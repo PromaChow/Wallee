@@ -6,12 +6,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {styles} from "./styles";
 import { HomeScreen} from "./screens/HomeScreen"
 import { Main} from "./screens/Main"
-import firebase from "./firebase.mjs"
-import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Stack = createNativeStackNavigator(); 
 export default function App() {
-  console.log(userDocument);
   return (
     <NavigationContainer>
       <Stack.Navigator>

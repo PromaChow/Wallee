@@ -71,6 +71,10 @@ export const HomeScreen=()=> {
               verificationCode
             );
             await signInWithCredential(auth, credential);
+            //console.log(auth+" "+credential);
+            user = auth.currentUser;
+            console.log(user.uid)
+
             showMessage({ text: 'Phone authentication successful 👍' });
           } catch (err) {
             showMessage({ text: `Error: ${err.message}`, color: 'red' });

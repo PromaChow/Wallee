@@ -12,14 +12,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createNativeStackNavigator(); 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen component={HomeScreen} name ="Home"/>
-        <Stack.Screen component={Main} name ="Main"></Stack.Screen>
+  //   <NavigationContainer>
+  //     <Stack.Navigator>
+  //       <Stack.Screen component={HomeScreen} name ="Home"/>
+  //       <Stack.Screen component={Main} name ="Main"></Stack.Screen>
 
-      </Stack.Navigator>
-    </NavigationContainer>
+  //     </Stack.Navigator>
+  //   </NavigationContainer>
   
+  // );
+  <Main>
+
+  </Main>
   );
   }
 

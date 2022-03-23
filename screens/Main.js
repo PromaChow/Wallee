@@ -8,6 +8,8 @@ import { doc, setDoc, collection, getDocs } from "firebase/firestore";
 import {styles} from "../styles";
 import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
+import CurrencyInput from 'react-native-currency-input';
+
 
 
 
@@ -16,6 +18,8 @@ import { getStorage, ref, uploadBytes,getDownloadURL } from "firebase/storage";
 export const Main = () => {
     
     const[ImageUrl, setUrl] = React.useState('p');
+    const[value, setValue] = React.useState(23);
+
     const getData = async()=>{
     
      
@@ -148,7 +152,7 @@ export const Main = () => {
     };
 
     const user = {Name: 'abcd', Age : 20};
-  
+    
     
     return(
 
@@ -158,7 +162,18 @@ export const Main = () => {
         
         <Button title="On cam" onPress={takePhoto} style ={{backgroundColor:"#0076653", marginTop : 50}}></Button>
         <Button title="Pick Image" onPress={pickImage} style ={{backgroundColor:"#0076653", marginTop : 50}}></Button>
-       
+        <CurrencyInput
+      value={value}
+      onChangeValue={setValue}
+      prefix="R$"
+      delimiter="."
+      separator=","
+      precision={2}
+      minValue={0}
+      showPositiveSign
+      onChangeText={(formattedValue) => {
+        console.log(formattedValue); // R$ +2.310,46
+      }}/>
       </SafeAreaView>
       );
       

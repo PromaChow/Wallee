@@ -7,6 +7,7 @@ import {styles} from "./styles";
 import { HomeScreen} from "./screens/HomeScreen"
 import { Main} from "./screens/Main"
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CurrencyScreen } from './screens/CurrencyScreen';
 
 
 const Stack = createNativeStackNavigator(); 
@@ -21,9 +22,9 @@ export default function App() {
   //   </NavigationContainer>
   
   // );
-  <Main>
-
-  </Main>
+  <CurrencyScreen>
+    
+  </CurrencyScreen>
   );
   }
 

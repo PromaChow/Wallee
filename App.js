@@ -8,24 +8,25 @@ import { HomeScreen} from "./screens/HomeScreen"
 import { Main} from "./screens/Main"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CurrencyScreen } from './screens/CurrencyScreen';
+import { OTPScreen } from './screens/OTPScreen';
 
 
 const Stack = createNativeStackNavigator(); 
 export default function App() {
   return (
-  //   <NavigationContainer>
-  //     <Stack.Navigator>
-  //       <Stack.Screen component={HomeScreen} name ="Home"/>
-  //       <Stack.Screen component={Main} name ="Main"></Stack.Screen>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen component={HomeScreen} name ="Home"/>
+        <Stack.Screen component={OTPScreen} name ="OTPScreen"></Stack.Screen>
 
-  //     </Stack.Navigator>
-  //   </NavigationContainer>
+      </Stack.Navigator>
+    </NavigationContainer>
   
-  // );
-  <CurrencyScreen>
-    
-  </CurrencyScreen>
   );
+  // <CurrencyScreen>
+    
+  // </CurrencyScreen>
+  
   }
 
 

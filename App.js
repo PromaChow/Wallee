@@ -8,7 +8,12 @@
 
 import React from 'react';
 import type {Node} from 'react';
-import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HomeScreen } from './screen/HomeScreen';
+import { Profile } from './screen/Profile';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -29,6 +34,35 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+const ifExist = (uid) =>{
+  firestore()
+  .collection('Users')
+  .doc(uid)
+  .get()
+  .then(documentSnapshot => {
+      bl = documentSnapshot.exists;
+      console.log(bl);
+      return bl;
+    }
+  );
+}
+
+const retrieve_data = async(uid) =>{
+  //console.log("hi");
+  firestore()
+  .collection('Users')
+  .doc(uid)
+  .get()
+  .then(documentSnapshot => {
+    console.log('User exists: ', documentSnapshot.exists);
+
+    if (documentSnapshot.exists) {
+      console.log('User data: ', documentSnapshot.data());
+    }
+  });
+ 
+
+}
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -54,39 +88,60 @@ const Section = ({children, title}): Node => {
     </View>
   );
 };
-
+const Stack = createNativeStackNavigator();
 const App: () => Node = () => {
-  const [confirm, setConfirm] = React.useState(null);
 
-  const [code, setCode] = React.useState('');
+  return(
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ title: 'Welcome' }}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={{ title: 'Welcome' }}
+          />
+          {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+        </Stack.Navigator>
+      </NavigationContainer>
+  //   <SafeAreaView>
+  //   <Button title="Rtrieve" onPress={() => retrieve_data('5opQHiDLez9N6oAgHQe4')} />
+  //   <Button title="Rtrieve" onPress={() =>{ bl = ifExist('5opQHiDLez9N6oAgHQe4'); console.log(bl)}} />
+  // </SafeAreaView>
+  // const [confirm, setConfirm] = React.useState(null);
 
-  async function signInWithPhoneNumber(phoneNumber) {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    setConfirm(confirmation);
-  }
+  // const [code, setCode] = React.useState('');
 
-  async function confirmCode() {
-    try {
-      await confirm.confirm(code);
-    } catch (error) {
-      console.log('Invalid code.');
-    }
-  }
+  // async function signInWithPhoneNumber(phoneNumber) {
+  //   const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+  //   setConfirm(confirmation);
+  // }
 
-  if (!confirm) {
-    return (
-      <Button
-        title="Phone Number Sign In"
-        onPress={() => signInWithPhoneNumber('+8801234567890')}
-      />
-    );
-  }
+  // async function confirmCode() {
+  //   try {
+  //     await confirm.confirm(code);
+  //   } catch (error) {
+  //     console.log('Invalid code.');
+  //   }
+  // }
 
-  return (
-    <>
-      <TextInput value={code} onChangeText={text => setCode(text)} />
-      <Button title="Confirm Code" onPress={() => confirmCode()} />
-    </>
+  // if (!confirm) {
+  //   return (
+  //     <Button
+  //       title="Phone Number Sign In"
+  //       onPress={() => signInWithPhoneNumber('+8801234567890')}
+  //     />
+  //   );
+  // }
+
+  // return (
+  //   <>
+  //     <TextInput value={code} onChangeText={text => setCode(text)} />
+  //     <Button title="Confirm Code" onPress={() => confirmCode()} />
+  //   </>
   );
 }
 

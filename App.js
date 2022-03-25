@@ -13,6 +13,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from './screen/HomeScreen';
 import { Profile } from './screen/Profile';
+import { Feed } from './screen/Feed';
+import { OTP } from './screen/OTPScreen';
+import { SignUp } from './screen/SignUp';
 
 import {
   SafeAreaView,
@@ -102,6 +105,24 @@ const App: () => Node = () => {
           <Stack.Screen
             name="Profile"
             component={Profile}
+            options={{ title: 'Welcome' }}
+          />
+          <Stack.Screen
+            name="Feed"
+            component={Feed}
+            options={{ title: 'Welcome' }}
+          />
+
+
+          <Stack.Screen
+            name="OTP"
+            component={OTP}
+            options={{ title: 'Welcome' }}
+          />
+
+          <Stack.Screen
+            name="SignUp"
+            component={SignUp}
             options={{ title: 'Welcome' }}
           />
           {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}

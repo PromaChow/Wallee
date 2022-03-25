@@ -13,8 +13,8 @@ import {
     TextInput
   } from 'react-native';
 
-export const Profile=()=>{
-    
+export const Profile=({ route, navigation })=>{
+    //const {uid} = route.params;
     return(
         <SafeAreaView>
            <TextInput placeholder='Username' style={{backgroundColor:"#000000", alignItems:'center'}}>

@@ -74,40 +74,40 @@ const App: () => Node = () => {
   let str = 'pr';
   return (
 
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    //     <Stack.Screen
-    //       name="Home"
-    //       component={HomeScreen}
-    //       options={{ title: 'Welcome' }}
-    //     />
-    //     <Stack.Screen
-    //       name="Profile"
-    //       component={Profile}
-    //       options={{ title: 'Welcome' }}
-    //     />
-    //     <Stack.Screen
-    //       name="Feed"
-    //       component={Feed}
-    //       options={{ title: 'Welcome' }}
-    //     />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Welcome' }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{ title: 'Welcome' }}
+        />
+        <Stack.Screen
+          name="Feed"
+          component={Feed}
+          options={{ title: 'Welcome' }}
+        />
 
 
-    //     <Stack.Screen
-    //       name="OTP"
-    //       component={OTP}
-    //       options={{ title: 'Welcome' }}
-    //     />
+        <Stack.Screen
+          name="OTP"
+          component={OTP}
+          options={{ title: 'Welcome' }}
+        />
 
-    //     <Stack.Screen
-    //       name="SignUp"
-    //       component={SignUp}
-    //       options={{ title: 'Welcome' }}
-    //     />
-    //     {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-    <Feed></Feed>
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{ title: 'Welcome' }}
+        />
+        {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
+  
 
   );
 

@@ -27,6 +27,7 @@ const ifExist = (uid, b) => {
 
 
 const add_User = (uid) => {
+    console.log(uid);
     firestore()
         .collection('Users')
         .doc(uid)

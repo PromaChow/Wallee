@@ -32,8 +32,8 @@ export const SignUp = () => {
                      onChangeText={setPhoneNumber} placeholder="Enter your Phone Number"
           ></TextInput>
           <Button title ="Proceed" style={{backgroundColor: "#000000"}} 
-                  onPress = {()=>{ signInWithPhoneNumber(phoneNumber);
-                                  navigation.navigate('OTP')}}
+                  onPress = {async()=>{ await signInWithPhoneNumber(phoneNumber).then(()=> navigation.navigate('OTP'))
+                                 }}
           ></Button>
       </SafeAreaView>
   )

@@ -26,8 +26,8 @@ export const Profile = ({ route, navigation }) => {
             </TextInput>
             <Button title="Okay" onPress={async () => {
                 
-                { update_doc(user.uid, 'name', username) }
-                navigation.navigate('Feed');
+                 await update_doc(user.uid, 'name', username).then(()=>{
+                navigation.navigate('Feed');})
             }}></Button>
         </SafeAreaView>
     )

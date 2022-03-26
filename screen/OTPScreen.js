@@ -27,11 +27,12 @@ export const OTP = ({ navigation }) => {
                 onChangeText={setCode} placeholder="Enter OTP"
             ></TextInput>
             <Button title="Proceed" style={{ backgroundColor: "#000000" }}
-                onPress={() => {
+                onPress={async() => {
                     console.log("Otp")
-                    confirmCode(code).then(()=>{
+                    await confirmCode(code).then(()=>{
                     const user = firebase.auth().currentUser;
                     console.log("o"+user.uid);
+                    if(!user) console.log("hi");
                     firestore()
                     .collection('Users')
                     .doc(user.uid)

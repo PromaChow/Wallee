@@ -73,8 +73,7 @@ const Stack = createNativeStackNavigator();
 const App: () => Node = () => {
   let str = 'pr';
   return (
-    
-    <Button title="Add" onPress={() => { var b; ifExist('1232423566776',b).then(()=>{console.log(b);}) }}></Button>
+
     // <NavigationContainer>
     //   <Stack.Navigator>
     //     <Stack.Screen
@@ -108,79 +107,11 @@ const App: () => Node = () => {
     //     {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
     //   </Stack.Navigator>
     // </NavigationContainer>
-    //   <SafeAreaView>
-    //   <Button title="Rtrieve" onPress={() => retrieve_data('5opQHiDLez9N6oAgHQe4')} />
-    //   <Button title="Rtrieve" onPress={() =>{ bl = ifExist('5opQHiDLez9N6oAgHQe4'); console.log(bl)}} />
-    // </SafeAreaView>
-    // const [confirm, setConfirm] = React.useState(null);
+    <Feed></Feed>
 
-    // const [code, setCode] = React.useState('');
-
-    // async function signInWithPhoneNumber(phoneNumber) {
-    //   const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-    //   setConfirm(confirmation);
-    // }
-
-    // async function confirmCode() {
-    //   try {
-    //     await confirm.confirm(code);
-    //   } catch (error) {
-    //     console.log('Invalid code.');
-    //   }
-    // }
-
-    // if (!confirm) {
-    //   return (
-    //     <Button
-    //       title="Phone Number Sign In"
-    //       onPress={() => signInWithPhoneNumber('+8801234567890')}
-    //     />
-    //   );
-    // }
-
-    // return (
-    //   <>
-    //     <TextInput value={code} onChangeText={text => setCode(text)} />
-    //     <Button title="Confirm Code" onPress={() => confirmCode()} />
-    //   </>
   );
+
 }
-
-// const isDarkMode = useColorScheme() === 'dark';
-
-// const backgroundStyle = {
-//   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-// };
-
-// return (
-//   <SafeAreaView style={backgroundStyle}>
-//     <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-//     <ScrollView
-//       contentInsetAdjustmentBehavior="automatic"
-//       style={backgroundStyle}>
-//       <Header />
-//       <View
-//         style={{
-//           backgroundColor: isDarkMode ? Colors.black : Colors.white,
-//         }}>
-//         <Section title="Step One">
-//           Edit <Text style={styles.highlight}>App.js</Text> to change this
-//           screen and then come back to see your edits.
-//         </Section>
-//         <Section title="See Your Changes">
-//           <ReloadInstructions />
-//         </Section>
-//         <Section title="Debug">
-//           <DebugInstructions />
-//         </Section>
-//         <Section title="Learn More">
-//           Read the docs to discover what to do next:
-//         </Section>
-//         <LearnMoreLinks />
-//       </View>
-//     </ScrollView>
-//   </SafeAreaView>
-// );
 
 
 const styles = StyleSheet.create({

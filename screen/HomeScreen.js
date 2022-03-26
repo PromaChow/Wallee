@@ -24,6 +24,7 @@ export const HomeScreen = () => {
   const navigation = useNavigation();
 
   const user = firebase.auth().currentUser;
+ 
   
   if(!user){
       return(
@@ -32,7 +33,7 @@ export const HomeScreen = () => {
       </SignUp>
       );
   }
-  else{console.log(user.uid);
+  else{
       return(<Feed>
 
       </Feed>

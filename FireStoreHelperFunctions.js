@@ -1,5 +1,6 @@
 import React from 'react';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 
 const ifExist = (uid,b) => {
@@ -81,5 +82,35 @@ const retrieve_data = async (uid) => {
 
 }
 
+const deletePrivFiles = async(uid) =>{
+    var dir = uid +"/images/";
+    const storageRef = storage().ref(dir);
+    storageRef.listAll().then((listResults) => {
+      const promises = listResults.items.map((item) => {
+        return item.delete();
+      });
+      Promise.all(promises);
+    });
+    
+}
+const addToStorage = async (uid,uri) => {
+    deletePrivFiles(uid);
+    let filename = uri.split('/').pop();
+    console.log(uri+" "+filename);
+    let dir = uid+"/images/"+filename;
+    const reference = storage().ref(dir);
+    const task = reference.putFile(uri);
 
-export {ifExist, add_User, retrieve_data, update_doc };
+    task.on('state_changed', taskSnapshot => {
+        console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
+      });
+      
+      task.then(() => {
+        console.log('Image uploaded to the bucket!')
+      });
+      
+    console.log("summoned");
+     
+
+}
+export {ifExist, add_User, retrieve_data, update_doc,addToStorage };

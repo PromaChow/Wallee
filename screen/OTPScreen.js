@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { confirmCode } from '../Authentication';
 import firestore from '@react-native-firebase/firestore';
+import { add_User } from '../FireStoreHelperFunctions';
+import firebase from '@react-native-firebase/app'
 import {
     SafeAreaView,
     ScrollView,
@@ -26,22 +28,29 @@ export const OTP = ({ navigation }) => {
             ></TextInput>
             <Button title="Proceed" style={{ backgroundColor: "#000000" }}
                 onPress={() => {
-                    confirmCode(code);
+                    console.log("Otp")
+                    confirmCode(code).then(()=>{
                     const user = firebase.auth().currentUser;
+                    console.log("o"+user.uid);
                     firestore()
                     .collection('Users')
                     .doc(user.uid)
                     .get()
                     .then(documentSnapshot => {
                         let exists = documentSnapshot.exists;
-            
+                        console.log(user.uid +" "+ exists);
                         if (!exists) {
+                             
+                             add_User(user.uid);
                              navigation.navigate('Profile');
                         }
                         else navigation.navigate('Feed');
                     });
                 }
-          > </Button>
+                    )
+            }
+            }
+          ></Button>
 
         </SafeAreaView >
     )

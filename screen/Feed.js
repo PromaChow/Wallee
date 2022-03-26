@@ -16,7 +16,7 @@ import {
     TextInput
   } from 'react-native';
 
-export function Feed(){
+export function Feed({navigation}){
     
     const user = firebase.auth().currentUser;
     return(

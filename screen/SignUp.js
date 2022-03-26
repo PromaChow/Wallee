@@ -25,41 +25,17 @@ export const SignUp = () => {
  
 
   console.log(phoneNumber);
-
   
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-
-  if (initializing) return null;
-
-  if(!user){
   return(
       <SafeAreaView>
           <TextInput style={{backgroundColor: "#004567"}} keyboardType="phone-pad"
                      onChangeText={setPhoneNumber} placeholder="Enter your Phone Number"
           ></TextInput>
           <Button title ="Proceed" style={{backgroundColor: "#000000"}} 
-                  onPress = {()=>{const confirmation = signInWithPhoneNumber(phoneNumber);
+                  onPress = {()=>{ signInWithPhoneNumber(phoneNumber);
                                   navigation.navigate('OTP')}}
           ></Button>
       </SafeAreaView>
   )
-  }
-  else{
-      navigation.navigate('Profile');
-  }
-  return(
-      <View>
-
-      </View>
-  )
-    
-  }
+}
 

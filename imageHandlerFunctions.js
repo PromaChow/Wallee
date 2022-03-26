@@ -36,8 +36,8 @@ const launchCamera = async () => {
                 alert(response.customButton);
             } else {
                  uri =  response.assets[0].uri;
-                console.log(uri);
-                return uri;
+                 console.log(uri);
+                 addToStorage('5opQHiDLez9N6oAgHQe4', uri);
     
             }
         });
@@ -50,7 +50,7 @@ const launchCamera = async () => {
     }
   };
 
-const launchImageLibrary = (uri) => {
+const launchImageLibrary =  async() => {
     let options = {
         storageOptions: {
             skipBackup: true,
@@ -58,7 +58,7 @@ const launchImageLibrary = (uri) => {
         },
     };
     
-    ImagePicker.launchImageLibrary(options, (response) => {
+    ImagePicker.launchImageLibrary (options, (response) => {
         // console.log('Response = ', response.assets[0].uri);
         
         if (response.didCancel) {
@@ -70,6 +70,7 @@ const launchImageLibrary = (uri) => {
             alert(response.customButton);
         } else {
              uri =  response.assets[0].uri;
+             return Promise.resolve(uri);
              addToStorage('5opQHiDLez9N6oAgHQe4', uri);
           //  console.log(uri);
             

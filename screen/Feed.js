@@ -29,7 +29,7 @@ export function Feed({navigation}){
             navigation.navigate('SignUp');
              }} >
                </Button> */}
-          <Button title ="choose Image" onPress={()=>{ launchImageLibrary()}}></Button>
+          <Button title ="choose Image" onPress={async()=>{let uri = await launchImageLibrary(); console.log(uri)}}></Button>
 
           <Button title ="choose cam" onPress={launchCamera}></Button>
 

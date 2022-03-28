@@ -24,7 +24,7 @@ export const SignUp = () => {
   const [initializing, setInitializing] = useState(true);
  
 
-  console.log(phoneNumber);
+  console.log("phone"+phoneNumber);
   
   return(
       <SafeAreaView>

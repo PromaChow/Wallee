@@ -20,7 +20,7 @@ export const OTP = ({ navigation }) => {
 
     const [code, setCode] = React.useState('');
 
-    console.log(code);
+    console.log("code from OTP" + code);
     return (
         <SafeAreaView>
             <TextInput style={{ backgroundColor: "#004567" }} keyboardType="phone-pad"

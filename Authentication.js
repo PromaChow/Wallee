@@ -12,7 +12,7 @@ const signInWithPhoneNumber= async(phoneNumber) => {
   }
 
   const confirmCode=async( code)=> {
-      console.log(code);
+      console.log("code from confirm"+code);
     try {
     console.log("confirmation_1" + confirm);
       await confirm.confirm(code);

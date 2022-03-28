@@ -1,7 +1,8 @@
-import * as ImagePicker from "react-native-image-picker";
+//import * as ImagePicker from "react-native-image-picker";
 import { PermissionsAndroid } from "react-native";
 import React from "react";
 import { addToStorage } from "./FireStoreHelperFunctions";
+import ImagePicker from 'react-native-image-crop-picker';
 var uri;
 
 const launchCamera = async () => {
@@ -25,26 +26,24 @@ const launchCamera = async () => {
         },
       };
 
-      const imageReceived = new Promise((resolve, reject)=>{
-      ImagePicker.launchCamera(options, response => {
-       // console.log("Response = ", response);
-
-        if (response.didCancel) {
-          console.log("User cancelled image picker");
-          reject();
-        } else if (response.error) {
-          console.log("ImagePicker Error: ", response.error);
-          reject();
-        } else if (response.customButton) {
-          console.log("User tapped custom button: ", response.customButton);
-          alert(response.customButton);
-        } else {
-            uri = response.assets[0].uri;
-            resolve(uri);;
-          //  addToStorage("5opQHiDLez9N6oAgHQe4", uri);
+      const imageReceived = new Promise((resolve, reject) => {
+        try {
+          ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+          }).then(image => {
+            console.log(image.path);
+            resolve(image.path);
+          });
+        } catch (err) {
+          if (err.message !== 'User cancelled image selection') {
+            reject();
+            console.error(err);
+          }
         }
-      })});
-      return await imageReceived;
+      });
+        return await imageReceived;
     } else {
       console.log("Camera permission denied");
       return false;
@@ -54,42 +53,26 @@ const launchCamera = async () => {
   }
 };
 
+
 const launchImageLibrary = async () => {
-  let options = {
-    storageOptions: {
-      skipBackup: true,
-      path: "images",
-    },
-  };
-
   const imageReceived = new Promise((resolve, reject) => {
-    ImagePicker.launchImageLibrary(options, response => {
-      // console.log('Response = ', response.assets[0].uri);
-
-      if (response.didCancel) {
-        console.log("User cancelled image picker");
-        reject();
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-        reject();
-      } else if (response.customButton) {
-        console.log("User tapped custom button: ", response.customButton);
-        alert(response.customButton);
-        reject();
-      } else {
-        uri = response.assets[0].uri;
-        resolve(uri);
-        // addToStorage("5opQHiDLez9N6oAgHQe4", uri);
-        //  console.log(uri);
-      }
+  try {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image.path);
+      resolve(image.path);
     });
-  });
-
+  } catch (err) {
+    if (err.message !== 'User cancelled image selection') {
+      reject();
+      console.error(err);
+    }
+  }
+});
   return await imageReceived;
-};
+}
 
-const storeImage = () => {
-  console.log(uri);
-};
-
-export { launchImageLibrary, launchCamera, storeImage };
+export { launchImageLibrary,launchCamera };

@@ -6,7 +6,6 @@ import { addToStorage } from "../FireStoreHelperFunctions";
 import {
   launchImageLibrary,
   launchCamera,
-  storeImage,
 } from "../imageHandlerFunctions";
 
 import {
@@ -20,9 +19,9 @@ import {
   Button,
   TextInput,
 } from "react-native";
-export function Feed({ navigation }) {
+export function Feed() {
   const user = firebase.auth().currentUser;
-
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={{ backgroundColor: "#000000" }}>
       
@@ -46,8 +45,9 @@ export function Feed({ navigation }) {
            <Button title="Sign Out" style={{backgroundColor:"#000000", alignItems:'center'}} 
           onPress={async  () =>{await auth()
             .signOut()
-            .then(() => console.log('User signed out!'));
-            navigation.navigate('SignUp');
+            .then(() => {
+              console.log('User signed out!'); navigation.navigate('SignUp');});
+           
              }} >
                </Button>
     </SafeAreaView>

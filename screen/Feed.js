@@ -19,6 +19,8 @@ import {
   Button,
   TextInput,
 } from "react-native";
+var tesseract = require('../tesseract');
+console.log(tesseract);
 export function Feed() {
   const user = firebase.auth().currentUser;
   const navigation = useNavigation();
@@ -50,6 +52,25 @@ export function Feed() {
            
              }} >
                </Button>
+
+               <Button title="tesseract" onPress={()=>{
+                 const config = {
+                  lang: "eng",
+                  oem: 1,
+                  psm: 3,
+                }
+                
+                tesseract
+                  .recognize("../receipt.jpg", config)
+                  .then((text) => {
+                    console.log("Result:", text);
+                  })
+                  .catch((error) => {
+                    console.log(error.message);
+                  })
+               }
+          
+          }></Button>
     </SafeAreaView>
   );
 }

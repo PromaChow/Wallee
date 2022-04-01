@@ -32,6 +32,8 @@ const launchCamera = async () => {
             width: 300,
             height: 400,
             cropping: true,
+            freeStyleCropEnabled : true,
+            cropperCircleOverlay:true,
           }).then(image => {
             console.log(image.path);
             resolve(image.path);
@@ -61,6 +63,8 @@ const launchImageLibrary = async () => {
       width: 300,
       height: 400,
       cropping: true,
+      freeStyleCropEnabled : true,
+      cropperCircleOverlay:true,
     }).then(image => {
       console.log(image.path);
       resolve(image.path);

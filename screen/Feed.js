@@ -3,11 +3,12 @@ import auth from "@react-native-firebase/auth";
 import firebase from "@react-native-firebase/app";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { addToStorage } from "../FireStoreHelperFunctions";
+
+
 import {
   launchImageLibrary,
   launchCamera,
 } from "../imageHandlerFunctions";
-
 import {
   SafeAreaView,
   ScrollView,
@@ -21,7 +22,8 @@ import {
 } from "react-native";
 var tesseract = require('../tesseract');
 console.log(tesseract);
-export function Feed() {
+export const Feed=() => {
+
   const user = firebase.auth().currentUser;
   const navigation = useNavigation();
   return (
@@ -53,24 +55,9 @@ export function Feed() {
              }} >
                </Button>
 
-               <Button title="tesseract" onPress={()=>{
-                 const config = {
-                  lang: "eng",
-                  oem: 1,
-                  psm: 3,
-                }
-                
-                tesseract
-                  .recognize("../receipt.jpg", config)
-                  .then((text) => {
-                    console.log("Result:", text);
-                  })
-                  .catch((error) => {
-                    console.log(error.message);
-                  })
-               }
-          
-          }></Button>
+
+
+          <Button title = {user.uid}></Button>
     </SafeAreaView>
   );
 }

@@ -3,7 +3,7 @@ import auth from "@react-native-firebase/auth";
 import firebase from "@react-native-firebase/app";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { addToStorage } from "../FireStoreHelperFunctions";
-
+import { recognizeImage } from "../mlkit";
 
 import {
   launchImageLibrary,
@@ -20,8 +20,8 @@ import {
   Button,
   TextInput,
 } from "react-native";
-var tesseract = require('../tesseract');
-console.log(tesseract);
+// var tesseract = require('../tesseract');
+// console.log(tesseract);
 export const Feed=() => {
 
   const user = firebase.auth().currentUser;
@@ -58,6 +58,23 @@ export const Feed=() => {
 
 
           <Button title = {user.uid}></Button>
+
+          <Button title = "recognize Text" onPress={async () => {
+          let uri = await launchCamera();
+          console.log(uri);
+          if(uri){
+            try{
+              const response = await recognizeImage(uri);
+              console.log(response);
+            }
+            catch (error){
+              console.log(error);
+            }
+          }
+          
+          }
+        }
+          ></Button>
     </SafeAreaView>
   );
 }

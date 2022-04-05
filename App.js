@@ -7,18 +7,31 @@ import {
   Text,
   Spinner,
 } from 'native-base';
-import Test from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {SafeAreaView} from 'react-native-safe-area-context';
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // const Stack = createNativeStackNavigator();
 
+//********** Test ********
+
+import {IncomeJournal} from './src/journal';
+import Transaction from './src/transaction';
+const testTransaction = new Transaction(200, 'user');
+
+const before = new Date();
+console.log(before.getTime());
+
+//*********** Test ********
+
 export default App = () => {
   return (
     <NativeBaseProvider>
       <Center bg="info.400" flex={1}>
-        <Icon as={Test} name="rocket" color="danger.600" />
-        <Text fontSize="xl">Hello World</Text>
+        <Icon as={FontAwesome} name="rocket" color="danger.600" />
+        <Text fontSize="xl">{testTransaction.amount}</Text>
+        <Text fontSize="xl">{testTransaction.originator}</Text>
       </Center>
     </NativeBaseProvider>
   );

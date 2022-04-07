@@ -60,11 +60,9 @@ const launchImageLibrary = async () => {
   const imageReceived = new Promise((resolve, reject) => {
   try {
     ImagePicker.openPicker({
-      width: 300,
-      height: 400,
       cropping: true,
       freeStyleCropEnabled : true,
-      cropperCircleOverlay:true,
+ 
     }).then(image => {
       console.log(image.path);
       resolve(image.path);

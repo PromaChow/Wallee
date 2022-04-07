@@ -4,6 +4,7 @@ import firebase from "@react-native-firebase/app";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { addToStorage } from "../FireStoreHelperFunctions";
 import { recognizeImage } from "../mlkit";
+import ImgToBase64 from 'react-native-image-base64';
 
 import {
   launchImageLibrary,
@@ -34,7 +35,29 @@ export const Feed=() => {
         onPress={async () => {
           let uri = await launchImageLibrary();
           console.log(uri);
-          addToStorage(user.uid, uri);
+          ImgToBase64.getBase64String(uri)
+          .then((base64String)=> {
+           console.log("BASE64"+base64String);
+          fetch('http://192.168.242.104:4000/image', {
+          method: 'POST',
+          headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+          body: JSON.stringify({
+            image : base64String
+       
+    })
+  }).then(response =>{
+      console.log("response"+response.status);
+     
+    }).then(data => console.log(data));
+
+           
+          })
+          .catch(err => console.log("error"+err));
+
+         // addToStorage(user.uid, uri);
         }}
       ></Button>
 
@@ -60,7 +83,7 @@ export const Feed=() => {
           <Button title = {user.uid}></Button>
 
           <Button title = "recognize Text" onPress={async () => {
-          let uri = await launchCamera();
+          let uri = await launchImageLibrary();
           console.log(uri);
           if(uri){
             try{

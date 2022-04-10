@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   NativeBaseProvider,
+  Modal,
+  Input,
+  FormControl,
+  Button,
   Box,
   Icon,
   Center,
   Text,
   Spinner,
 } from 'native-base';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 import {SafeAreaView} from 'react-native-safe-area-context';
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,21 +22,19 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {IncomeJournal} from './src/journal';
 import Transaction from './src/transaction';
+import Calculator from './src/components/Calculator';
 const testTransaction = new Transaction(200, 'user');
-
-const before = new Date();
-console.log(before.getTime());
 
 //*********** Test ********
 
 export default App = () => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <NativeBaseProvider>
-      <Center bg="info.400" flex={1}>
-        <Icon as={FontAwesome} name="rocket" color="danger.600" />
-        <Text fontSize="xl">{testTransaction.amount}</Text>
-        <Text fontSize="xl">{testTransaction.originator}</Text>
-      </Center>
+      <Center bg="tertiary.400"></Center>
+      <Box flex="1" width="100%">
+        <Calculator />
+      </Box>
     </NativeBaseProvider>
   );
 };

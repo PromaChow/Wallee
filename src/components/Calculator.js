@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {
+  Pressable,
   Text,
   HStack,
   VStack,
@@ -10,6 +11,7 @@ import {
   Center,
   Icon,
 } from 'native-base';
+import {TouchableOpacity, StyleProp} from 'react-native';
 import {useState} from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -93,8 +95,61 @@ const BackspaceButton = ({deleteLastSymbol}) => {
   );
 };
 
+let KeyPad = ({setExpression}) => (
+  <Box flex="3" flexDirection="row" height="100%">
+    <HStack flex="3" flexDirection="row" bg="info.100">
+      <VStack flex="1">
+        <NumButton key={'7'} renderSymbol={'7'} appendSymbol={setExpression} />
+        <NumButton key={'4'} renderSymbol={'4'} appendSymbol={setExpression} />
+        <NumButton key={'1'} renderSymbol={'1'} appendSymbol={setExpression} />
+        <NumButton key={'.'} renderSymbol={'.'} appendSymbol={setExpression} />
+      </VStack>
+      <VStack space="1" flex="1">
+        <NumButton key={'8'} renderSymbol={'8'} appendSymbol={setExpression} />
+        <NumButton key={'5'} renderSymbol={'5'} appendSymbol={setExpression} />
+        <NumButton key={'2'} renderSymbol={'2'} appendSymbol={setExpression} />
+        <NumButton key={'0'} renderSymbol={'0'} appendSymbol={setExpression} />
+      </VStack>
+      <VStack space="1" flex="1">
+        <NumButton key={'9'} renderSymbol={'9'} appendSymbol={setExpression} />
+        <NumButton key={'6'} renderSymbol={'6'} appendSymbol={setExpression} />
+        <NumButton key={'3'} renderSymbol={'3'} appendSymbol={setExpression} />
+        <BackspaceButton key={'x'} deleteLastSymbol={setExpression} />
+      </VStack>
+    </HStack>
+    <HStack flex="1" bg="info.200">
+      <VStack space="1" flex="1">
+        <OperatorButton
+          key={'/'}
+          renderSymbol={'/'}
+          appendSymbol={setExpression}
+        />
+        <OperatorButton
+          key={'*'}
+          renderSymbol={'*'}
+          appendSymbol={setExpression}
+        />
+        <OperatorButton
+          key={'-'}
+          renderSymbol={'-'}
+          appendSymbol={setExpression}
+        />
+        <OperatorButton
+          key={'+'}
+          renderSymbol={'+'}
+          appendSymbol={setExpression}
+        />
+        <EvalButton key={'='} evaluateExpression={setExpression} />
+      </VStack>
+    </HStack>
+  </Box>
+);
+
+KeyPad = React.memo(KeyPad);
+
 const Calculator = ({initialExpression = ''}) => {
   const [currentExpression, setExpression] = useState(initialExpression);
+
   return (
     <>
       <Box flex="2">
@@ -102,102 +157,12 @@ const Calculator = ({initialExpression = ''}) => {
           bg="gray.50"
           flex="1"
           _text={{
-            fontSize: '3xl',
+            fontSize: '4xl',
           }}>
           {currentExpression}
         </Center>
       </Box>
-      <Box flex="3" flexDirection="row" height="100%">
-        <HStack flex="3" flexDirection="row" bg="info.100">
-          <VStack flex="1">
-            <NumButton
-              key={'7'}
-              renderSymbol={'7'}
-              appendSymbol={setExpression}
-            />
-            <NumButton
-              key={'4'}
-              renderSymbol={'4'}
-              appendSymbol={setExpression}
-            />
-            <NumButton
-              key={'1'}
-              renderSymbol={'1'}
-              appendSymbol={setExpression}
-            />
-            <NumButton
-              key={'.'}
-              renderSymbol={'.'}
-              appendSymbol={setExpression}
-            />
-          </VStack>
-          <VStack space="1" flex="1">
-            <NumButton
-              key={'8'}
-              renderSymbol={'8'}
-              appendSymbol={setExpression}
-            />
-            <NumButton
-              key={'5'}
-              renderSymbol={'5'}
-              appendSymbol={setExpression}
-            />
-            <NumButton
-              key={'2'}
-              renderSymbol={'2'}
-              appendSymbol={setExpression}
-            />
-            <NumButton
-              key={'0'}
-              renderSymbol={'0'}
-              appendSymbol={setExpression}
-            />
-          </VStack>
-          <VStack space="1" flex="1">
-            <NumButton
-              key={'9'}
-              renderSymbol={'9'}
-              appendSymbol={setExpression}
-            />
-            <NumButton
-              key={'6'}
-              renderSymbol={'6'}
-              appendSymbol={setExpression}
-            />
-            <NumButton
-              key={'3'}
-              renderSymbol={'3'}
-              appendSymbol={setExpression}
-            />
-            <BackspaceButton key={'x'} deleteLastSymbol={setExpression} />
-          </VStack>
-        </HStack>
-        <HStack flex="1" bg="info.200">
-          <VStack space="1" flex="1">
-            <OperatorButton
-              key={'/'}
-              renderSymbol={'/'}
-              appendSymbol={setExpression}
-            />
-            <OperatorButton
-              key={'*'}
-              renderSymbol={'*'}
-              appendSymbol={setExpression}
-            />
-            <OperatorButton
-              key={'-'}
-              renderSymbol={'-'}
-              appendSymbol={setExpression}
-            />
-            <OperatorButton
-              key={'+'}
-              renderSymbol={'+'}
-              appendSymbol={setExpression}
-            />
-            <EvalButton key={'='} evaluateExpression={setExpression} />
-          </VStack>
-        </HStack>
-      </Box>
+      <KeyPad setExpression={setExpression} />
     </>
   );
 };

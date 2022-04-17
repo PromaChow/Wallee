@@ -29,11 +29,9 @@ const launchCamera = async () => {
       const imageReceived = new Promise((resolve, reject) => {
         try {
           ImagePicker.openCamera({
-            width: 300,
-            height: 400,
             cropping: true,
             freeStyleCropEnabled : true,
-            cropperCircleOverlay:true,
+           // cropperCircleOverlay:true,
           }).then(image => {
             console.log(image.path);
             resolve(image.path);

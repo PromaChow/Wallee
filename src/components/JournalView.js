@@ -9,11 +9,17 @@ import {
   Icon,
   Center,
   Text,
+  HStack,
+  VStack,
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 
 const JournalView = () => {
-  return <Box flex="10" bg="teal.100"></Box>;
+  return (
+    <HStack space={1} flex="1">
+      <VStack space={1} flex="1"></VStack>
+    </HStack>
+  );
 };
 
 export default JournalView;

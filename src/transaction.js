@@ -5,7 +5,7 @@ export default class Transaction {
   dateOfCreation;
   lastAccessTime;
 
-  constructor(amount, creator) {
+  constructor(amount, creator = 'User') {
     this.amount = amount;
     this.creator = creator;
     this.timeOfCreation =

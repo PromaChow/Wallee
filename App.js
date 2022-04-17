@@ -56,7 +56,7 @@ export default App = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <NativeBaseProvider>
-      {/* <Box bg="gray.400" flex={1}>
+      <Box bg="gray.400" flex={1}>
         <Box>
           <Icon
             mt="2"
@@ -90,10 +90,7 @@ export default App = () => {
           size="md"
           icon={<Icon color="white" as={Feather} name="plus" size="md" />}
         />
-      </Box> */}
-      <Center flex={1} bg="white">
-        <Calculator transaction={new Transaction('200', 'User')} />
-      </Center>
+      </Box>
     </NativeBaseProvider>
   );
 };

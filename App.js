@@ -91,8 +91,8 @@ export default App = () => {
           icon={<Icon color="white" as={Feather} name="plus" size="md" />}
         />
       </Box> */}
-      <Center flex={1}>
-        <Calculator transaction={new Transaction('200', 'user')} />
+      <Center flex={1} bg="white">
+        <Calculator transaction={new Transaction('200', 'User')} />
       </Center>
     </NativeBaseProvider>
   );

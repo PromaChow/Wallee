@@ -5,6 +5,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 import {useState} from 'react';
 import {
+  Modal,
   NativeBaseProvider,
   Box,
   Icon,
@@ -15,7 +16,7 @@ import {
 
 export const TransactionListView = ({colorIndex = 6, initialTransaction}) => {
   const [transaction, setTransaction] = useState(initialTransaction);
-
+  const [showModal, setShowModal] = useState(false);
   return (
     <Center
       paddingTop={3}

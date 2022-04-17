@@ -148,18 +148,19 @@ KeyPad = React.memo(KeyPad);
 
 const Calculator = ({transaction}) => {
   const [currentExpression, setExpression] = useState(transaction.amount);
-  const [keypadOpen, setKeyPadOpen] = useState(true);
+  const [keypadOpen, setKeyPadOpen] = useState(false);
 
   useEffect(() => {
     return () => {
       transaction.amount = currentExpression;
+      console.log(transaction.amount);
     };
   }, []);
 
   return (
     <>
       <Box flex="2">
-        <Box pt={10} pb={0} bg="gray.50" justifyContent="center">
+        <Box pt={10} pb={0} bg="white" justifyContent="center">
           <Center flex="1">
             <Box
               _text={{
@@ -180,16 +181,13 @@ const Calculator = ({transaction}) => {
 
           <Box flex="1">
             <Button
+              bg={keypadOpen ? 'lightBlue.200' : 'white'}
               onPressIn={() => setKeyPadOpen(!keypadOpen)}
               borderColor={'black'}
               size="md"
               variant="ghost"
               onPress={null}>
-              <Icon
-                size="md"
-                as={Feather}
-                name="edit-2"
-                color="gray.600"></Icon>
+              <Icon size="lg" as={Feather} name="edit" color="gray.600"></Icon>
             </Button>
           </Box>
         </Box>

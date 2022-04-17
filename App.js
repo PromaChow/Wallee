@@ -1,6 +1,8 @@
+import {TransactionView} from './src/components/TransactionView';
 import React, {useState} from 'react';
 import {
   NativeBaseProvider,
+  ScrollView,
   Fab,
   Modal,
   Input,
@@ -11,6 +13,7 @@ import {
   Center,
   Text,
   Spinner,
+  HStack,
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -19,19 +22,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 // const Stack = createNativeStackNavigator();
 
-//********** Test ********
-
-import {IncomeJournal} from './src/journal';
-import Transaction from './src/transaction';
-import JournalView from './src/components/JournalView';
 import Calculator from './src/components/Calculator';
-const testTransaction = new Transaction(200, 'user');
+import JournalView from './src/components/JournalView';
+import Transaction from './src/transaction';
 
 const colorNames = [
   'secondary',
-  'tertiary',
   'danger',
-  'success',
   'info',
   'rose',
   'teal',
@@ -39,9 +36,9 @@ const colorNames = [
   'cyan',
 ];
 
-const colorValues = [200, 400, 600];
-const bgColors = [];
-const fgColors = [];
+const colorValues = [600, 800];
+export const bgColors = [];
+export const fgColors = [];
 
 colorValues.forEach(number => {
   colorNames.forEach(name => {
@@ -56,7 +53,7 @@ export default App = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <NativeBaseProvider>
-      <Box bg="gray.400" flex={1}>
+      {/* <Box bg="gray.400" flex={1}>
         <Box>
           <Icon
             mt="2"
@@ -77,14 +74,23 @@ export default App = () => {
             Journals
           </Center>
         </Box>
-        <JournalView />
+        <ScrollView
+          flexDirection={'column'}
+          horizontal={true}
+          flex="10"
+          bg="teal.100">
+          <HStack flex="1" space={0.5}></HStack>
+        </ScrollView>
         <Fab
           renderInPortal={false}
           shadow={2}
-          size="lg"
-          icon={<Icon color="white" as={Feather} name="plus" size="lg" />}
+          size="md"
+          icon={<Icon color="white" as={Feather} name="plus" size="md" />}
         />
-      </Box>
+      </Box> */}
+      <Center flex={1}>
+        <TransactionView initialTransaction={new Transaction(500, 'user')} />
+      </Center>
     </NativeBaseProvider>
   );
 };

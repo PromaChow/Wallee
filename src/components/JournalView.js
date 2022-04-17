@@ -1,3 +1,4 @@
+import {IncomeJournal} from './src/journal';
 import React from 'react';
 import {
   NativeBaseProvider,

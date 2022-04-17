@@ -1,13 +1,13 @@
 export default class Transaction {
   amount;
-  originator;
+  creator;
   timeOfCreation;
   lastAccessTime;
 
-  constructor(amount, originator) {
+  constructor(amount, creator) {
     this.amount = amount;
-    this.originator = originator;
-    this.timeOfCreation = new Date();
+    this.creator = creator;
+    this.timeOfCreation = new Date().toTimeString().slice(0, 5);
     this.lastAccessTime = this.timeOfCreation;
   }
 }

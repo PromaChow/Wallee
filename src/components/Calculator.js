@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useState, useEffect} from 'react';
 import {
   Pressable,
   Text,
@@ -12,7 +12,6 @@ import {
   Icon,
 } from 'native-base';
 import {TouchableOpacity, StyleProp} from 'react-native';
-import {useState} from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 
 const NumButton = ({renderSymbol, appendSymbol}) => {
@@ -147,22 +146,74 @@ let KeyPad = ({setExpression}) => (
 
 KeyPad = React.memo(KeyPad);
 
-const Calculator = ({initialExpression = ''}) => {
-  const [currentExpression, setExpression] = useState(initialExpression);
+const Calculator = ({transaction}) => {
+  const [currentExpression, setExpression] = useState(transaction.amount);
+  const [keypadOpen, setKeyPadOpen] = useState(true);
+
+  useEffect(() => {
+    return () => {
+      transaction.amount = currentExpression;
+    };
+  }, []);
 
   return (
     <>
       <Box flex="2">
-        <Center
-          bg="gray.50"
-          flex="1"
-          _text={{
-            fontSize: '4xl',
-          }}>
-          {currentExpression}
-        </Center>
+        <Box pt={10} pb={0} bg="gray.50" justifyContent="center">
+          <Center flex="1">
+            <Box
+              _text={{
+                fontSize: 'xl',
+                color: 'black',
+              }}>
+              Cash Flow
+            </Box>
+            <Box
+              _text={{
+                fontSize: '4xl',
+                fontWeight: 'semibold',
+                color: 'success.600',
+              }}>
+              {currentExpression}
+            </Box>
+          </Center>
+
+          <Box flex="1">
+            <Button
+              onPressIn={() => setKeyPadOpen(!keypadOpen)}
+              borderColor={'black'}
+              size="md"
+              variant="ghost"
+              onPress={null}>
+              <Icon
+                size="md"
+                as={Feather}
+                name="edit-2"
+                color="gray.600"></Icon>
+            </Button>
+          </Box>
+        </Box>
       </Box>
-      <KeyPad setExpression={setExpression} />
+
+      <Box
+        flex="1"
+        alignItems={'center'}
+        _text={{
+          fontSize: 'xl',
+          color: 'black',
+        }}>
+        Time Of Creation: {transaction.timeOfCreation}
+      </Box>
+      <Box
+        flex="1"
+        alignItems={'center'}
+        _text={{
+          fontSize: 'xl',
+          color: 'black',
+        }}>
+        Created By : {transaction.creator}
+      </Box>
+      {keypadOpen && <KeyPad setExpression={setExpression} />}
     </>
   );
 };

@@ -92,9 +92,7 @@ export default App = () => {
         />
       </Box> */}
       <Center flex={1}>
-        <TransactionDetailView
-          initialTransaction={new Transaction(500, 'user')}
-        />
+        <Calculator transaction={new Transaction('200', 'user')} />
       </Center>
     </NativeBaseProvider>
   );

@@ -1,4 +1,7 @@
-import {TransactionView} from './src/components/TransactionView';
+import {
+  TransactionListView,
+  TransactionDetailView,
+} from './src/components/TransactionView';
 import React, {useState} from 'react';
 import {
   NativeBaseProvider,
@@ -89,7 +92,9 @@ export default App = () => {
         />
       </Box> */}
       <Center flex={1}>
-        <TransactionView initialTransaction={new Transaction(500, 'user')} />
+        <TransactionDetailView
+          initialTransaction={new Transaction(500, 'user')}
+        />
       </Center>
     </NativeBaseProvider>
   );

@@ -13,9 +13,9 @@ import {
   Spinner,
 } from 'native-base';
 
-export const TransactionView = ({colorIndex = 6, initialTransaction}) => {
+export const TransactionListView = ({colorIndex = 6, initialTransaction}) => {
   const [transaction, setTransaction] = useState(initialTransaction);
-  // setTransaction({...transaction, amount: 200});
+
   return (
     <Center
       paddingTop={3}
@@ -26,16 +26,6 @@ export const TransactionView = ({colorIndex = 6, initialTransaction}) => {
       flex="1"
       maxW={'150'}
       maxH={'20'}>
-      {/* <Box
-        flex="1"
-        _text={{
-          color: 'light.200',
-          fontSize: 'lg',
-          fontWeight: 'semibold',
-        }}>
-        {transaction.amount}
-      </Box> */}
-
       <Box
         flexDirection="row"
         justifyContent="center"
@@ -75,14 +65,13 @@ export const TransactionView = ({colorIndex = 6, initialTransaction}) => {
           }}
           flexDirection={'column'}
           flex="2">
-          {transaction.timeOfCreation}
+          {transaction.timeOfCreation.slice(0, 5)}
         </Box>
       </Box>
     </Center>
   );
 };
 
-// Components I need
-// Calculator
-// TransactionDetails
-// TransactionListItem
+export const TransactionDetailView = ({transaction, setTransaction = null}) => {
+  return <Center></Center>;
+};

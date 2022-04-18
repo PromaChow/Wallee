@@ -1,7 +1,3 @@
-import {
-  TransactionListView,
-  TransactionDetailView,
-} from './src/components/TransactionView';
 import React, {useState} from 'react';
 import CreateJournalView from './src/components/CreateJournalView';
 import {
@@ -59,7 +55,7 @@ export default App = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <NativeBaseProvider>
-      <Box bg="gray.400" flex={1}>
+      {/* <Box bg="gray.400" flex={1}>
         <Box width={windowWidth}>
           <Icon
             mt="2"
@@ -80,12 +76,11 @@ export default App = () => {
             Journals
           </Center>
         </Box>
-        <ScrollView
-          flexDirection={'column'}
-          horizontal={true}
-          flex="10"
-          bg="teal.100">
-          <HStack flex="1" space={0.5}></HStack>
+        <ScrollView horizontal={true} flex="10" bg="teal.100">
+          <JournalView colorIndex={1} />
+          <JournalView colorIndex={3} />
+          <JournalView colorIndex={4} />
+          <JournalView colorIndex={5} />
         </ScrollView>
         <Fab
           renderInPortal={false}
@@ -94,9 +89,9 @@ export default App = () => {
           icon={<Icon color="white" as={Feather} name="plus" size="md" />}
           onPress={() => setShowModal(true)}
         />
-      </Box>
-      {/* <Calculator transaction={new Transaction('500', 'User')} /> */}
-      <CreateJournalView showModal={showModal} setShowModal={setShowModal} />
+      </Box> */}
+      <Calculator transaction={new Transaction('500', 'User')} />
+      {/* <CreateJournalView showModal={showModal} setShowModal={setShowModal} /> */}
     </NativeBaseProvider>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import Transaction from '../transaction';
+import {windowWidth} from '../../App';
 import {bgColors, fgColors} from '../../App';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -14,19 +15,24 @@ import {
   Spinner,
 } from 'native-base';
 
-export const TransactionListView = ({colorIndex = 6, initialTransaction}) => {
+const TransactionListView = ({
+  maxWidth = '150',
+  colorIndex = 3,
+  initialTransaction,
+}) => {
   const [transaction, setTransaction] = useState(initialTransaction);
   const [showModal, setShowModal] = useState(false);
   return (
     <Center
+      my="-0.7"
       paddingTop={3}
       paddingLeft={6}
       paddingBottom={0}
       borderRadius={'md'}
       bg={fgColors[colorIndex]}
       flex="1"
-      maxW={'150'}
-      maxH={'20'}>
+      width="120"
+      height="20">
       <Box
         flexDirection="row"
         justifyContent="center"
@@ -73,6 +79,4 @@ export const TransactionListView = ({colorIndex = 6, initialTransaction}) => {
   );
 };
 
-export const TransactionDetailView = ({transaction, setTransaction = null}) => {
-  return <Center></Center>;
-};
+export default TransactionListView;

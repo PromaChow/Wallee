@@ -1,11 +1,22 @@
-import Transaction from './src/transaction';
-import Journal from './src/transaction';
-import JournalView from './src/components/JournalView';
+import Transaction from './transaction';
+import Journal, {IncomeJournal, ExpenseJournal} from './journal';
 
-const Journalist = [new Journal()];
+const listOfJournals = [new IncomeJournal()];
 
-Journalist[0].addTransaction(new Transaction('500', 'User'));
-Journalist[0].addTransaction(new Transaction('200', 'User'));
-Journalist[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('500', 'User'));
+listOfJournals[0].addTransaction(new Transaction('200', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
+listOfJournals[0].addTransaction(new Transaction('9847', 'User'));
 
-export default Journalist;
+console.log(listOfJournals[0].listOfTransactions);
+
+export default listOfJournals;

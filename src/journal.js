@@ -1,16 +1,38 @@
 import Transaction from './transaction';
 
-class Journal {
+export class Journal {
   listOfTransactions = [];
-  originator;
+  contribution;
+  creator;
+  timeOfCreation;
+  dateOfCreation;
+  lastAccessTime;
+
+  constructor(creator = 'User') {
+    this.contribution = 0;
+    this.creator = creator;
+    this.timeOfCreation =
+      new Date().toTimeString().slice(0, 9) + new Date().toDateString();
+    this.lastAccessTime = this.timeOfCreation;
+  }
 
   addTransaction(transaction) {
     this.listOfTransactions.push(transaction);
   }
 }
 
-class IncomeJournal extends Journal {}
+export class IncomeJournal extends Journal {
+  constructor() {
+    super();
+  }
 
-class ExpenseJournal extends Journal {}
+  contribute() {}
+}
 
-export {IncomeJournal, ExpenseJournal};
+export class ExpenseJournal extends Journal {
+  constructor() {
+    super();
+  }
+
+  contribute() {}
+}

@@ -1,11 +1,11 @@
-import Transaction from "./transaction";
+import Transaction from './transaction';
 
 class Journal {
   listOfTransactions = [];
   originator;
 
   addTransaction(transaction) {
-    this.listOfTransactions.push(transaction):
+    this.listOfTransactions.push(transaction);
   }
 }
 

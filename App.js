@@ -20,6 +20,10 @@ import {
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {Dimensions} from 'react-native';
+
+export const windowWidth = Dimensions.get('window').width;
+export const windowHeight = Dimensions.get('window').height;
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -56,8 +60,8 @@ export default App = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <NativeBaseProvider>
-      <Box bg="gray.400" flex={1}>
-        <Box>
+      {/* <Box bg="gray.400" flex={1}>
+      <Box width={windowWidth}>
           <Icon
             mt="2"
             ml="2"
@@ -90,7 +94,8 @@ export default App = () => {
           size="md"
           icon={<Icon color="white" as={Feather} name="plus" size="md" />}
         />
-      </Box>
+      </Box> */}
+      <Calculator transaction={new Transaction('500', 'User')} />
     </NativeBaseProvider>
   );
 };

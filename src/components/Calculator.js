@@ -150,6 +150,8 @@ KeyPad = React.memo(KeyPad);
 
 const Calculator = ({transaction}) => {
   const evaluationCallback = useCallback(expression => {
+    console.log('callback created');
+
     if (expression === '') return '0';
 
     if (['+', '-', '*', '/', '.'].includes(expression[expression.length - 1]))
@@ -159,7 +161,6 @@ const Calculator = ({transaction}) => {
     const result = evaluator().toString();
 
     if (result === 'NaN') return '0';
-
     return result;
   }, []);
 
@@ -169,7 +170,6 @@ const Calculator = ({transaction}) => {
   useEffect(() => {
     return () => {
       transaction.amount = currentExpression;
-      console.log(transaction.amount);
     };
   }, []);
 
@@ -215,8 +215,7 @@ const Calculator = ({transaction}) => {
               py: '1',
               pr: '5',
               fontSize: '2xl',
-              color: `${keypadOpen ? 'danger.500' : 'white'}`,
-              fontWeight: `${keypadOpen ? 'semibold' : 'normal'}`,
+              color: 'white',
             }}>
             {keypadOpen ? 'Editing' : 'Details'}
           </Box>

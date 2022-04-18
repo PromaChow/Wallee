@@ -3,6 +3,7 @@ import {
   TransactionDetailView,
 } from './src/components/TransactionView';
 import React, {useState} from 'react';
+import CreateJournalView from './src/components/CreateJournalView';
 import {
   NativeBaseProvider,
   ScrollView,
@@ -54,14 +55,12 @@ colorValues.forEach(number => {
   });
 });
 
-//*********** Test ********
-
 export default App = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <NativeBaseProvider>
-      {/* <Box bg="gray.400" flex={1}>
-      <Box width={windowWidth}>
+      <Box bg="gray.400" flex={1}>
+        <Box width={windowWidth}>
           <Icon
             mt="2"
             ml="2"
@@ -93,9 +92,11 @@ export default App = () => {
           shadow={2}
           size="md"
           icon={<Icon color="white" as={Feather} name="plus" size="md" />}
+          onPress={() => setShowModal(true)}
         />
-      </Box> */}
-      <Calculator transaction={new Transaction('500', 'User')} />
+      </Box>
+      {/* <Calculator transaction={new Transaction('500', 'User')} /> */}
+      <CreateJournalView showModal={showModal} setShowModal={setShowModal} />
     </NativeBaseProvider>
   );
 };

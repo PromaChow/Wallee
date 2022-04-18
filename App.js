@@ -55,7 +55,7 @@ export default App = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <NativeBaseProvider>
-      {/* <Box bg="gray.400" flex={1}>
+      <Box bg="gray.400" flex={1}>
         <Box width={windowWidth}>
           <Icon
             mt="2"
@@ -77,7 +77,7 @@ export default App = () => {
           </Center>
         </Box>
         <ScrollView horizontal={true} flex="10" bg="teal.100">
-          <JournalView colorIndex={1} />
+          <JournalView colorIndex={6} />
           <JournalView colorIndex={3} />
           <JournalView colorIndex={4} />
           <JournalView colorIndex={5} />
@@ -89,8 +89,8 @@ export default App = () => {
           icon={<Icon color="white" as={Feather} name="plus" size="md" />}
           onPress={() => setShowModal(true)}
         />
-      </Box> */}
-      <Calculator transaction={new Transaction('500', 'User')} />
+      </Box>
+      {/* <Calculator transaction={new Transaction('500', 'User')} /> */}
       {/* <CreateJournalView showModal={showModal} setShowModal={setShowModal} /> */}
     </NativeBaseProvider>
   );

@@ -1,6 +1,6 @@
 import {Journal, IncomeJournal, ExpenseJournal} from '../journal';
 import TransactionListView from './TransactionView';
-import {windowWidth} from '../../App';
+import {windowHeight} from '../../App';
 import listOfJournals from '../userSpace';
 import React from 'react';
 import {
@@ -18,30 +18,32 @@ import {
 } from 'native-base';
 import {bgColors} from '../../App';
 
-let journalWidth = windowWidth * 0.4;
-let transactionWidth = journalWidth * 0.85;
-journalWidth = journalWidth.toString();
-transactionWidth = transactionWidth.toString();
-
 let counter = 1;
 
-let JournalView = ({colorIndex}) => {
+let JournalView = ({
+  listOfTransactions = listOfJournals[0].listOfTransactions,
+  colorIndex,
+}) => {
+  const boxHeight = (listOfTransactions.length + 1) * 85;
+
   return (
-    <Box m="1" bg={bgColors[colorIndex]}>
+    <Box
+      m="1"
+      bg={bgColors[colorIndex]}
+      borderRadius="md"
+      height={boxHeight <= windowHeight ? boxHeight.toString() : 'auto'}>
       <Center
         padding={1}
         _text={{
           fontSize: 'lg',
           fontWeight: 'semibold',
+          color: 'white',
         }}>
         Title
       </Center>
-      {/* <Text>Title</Text> */}
       <ScrollView>
-        <VStack space={2} flex="1">
-          {listOfJournals[0].listOfTransactions.map(transaction => {
-            console.log(transaction);
-
+        <VStack space={2} width="130" alignItems="center">
+          {listOfTransactions.map(transaction => {
             return (
               <TransactionListView
                 key={++counter}

@@ -26,55 +26,55 @@ const TransactionListView = ({
     <Center
       my="-0.7"
       paddingTop={3}
-      paddingLeft={6}
-      paddingBottom={0}
+      paddingBottom={3}
+      paddingLeft={3}
       borderRadius={'md'}
       bg={fgColors[colorIndex]}
       flex="1"
-      width="120"
-      height="20">
-      <Box
+      width="115"
+      height="85">
+      <Center
         flexDirection="row"
         justifyContent="center"
         paddingBottom={0}
-        m={0}
+        mb={2}
         flex="1">
-        <Box flex="1" m={0}>
+        <Center flex="1" m={0}>
           <Icon as={Feather} name="dollar-sign" size="sm" color="light.300" />
-        </Box>
-        <Box
+        </Center>
+        <Center
           m={0}
           _text={{
             color: 'light.200',
-            fontSize: 'lg',
+            fontSize: `${transaction.amount < 999999 ? 'xl' : 'lg'}`,
             fontWeight: 'bold',
           }}
           flexDirection={'column'}
-          flex="2">
+          flex="3">
           {transaction.amount}
-        </Box>
-      </Box>
+        </Center>
+      </Center>
 
-      <Box
+      <Center
         flexDirection="row"
         justifyContent="center"
         paddingBottom={0}
         m={0}
         flex="1">
-        <Box flex="1" m={0}>
+        <Center flex="1" m={0}>
           <Icon as={Feather} name="clock" size="sm" color="light.300" />
-        </Box>
-        <Box
+        </Center>
+        <Center
           m={0}
           _text={{
             color: 'light.200',
             fontSize: 'lg',
           }}
           flexDirection={'column'}
-          flex="2">
+          flex="3">
           {transaction.timeOfCreation.slice(0, 5)}
-        </Box>
-      </Box>
+        </Center>
+      </Center>
     </Center>
   );
 };

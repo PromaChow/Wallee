@@ -22,4 +22,4 @@ class ImgProcessing:
     def deskew(image):
         with Image(filename=image) as im:
             im.deskew(0.4*im.quantum_range)
-            im.save(filename=str)
+            im.save(filename=image)

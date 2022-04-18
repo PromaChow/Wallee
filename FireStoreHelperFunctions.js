@@ -4,7 +4,6 @@ import storage from '@react-native-firebase/storage';
 
 
 const ifExist = (uid, b) => {
-    console.log("hek");
     firestore()
         .collection('Users')
         .doc(uid)

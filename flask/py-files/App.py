@@ -24,40 +24,37 @@ cors = CORS(app)
 #     return img
 def hello_world():
     str = "rec.jpg"
-    # if(request.method == "POST"):
-    #     print("accepted")
-    #     bytesOfimage = request.get_json()
-    #     print(type(bytesOfimage['image']), file=sys.stderr)
-    #     with open(str, "wb") as fh:
-    #         fh.write(base64.b64decode(bytesOfimage['image']))
+    if(request.method == "POST"):
+        print("accepted")
+        bytesOfimage = request.get_json()
+        print(type(bytesOfimage['image']), file=sys.stderr)
+        with open(str, "wb") as fh:
+            fh.write(base64.b64decode(bytesOfimage['image']))
 
     obj = imageProcessing.ImgProcessing
-    # obj.deskew(str)
+    obj.deskew(str)
+
     im = cv2.imread(str)
+
+   # im = cv2.resize(im, (32, 32), interpolation=cv2.INTER_AREA)
+    alpha = 1  
+    beta = 0  
+
     im = obj.grayScaling(im)
-    im = obj.threshold(im)
+    im = cv2.convertScaleAbs(im, alpha=alpha, beta=beta)
 
-    cv2.imwrite("img.png", im)
-    # im = cv2.imread(str)
+    kernel = np.array([[0, -1, 0],
+                       [-1, 5, -1],
+                       [0, -1, 0]])
+    image_sharp = cv2.filter2D(src=im, ddepth=-1, kernel=kernel)
 
-    # im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-    # im = cv2.fastNlMeansDenoising(im)
-    # im = cv2.threshold(im, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    cv2.imwrite("img.png", image_sharp)
 
-    # with Image(filename=str) as im:
-    #     im.deskew(0.4*im.quantum_range)
-    #     im.save(filename=str)
-    # im = cv2.imread(str)
+    print(pytesseract.image_to_string(im))
 
-    print("hello"+pytesseract.image_to_string(im))
-    # reader = easyocr.Reader(['en'])
-    # result = reader.readtext(im, detail=0)
-    # print(result)
-    # with open('image.jpeg', 'wb') as out:
-    #     out.write(bytesOfimage)
     return "<p>Hello, World!</p>"
 
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host="192.168.78.104", port=5000)
+    app.run(host="192.168.78.104", port=4000)

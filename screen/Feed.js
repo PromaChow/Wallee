@@ -60,7 +60,7 @@ export const Feed=() => {
 
 
 
-          <Button title = {user.uid}></Button>
+  
 
           <Button title = "recognize Text" onPress={async () => {
           let uri = await launchCamera();
@@ -68,7 +68,7 @@ export const Feed=() => {
           ImgToBase64.getBase64String(uri)
           .then((base64String)=> {
            console.log("BASE64"+base64String);
-          fetch('http://192.168.171.104:4000/image', {
+          fetch('http://192.168.78.104:4000/image', {
           method: 'POST',
           headers: {
           Accept: 'application/json',
@@ -92,10 +92,10 @@ export const Feed=() => {
         }
           ></Button>
 
-          <Button title ="Send notifications" onPress={}>
+         
 
 
-          </Button>
+          
     </SafeAreaView>
   );
 }

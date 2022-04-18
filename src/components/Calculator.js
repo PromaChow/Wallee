@@ -1,4 +1,4 @@
-import React, {memo, useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   Pressable,
   Text,
@@ -16,6 +16,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {windowHeight, windowWidth} from '../../App';
 
 const NumButton = ({renderSymbol, appendSymbol}) => {
+  console.log(`Re-Rendered ${renderSymbol}`);
   return (
     <Button
       variant="ghost"
@@ -41,7 +42,7 @@ const OperatorButton = ({renderSymbol, appendSymbol}) => {
       onPress={() =>
         appendSymbol(previousExpression => {
           if (
-            !['+', '-', '*', '/'].includes(
+            !['+', '-', '*', '/', '.'].includes(
               previousExpression[previousExpression.length - 1],
             )
           )
@@ -55,28 +56,14 @@ const OperatorButton = ({renderSymbol, appendSymbol}) => {
 };
 
 // const evalButton
-const EvalButton = ({evaluateExpression}) => {
+const EvalButton = ({evaluateExpression, evaluationCallback}) => {
   return (
     <Button
       variant="ghost"
       borderRadius="none"
       flex="1"
       _text={{fontSize: '4xl', fontWeight: 'medium', color: 'gray.500'}}
-      onPress={() =>
-        evaluateExpression(expression => {
-          if (expression === '') return '0';
-
-          if (['+', '-', '*', '/'].includes(expression[expression.length - 1]))
-            expression = expression.slice(0, -1);
-
-          const evaluator = new Function(`return ${expression};`);
-          const result = evaluator().toString();
-
-          if (result === 'NaN') return '0';
-
-          return result;
-        })
-      }>
+      onPress={() => evaluateExpression(evaluationCallback)}>
       =
     </Button>
   );
@@ -101,14 +88,18 @@ const BackspaceButton = ({deleteLastSymbol}) => {
   );
 };
 
-let KeyPad = ({setExpression}) => (
+let KeyPad = ({setExpression, evaluationCallback}) => (
   <Box flex="3" flexDirection="row" height="100%">
     <HStack flex="3" flexDirection="row" bg="info.100">
       <VStack flex="1">
         <NumButton key={'7'} renderSymbol={'7'} appendSymbol={setExpression} />
         <NumButton key={'4'} renderSymbol={'4'} appendSymbol={setExpression} />
         <NumButton key={'1'} renderSymbol={'1'} appendSymbol={setExpression} />
-        <NumButton key={'.'} renderSymbol={'.'} appendSymbol={setExpression} />
+        <OperatorButton
+          key={'.'}
+          renderSymbol={'.'}
+          appendSymbol={setExpression}
+        />
       </VStack>
       <VStack space="1" flex="1">
         <NumButton key={'8'} renderSymbol={'8'} appendSymbol={setExpression} />
@@ -145,7 +136,11 @@ let KeyPad = ({setExpression}) => (
           renderSymbol={'+'}
           appendSymbol={setExpression}
         />
-        <EvalButton key={'='} evaluateExpression={setExpression} />
+        <EvalButton
+          key={'='}
+          evaluateExpression={setExpression}
+          evaluationCallback={evaluationCallback}
+        />
       </VStack>
     </HStack>
   </Box>
@@ -154,6 +149,20 @@ let KeyPad = ({setExpression}) => (
 KeyPad = React.memo(KeyPad);
 
 const Calculator = ({transaction}) => {
+  const evaluationCallback = useCallback(expression => {
+    if (expression === '') return '0';
+
+    if (['+', '-', '*', '/', '.'].includes(expression[expression.length - 1]))
+      expression = expression.slice(0, -1);
+
+    const evaluator = new Function(`return ${expression};`);
+    const result = evaluator().toString();
+
+    if (result === 'NaN') return '0';
+
+    return result;
+  }, []);
+
   const [currentExpression, setExpression] = useState(transaction.amount);
   const [keypadOpen, setKeyPadOpen] = useState(false);
 
@@ -181,7 +190,7 @@ const Calculator = ({transaction}) => {
             space={4}>
             <Button
               onPress={() => {
-                if (keypadOpen && currentExpression === '') setExpression('0');
+                setExpression(evaluationCallback(currentExpression));
                 setKeyPadOpen(!keypadOpen);
               }}
               _text={{
@@ -252,7 +261,12 @@ const Calculator = ({transaction}) => {
         </Box>
       </Center>
       <Box flex="1" bg="white">
-        {keypadOpen && <KeyPad setExpression={setExpression} />}
+        {keypadOpen && (
+          <KeyPad
+            setExpression={setExpression}
+            evaluationCallback={evaluationCallback}
+          />
+        )}
       </Box>
     </>
   );

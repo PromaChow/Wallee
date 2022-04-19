@@ -3,27 +3,6 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
 
-const ifExist = (uid, b) => {
-    firestore()
-        .collection('Users')
-        .doc(uid)
-        .get()
-        .then(documentSnapshot => {
-            if (documentSnapshot.exists) {
-                console.log("hi");
-                b = true;
-                return true;
-            }
-            else {
-                b = false;
-                return false;
-            }
-
-        }
-        );
-
-}
-
 
 const add_User = (uid) => {
     console.log(uid);
@@ -117,4 +96,4 @@ const addToStorage = async (uid, uri) => {
 
 
 }
-export { ifExist, add_User, retrieve_data, update_doc, addToStorage };
+export { add_User, retrieve_data, update_doc, addToStorage };

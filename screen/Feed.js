@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
 import firebase from "@react-native-firebase/app";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { addToStorage } from "../FireStoreHelperFunctions";
+import { addToStorage, retrieve_data } from "../FireStoreHelperFunctions";
 import { recognizeImage } from "../mlkit";
 import ImgToBase64 from 'react-native-image-base64';
 import notifee from '@notifee/react-native';
@@ -59,9 +59,6 @@ export const Feed=() => {
                </Button>
 
 
-
-  
-
           <Button title = "recognize Text" onPress={async () => {
           let uri = await launchCamera();
           console.log(uri);
@@ -91,9 +88,6 @@ export const Feed=() => {
           }
         }
           ></Button>
-
-         
-
 
           
     </SafeAreaView>

@@ -17,11 +17,6 @@ cors = CORS(app)
 
 
 @app.route("/image", methods=['GET', 'POST'])
-# def process_image(path):
-#     img = cv2.imread(path)
-#     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-#     img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-#     return img
 def hello_world():
     str = "rec.jpg"
     if(request.method == "POST"):
@@ -35,22 +30,14 @@ def hello_world():
     obj.deskew(str)
 
     im = cv2.imread(str)
-
-   # im = cv2.resize(im, (32, 32), interpolation=cv2.INTER_AREA)
-    alpha = 1  
-    beta = 0  
-
+    im = obj.increase_contrast(im)
     im = obj.grayScaling(im)
-    im = cv2.convertScaleAbs(im, alpha=alpha, beta=beta)
+    im = obj.threshold(im)
+    im = obj.sharpen(im)
 
-    kernel = np.array([[0, -1, 0],
-                       [-1, 5, -1],
-                       [0, -1, 0]])
-    image_sharp = cv2.filter2D(src=im, ddepth=-1, kernel=kernel)
+    cv2.imwrite("img.png", im)
 
-    cv2.imwrite("img.png", image_sharp)
-
-    print(pytesseract.image_to_string(im))
+    print("\n\n"+pytesseract.image_to_string(im))
 
     return "<p>Hello, World!</p>"
 

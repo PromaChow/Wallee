@@ -78,7 +78,7 @@ export default App = () => {
               fontSize: '2xl',
               color: 'white',
             }}>
-            Journal
+            Journals
           </Center>
         </Box>
         <ScrollView horizontal={true} flex="10" bg="teal.100">

@@ -1,6 +1,7 @@
 import Transaction from './transaction';
 
 export class Journal {
+  title;
   listOfTransactions = [];
   contribution;
   creator;
@@ -8,7 +9,8 @@ export class Journal {
   dateOfCreation;
   lastAccessTime;
 
-  constructor(creator = 'User') {
+  constructor(title, creator = 'User') {
+    this.title = title;
     this.contribution = 0;
     this.creator = creator;
     this.timeOfCreation =

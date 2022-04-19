@@ -29,8 +29,9 @@ export const windowHeight = Dimensions.get('window').height;
 import Calculator from './src/components/Calculator';
 import JournalView from './src/components/JournalView';
 import Transaction from './src/transaction';
+import listOfJournals from './src/userSpace';
 
-const colorNames = [
+export const colorNames = [
   'secondary',
   'danger',
   'info',
@@ -50,6 +51,10 @@ colorValues.forEach(number => {
     fgColors.push(`${name}.${number + 100}`);
   });
 });
+
+export const getRandomColor = () =>
+  Math.floor(Math.random() * colorNames.length);
+export const journalKeyMemo = {};
 
 export default App = () => {
   const [showModal, setShowModal] = useState(false);
@@ -73,14 +78,19 @@ export default App = () => {
               fontSize: '2xl',
               color: 'white',
             }}>
-            Journals
+            Journal
           </Center>
         </Box>
         <ScrollView horizontal={true} flex="10" bg="teal.100">
-          <JournalView colorIndex={6} />
-          <JournalView colorIndex={3} />
-          <JournalView colorIndex={4} />
-          <JournalView colorIndex={5} />
+          {Object.keys(journalKeyMemo).map(key => {
+            return (
+              <JournalView
+                key={key}
+                title={key}
+                colorIndex={journalKeyMemo[key]}
+              />
+            );
+          })}
         </ScrollView>
         <Fab
           renderInPortal={false}
@@ -91,7 +101,7 @@ export default App = () => {
         />
       </Box>
       {/* <Calculator transaction={new Transaction('500', 'User')} /> */}
-      {/* <CreateJournalView showModal={showModal} setShowModal={setShowModal} /> */}
+      <CreateJournalView showModal={showModal} setShowModal={setShowModal} />
     </NativeBaseProvider>
   );
 };

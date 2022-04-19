@@ -10,16 +10,16 @@ import {
   Icon,
   Center,
 } from 'native-base';
-import {IncomeJournal, ExpenseJournal} from '../journal';
+import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
+import listOfJournals from '../userSpace';
+import {journalKeyMemo, getRandomColor} from '../../App';
 
 const CreateJournalView = ({showModal, setShowModal}) => {
-  // const [showModal, setShowModal] = useState(false);
   const [journalName, setJournalName] = useState('');
   const [journalType, setJournalType] = useState('income');
 
   return (
     <Center>
-      {/* <Button onPress={() => setShowModal(true)}>Button</Button> */}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">
           <Modal.CloseButton />
@@ -62,8 +62,17 @@ const CreateJournalView = ({showModal, setShowModal}) => {
               </Button>
               <Button
                 onPress={() => {
+                  const key = `${journalName}`;
+                  if (!(key in journalKeyMemo)) {
+                    listOfJournals[key] =
+                      journalType === 'income'
+                        ? new IncomeJournal(journalName, 'User')
+                        : new ExpenseJournal(journalName, 'User');
+
+                    journalKeyMemo[key] = getRandomColor();
+                  }
+
                   setShowModal(false);
-                  // Set journal creation logic here
                 }}>
                 Save
               </Button>

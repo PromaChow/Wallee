@@ -8,6 +8,7 @@
 
 import React from 'react';
 import type { Node } from 'react';
+import {useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -16,7 +17,7 @@ import { Profile } from './screen/Profile';
 import { Feed } from './screen/Feed';
 import { OTP } from './screen/OTPScreen';
 import { SignUp } from './screen/SignUp';
-import {ifExist, add_User,retrieve_data,update_doc,} from './FireStoreHelperFunctions';
+import {getUserID,ifExist, add_User,retrieve_data,update_doc,} from './FireStoreHelperFunctions';
 
 import {
   SafeAreaView,
@@ -28,7 +29,8 @@ import {
   View,
   Button,
   TextInput,
-  ProgressBarAndroid
+  ProgressBarAndroid,
+  AppState,
 } from 'react-native';
 
 import {
@@ -72,6 +74,24 @@ const Section = ({ children, title }): Node => {
 };
 const Stack = createNativeStackNavigator();
 const App: () => Node = () => {
+  const [aState, setAppState] = useState(AppState.currentState);
+  useEffect(() => {
+    const appStateListener = AppState.addEventListener(
+      'change',
+      nextAppState => {
+        console.log('Next AppState is: ', nextAppState);
+       if(nextAppState==="background"){
+         var date = Date.now();
+         console.log(date);
+         update_doc(getUserID(),'lastAccessedDate', date);
+       }
+        setAppState(nextAppState);
+      },
+    );
+    return () => {
+      appStateListener?.remove();
+    };
+  }, []);
   let str = 'pr';
   return (
 

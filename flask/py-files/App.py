@@ -43,5 +43,5 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(host="192.168.78.104", port=4000)
+
+    app.run(host="https://192.168.78.104", port=4000, debug=True)

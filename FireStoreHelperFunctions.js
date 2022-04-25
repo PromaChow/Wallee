@@ -1,9 +1,14 @@
 import React from 'react';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import auth from "@react-native-firebase/auth";
+import firebase from "@react-native-firebase/app";
 
-
-
+const getUserID = () =>{
+   const user = firebase.auth().currentUser;
+   console.log(user.uid);
+   return user.uid;
+}
 const add_User = (uid) => {
     console.log(uid);
     firestore()
@@ -46,6 +51,7 @@ const update_doc = async (uid, key, value) => {
 
 const retrieve_data = async (uid) => {
     //console.log("hi");
+    const user = new Promise((resolve, reject)=>{
     firestore()
         .collection('Users')
         .doc(uid)
@@ -54,9 +60,12 @@ const retrieve_data = async (uid) => {
             console.log('User exists: ', documentSnapshot.exists);
 
             if (documentSnapshot.exists) {
-                console.log('User data: ', documentSnapshot.data());
+                //console.log('User data: ', documentSnapshot.data());
+                resolve(documentSnapshot.data());
             }
         });
+    });
+    return await user;
 
 
 }
@@ -96,4 +105,4 @@ const addToStorage = async (uid, uri) => {
 
 
 }
-export { add_User, retrieve_data, update_doc, addToStorage };
+export {getUserID, add_User, retrieve_data, update_doc, addToStorage };

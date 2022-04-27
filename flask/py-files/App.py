@@ -10,10 +10,10 @@ import numpy as np
 import cv2
 from wand.image import Image
 import imageProcessing
-import easyocr
+
 
 app = Flask(__name__)
-cors = CORS(app)
+cors = CORS(app, supports_credentials=True)
 
 
 @app.route("/image", methods=['GET', 'POST'])
@@ -44,4 +44,4 @@ def hello_world():
 
 if __name__ == '__main__':
 
-    app.run(host="https://192.168.78.104", port=4000, debug=True)
+    app.run(host='192.168.86.104', port=4000, debug=True)

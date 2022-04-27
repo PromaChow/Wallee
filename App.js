@@ -74,24 +74,7 @@ const Section = ({ children, title }): Node => {
 };
 const Stack = createNativeStackNavigator();
 const App: () => Node = () => {
-  const [aState, setAppState] = useState(AppState.currentState);
-  useEffect(() => {
-    const appStateListener = AppState.addEventListener(
-      'change',
-      nextAppState => {
-        console.log('Next AppState is: ', nextAppState);
-       if(nextAppState==="background"){
-         var date = Date.now();
-         console.log(date);
-         update_doc(getUserID(),'lastAccessedDate', date);
-       }
-        setAppState(nextAppState);
-      },
-    );
-    return () => {
-      appStateListener?.remove();
-    };
-  }, []);
+  
   let str = 'pr';
   return (
 

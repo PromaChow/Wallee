@@ -141,7 +141,7 @@ export const Feed = () => {
           ImgToBase64.getBase64String(uri)
             .then(base64String => {
               //console.log('BASE64' + base64String);
-              fetch('http://192.168.86.104:4000/image', {
+              fetch('http://192.168.34.104:8080/image', {
                 method: 'POST',
                 headers: {
                   Accept: 'application/json',

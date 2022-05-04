@@ -79,6 +79,30 @@ const getSMS = async () => {
   }
 };
 
+const post = async uri => {
+  const fetchData = new Promise((resolve, reject) => {
+    // console.log(uri);
+    ImgToBase64.getBase64String(uri).then(base64String => {
+      fetch('http://192.168.34.104:8080/image', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          image: base64String,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('data' + data['value']);
+          resolve(data);
+        });
+    });
+  });
+  return fetchData;
+};
+
 // var tesseract = require('../tesseract');
 // console.log(tesseract);
 export const Feed = () => {
@@ -137,27 +161,9 @@ export const Feed = () => {
         title="Recognize Image"
         onPress={async () => {
           let uri = await launchImageLibrary();
-          // console.log(uri);
-          ImgToBase64.getBase64String(uri)
-            .then(base64String => {
-              //console.log('BASE64' + base64String);
-              fetch('http://192.168.34.104:8080/image', {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  image: base64String,
-                }),
-              })
-                .then(response => {
-                  console.log('response' + response.status);
-                })
-                .then(data => console.log(data));
-            })
-            .catch(err => console.log('error' + err));
-
+          let fetchData = await post(uri);
+          console.log('fetch');
+          console.log(fetchData);
           // addToStorage(user.uid, uri);
         }}></Button>
 

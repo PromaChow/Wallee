@@ -4,7 +4,6 @@ from flask_cors import CORS, cross_origin
 import sys
 from flask import jsonify
 import base64
-#from PIL import Image
 import pytesseract
 import numpy as np
 import cv2
@@ -21,6 +20,7 @@ from PIL import Image
 from tqdm import tqdm
 from IPython.display import display
 import matplotlib
+import re
 from matplotlib import pyplot, patches
 
 
@@ -105,9 +105,6 @@ def hello_world():
             fh.write(base64.b64decode(bytesOfimage['image']))
 
     im = cv2.imread(str)
-
-    cv2.imwrite("img.png", im)
-
     print("\n\n"+pytesseract.image_to_string(im))
 
     image, words, boxes, actual_boxes = preprocess(str)
@@ -116,6 +113,18 @@ def hello_world():
     write_dataset(dataset_directory, words, boxes, actual_boxes, image, str)
 
     os.system("sh /home/proma/Desktop/shell.sh")
+
+    pattern = re.compile("(.*)(S-ADDRESS)")
+    temp = ''
+    for i, line in enumerate(open('/home/proma/Desktop/Kaggle/kaggle/working/unilm/layoutlm/deprecated/examples/seq_labeling/output/test_predictions.txt')):
+        match = re.search(pattern, line)
+        if match:
+            print('Found on line %s: %s' % (i+1, match.group(0)))
+            strr = match.group(0)
+            temp += strr.split(' ', 1)[0]+' '
+
+    print(temp)
+    return jsonify({"address": temp})
 
     return "<p>Hello, World!</p>"
 

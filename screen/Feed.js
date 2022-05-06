@@ -8,6 +8,7 @@ import notifee from '@notifee/react-native';
 import {AndroidColor} from '@notifee/react-native';
 import SmsAndroid from 'react-native-get-sms-android';
 import {PermissionsAndroid} from 'react-native';
+import {ChangePhoneNumber} from './ChangePhoneNumber';
 import {
   getUserID,
   ifExist,
@@ -15,7 +16,6 @@ import {
   retrieve_data,
   update_doc,
 } from '../FireStoreHelperFunctions';
-import {jsonToCSV} from 'react-native-csv';
 
 import {launchImageLibrary, launchCamera} from '../imageHandlerFunctions';
 import {
@@ -194,6 +194,12 @@ export const Feed = () => {
           } else {
             console.log('Camera permission denied');
           }
+        }}></Button>
+
+      <Button
+        title="Change Phone Number"
+        onPress={async () => {
+          navigation.navigate('ChangePhoneNumber');
         }}></Button>
     </SafeAreaView>
   );

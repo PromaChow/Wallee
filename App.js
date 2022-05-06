@@ -7,17 +7,24 @@
  */
 
 import React from 'react';
-import type { Node } from 'react';
+import type {Node} from 'react';
 import {useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeScreen } from './screen/HomeScreen';
-import { Profile } from './screen/Profile';
-import { Feed } from './screen/Feed';
-import { OTP } from './screen/OTPScreen';
-import { SignUp } from './screen/SignUp';
-import {getUserID,ifExist, add_User,retrieve_data,update_doc,} from './FireStoreHelperFunctions';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {HomeScreen} from './screen/HomeScreen';
+import {Profile} from './screen/Profile';
+import {Feed} from './screen/Feed';
+import {OTP} from './screen/OTPScreen';
+import {ChangePhoneNumber} from './screen/ChangePhoneNumber';
+import {SignUp} from './screen/SignUp';
+import {
+  getUserID,
+  ifExist,
+  add_User,
+  retrieve_data,
+  update_doc,
+} from './FireStoreHelperFunctions';
 
 import {
   SafeAreaView,
@@ -41,13 +48,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-
-
-
-
-
-
-const Section = ({ children, title }): Node => {
+const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -74,49 +75,44 @@ const Section = ({ children, title }): Node => {
 };
 const Stack = createNativeStackNavigator();
 const App: () => Node = () => {
-  
   let str = 'pr';
   return (
-
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Welcome' }}
+          options={{title: 'Welcome'}}
         />
         <Stack.Screen
           name="Profile"
           component={Profile}
-          options={{ title: 'Welcome' }}
+          options={{title: 'Welcome'}}
         />
         <Stack.Screen
           name="Feed"
           component={Feed}
-          options={{ title: 'Welcome' }}
+          options={{title: 'Welcome'}}
         />
 
-
-        <Stack.Screen
-          name="OTP"
-          component={OTP}
-          options={{ title: 'Welcome' }}
-        />
+        <Stack.Screen name="OTP" component={OTP} options={{title: 'Welcome'}} />
 
         <Stack.Screen
           name="SignUp"
           component={SignUp}
-          options={{ title: 'Welcome' }}
+          options={{title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="ChangePhoneNumber"
+          component={ChangePhoneNumber}
+          options={{title: 'Welcome'}}
         />
         {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
-  
-
   );
-
-}
-
+};
 
 const styles = StyleSheet.create({
   sectionContainer: {

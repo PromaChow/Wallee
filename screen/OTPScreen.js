@@ -28,6 +28,14 @@ import {
 } from 'react-native';
 
 export const OTP = ({route, navigation}) => {
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        navigation.navigate('Feed');
+      }
+    });
+  }, []);
+
   const [code, setCode] = React.useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const {phoneNumber} = route.params;

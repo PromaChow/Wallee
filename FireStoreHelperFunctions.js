@@ -6,7 +6,8 @@ import firebase from '@react-native-firebase/app';
 
 const getUserID = () => {
   const user = firebase.auth().currentUser;
-  return user.uid;
+  if (user) return user.uid;
+  else return null;
 };
 
 const add_User = uid => {

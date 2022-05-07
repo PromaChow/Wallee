@@ -6,6 +6,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {signInWithPhoneNumber} from '../Authentication';
 import PhoneInput from 'react-native-phone-number-input';
 import Icon from 'react-native-vector-icons/Feather';
+import Modal from 'react-native-modal';
 import {
   SafeAreaView,
   ScrollView,
@@ -26,11 +27,66 @@ export const SignUp = () => {
   const [valid, setValid] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   const [user, setUser] = React.useState();
   const [initializing, setInitializing] = useState(true);
   console.log(formattedValue);
   return (
     <SafeAreaView style={styles.content}>
+      <Modal
+        transparent={true}
+        isVisible={isModalVisible}
+        onBackdropPress={() => setModalVisible(false)}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              width: 300,
+              height: 300,
+              backgroundColor: '#7d061a',
+              opacity: 0.6,
+              justifyContent: 'center',
+              borderRadius: 15,
+            }}>
+            <Icon
+              name="frown"
+              color="#FFFFFF"
+              size={90}
+              style={{opacity: 1, alignSelf: 'center'}}></Icon>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                alignSelf: 'center',
+
+                fontFamily: 'fantasy',
+                fontSize: 20,
+              }}>
+              Sorry
+            </Text>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                alignSelf: 'center',
+                margin: 20,
+                marginTop: 40,
+                fontFamily: 'fantasy',
+              }}>
+              Seems like the phone number you've provided is invalid. Please
+              provide a valid phone number.
+            </Text>
+          </View>
+        </View>
+      </Modal>
+
       <View style={{height: 200}}>
         <Icon
           name="key"
@@ -91,11 +147,16 @@ export const SignUp = () => {
         <TouchableOpacity
           style={styles.appButtonContainer}
           onPress={async () => {
-            await signInWithPhoneNumber(formattedValue).then(() => {
-              navigation.navigate('OTP', {
-                phone: phoneNumber,
+            const regex = /(^(\+88|0088)?(01){1}[23456789]{1}(\d){8})$/;
+            if (regex.test(formattedValue)) {
+              await signInWithPhoneNumber(formattedValue).then(() => {
+                navigation.navigate('OTP', {
+                  phone: phoneNumber,
+                });
               });
-            });
+            } else {
+              toggleModal(!isModalVisible);
+            }
           }}>
           <Text style={styles.appButtonText}>Proceed</Text>
         </TouchableOpacity>

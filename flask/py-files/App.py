@@ -22,6 +22,7 @@ from IPython.display import display
 import matplotlib
 import re
 from matplotlib import pyplot, patches
+import smsProcess
 
 
 app = Flask(__name__)
@@ -129,6 +130,15 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
+@app.route("/msg", methods=['GET', 'POST'])
+def bye_world():
+    if(request.method == "POST"):
+        print("accepted")
+        sms = request.get_json()
+        print(smsProcess.getInfo(sms['sms']))
+    return "<p>Hello, World!</p>"
+
+
 if __name__ == '__main__':
 
-    app.run(host='192.168.34.104', port=8080, debug=True)
+    app.run(host='192.168.237.104', port=8080, debug=True)

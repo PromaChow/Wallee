@@ -27,6 +27,9 @@ const add_User = uid => {
             name: '',
             currency: null,
             primaryAmount: 0.0,
+            lastAccessedDate: 1041379200000,
+            profilePhoto: '',
+            email: '',
           })
           .then(() => {
             console.log('User added!');

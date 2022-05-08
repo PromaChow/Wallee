@@ -20,6 +20,7 @@ import {ChangePhoneNumber} from './screen/ChangePhoneNumber';
 import {SignUp} from './screen/SignUp';
 import {Profile_two} from './screen/Profile_two';
 import {CurrencyList} from './screen/CurrencyList';
+import {UserProfile} from './screen/UserProfile';
 import {
   getUserID,
   ifExist,
@@ -115,6 +116,11 @@ const App: () => Node = () => {
         <Stack.Screen name="CurrenyList" component={CurrencyList} />
       </Stack.Navigator>
     </NavigationContainer>
+    // <NavigationContainer>
+    //   <Stack.Navigator>
+    //     <Stack.Screen name="UserProfile" component={UserProfile} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 };
 

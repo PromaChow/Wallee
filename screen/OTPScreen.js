@@ -8,7 +8,6 @@ import OTPInputView from '@twotalltotems/react-native-otp-input';
 import AnimatedLinearGradient, {
   presetColors,
 } from 'react-native-animated-linear-gradient';
-import CountDown from 'react-native-countdown-component';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Feather';
 import MaskedView from '@react-native-community/masked-view';
@@ -31,7 +30,18 @@ export const OTP = ({route, navigation}) => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate('Feed');
+        firestore()
+          .collection('Users')
+          .doc(user.uid)
+          .get()
+          .then(documentSnapshot => {
+            let exists = documentSnapshot.exists;
+            console.log(user.uid + ' ' + exists);
+            if (!exists) {
+              add_User(user.uid);
+              navigation.navigate('Profile');
+            } else navigation.navigate('Feed');
+          });
       }
     });
   }, []);

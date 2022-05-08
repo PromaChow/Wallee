@@ -18,6 +18,8 @@ import {Feed} from './screen/Feed';
 import {OTP} from './screen/OTPScreen';
 import {ChangePhoneNumber} from './screen/ChangePhoneNumber';
 import {SignUp} from './screen/SignUp';
+import {Profile_two} from './screen/Profile_two';
+import {CurrencyList} from './screen/CurrencyList';
 import {
   getUserID,
   ifExist,
@@ -109,6 +111,8 @@ const App: () => Node = () => {
           options={{title: 'Welcome'}}
         />
         {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+        <Stack.Screen name="Profile_two" component={Profile_two} />
+        <Stack.Screen name="CurrenyList" component={CurrencyList} />
       </Stack.Navigator>
     </NavigationContainer>
   );

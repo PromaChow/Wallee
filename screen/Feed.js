@@ -105,7 +105,7 @@ const post_sms = async sms => {
         response.text();
       })
       .then(data => {
-        //console.log('data' + data['value']);
+        console.log(data);
         resolve(data);
       });
   });
@@ -149,10 +149,11 @@ export const Feed = () => {
       nextAppState => {
         console.log('Next AppState is: ', nextAppState);
         if (nextAppState === 'background') {
-          getSMS();
+          
           var date = Date.now();
           console.log(date);
           update_doc(getUserID(), 'lastAccessedDate', '1041379200000');
+          getSMS();
         }
         setAppState(nextAppState);
       },

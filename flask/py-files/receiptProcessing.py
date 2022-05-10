@@ -22,11 +22,6 @@ from IPython.display import display
 import matplotlib
 import re
 from matplotlib import pyplot, patches
-import smsProcess
-
-
-app = Flask(__name__)
-cors = CORS(app, supports_credentials=True)
 
 
 def preprocess(image_path):
@@ -95,26 +90,7 @@ def write_dataset(output_dir, words, boxes, actual_boxes, image, filename):
     file_image.write("\n")
 
 
-@app.route("/image", methods=['GET', 'POST'])
-def hello_world():
-    str = "rec.jpg"
-    if(request.method == "POST"):
-        print("accepted")
-        bytesOfimage = request.get_json()
-        print(type(bytesOfimage['image']), file=sys.stderr)
-        with open(str, "wb") as fh:
-            fh.write(base64.b64decode(bytesOfimage['image']))
-
-    im = cv2.imread(str)
-    print("\n\n"+pytesseract.image_to_string(im))
-
-    image, words, boxes, actual_boxes = preprocess(str)
-    dataset_directory = Path(
-        '/home/proma/Desktop/Kaggle/kaggle/working/inference')
-    write_dataset(dataset_directory, words, boxes, actual_boxes, image, str)
-
-    os.system("sh /home/proma/Desktop/shell.sh")
-
+def getAddress():
     pattern = re.compile("(.*)(S-ADDRESS)")
     temp = ''
     for i, line in enumerate(open('/home/proma/Desktop/Kaggle/kaggle/working/unilm/layoutlm/deprecated/examples/seq_labeling/output/test_predictions.txt')):
@@ -124,22 +100,78 @@ def hello_world():
             strr = match.group(0)
             temp += strr.split(' ', 1)[0]+' '
 
-    print(temp)
-    return jsonify({"address": temp})
-
-    return "<p>Hello, World!</p>"
+    return temp
 
 
-@app.route("/msg", methods=['GET', 'POST'])
-def bye_world():
-    if(request.method == "POST"):
-        print("accepted")
-        sms = request.get_json()
+def getAmount():
+    pattern = re.compile("(.*)(S-TOTAL)")
+    temp = ''
+    for i, line in enumerate(open('/home/proma/Desktop/Kaggle/kaggle/working/unilm/layoutlm/deprecated/examples/seq_labeling/output/test_predictions.txt')):
+        match = re.search(pattern, line)
+        if match:
+            print('Found on line %s: %s' % (i+1, match.group(0)))
+            strr = match.group(0)
+            temp += strr.split(' ', 1)[0]+' '
 
-        return jsonify(smsProcess.getInfo(sms['sms']))
-    return "<p>Hello, World!</p>"
+    return temp
 
 
-if __name__ == '__main__':
+def getDate(str):
 
-    app.run(host='192.168.237.104', port=8080, debug=True)
+    reg_date_1 = re.compile(
+        "([0-9]{2}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2,4})(\s*)?|([0-9]{2,4}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2}(\s*)?)")
+    reg_time = re.compile(
+        "(\s*)?(([0-1]?[0-9]|2[0-3])(\s*)?:[0-5][0-9](\s*)?(:[0-5][0-9](\s*))?(p(\s*)?m|a(\s*)?m|P(\s*)?M|A(\s*)?M)?)")
+    reg_date_2 = re.compile(
+        "(((\s*)?([0-9])(\s*)?|(\s*)?([0-2][0-9])(\s*)?|(\s*)?([3][0-1])(\s*)?)(\s*)?(\-|\s)(\s*)?(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\s*)?(\-|\s)?(\s*)?(\d{2,4})?(\s*)?)(\s*)?|((\s*)?(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\s*)?(\s*)?(\-|\s)(\s*)?([0-9]{1,2})(\s*)?(\-|\s|\,)?(\s*)?(\d{2,4})?)(\s*)?")
+
+    reg_date_3 = re.compile(
+        "((([0-9])|([0-2][0-9])|([3][0-1]))(\-|\s)(January|February|March|April|May|June|July|August|September|October|November|December)(\-|\s)?(\d{2,4})?)|((January|February|March|April|May|June|July|August|September|October|November|December)(\-|\s)([0-9]{1,2})(\-|\s|\,)?(\s)?(\d{2,4})?)")
+    ret = ''
+    res = re.search(reg_date_1, str)
+    res_2 = re.search(reg_date_2, str)
+    res_3 = re.search(reg_date_3, str)
+    if(res):
+        ret += res.group(0)+' '
+        time = re.search(reg_time, str)
+        if bool(time):
+            ret += time.group(0)
+
+    elif(res_2):
+        ret += res_2.group(0)+' '
+        time = re.search(reg_time, str)
+        if bool(time):
+            ret += time.group(0)
+
+    elif(res_3):
+        ret += res_3.group(0)+' '
+        time = re.search(reg_time, str)
+        if bool(time):
+            ret += time.group(0)
+
+    # print(ret)
+    return ret
+
+
+def getData(img_path):
+    im = cv2.imread(img_path)
+
+    string = pytesseract.image_to_string(im)
+
+    string = string.replace("\n", " ")
+    string = string.replace("  ", " ")
+    print(string)
+
+    print(getDate(string))
+
+    image, words, boxes, actual_boxes = preprocess(img_path)
+    dataset_directory = Path(
+        '/home/proma/Desktop/Kaggle/kaggle/working/inference')
+    write_dataset(dataset_directory, words, boxes,
+                  actual_boxes, image, img_path)
+    os.system("sh /home/proma/Desktop/shell.sh")
+
+    print(getAddress() + " " + getAmount())
+
+
+getData('img.png')

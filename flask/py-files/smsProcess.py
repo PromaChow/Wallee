@@ -20,7 +20,7 @@ def find_date(str):
     reg_date_1 = re.compile(
         "([0-9]{2}(\/|\.|\-)[0-9]{2}(\/|\.|\-)[0-9]{2,4})|([0-9]{2,4}(\/|\.|\-)[0-9]{2}(\/|\.|\-)[0-9]{2})")
     reg_time = re.compile(
-        "(([0-1]?[0-9]|2[0-3]):[0-5][0-9](\s*)?(pm|am|PM|AM)?)")
+        "(([0-1]?[0-9]|2[0-3]):[0-5][0-9](\s*)?(:[0-5][0-9](\s*))?(pm|am|PM|AM)?)")
     reg_date_2 = re.compile(
         "((([0-9])|([0-2][0-9])|([3][0-1]))(\-|\s)(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\-|\s)?(\d{2,4})?)|((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\-|\s)([0-9]{1,2})(\-|\s|\,)?(\d{2,4})?)")
     ret = ''
@@ -54,6 +54,12 @@ def getFrontSubString(regex, str):
     str = str[:res.start()]
     # print(str)
     return str
+
+
+def preProcess(str):
+    res = re.sub("(\(.*\))", "", str)
+    res = res.replace("  ", " ")
+    return res
 
 
 def getInfo(sms):
@@ -220,4 +226,7 @@ def getInfo(sms):
     return dict
 
 
-print(getInfo("Dear Sir, your A/C ***7591 debited (Account Maintenance Fee Incl. VAT) by Tk115.00 on 25-12-2020 12:46:27 AM C/B Tk15,161.50. NexusPay https://bit.ly/nexuspay"))
+res = preProcess(
+    "POTTY  CLOTHING STORE 5555 XYZ Avenue Detroit, Michigan 48127 555-555-5555  Cashier: Josh June 19, 2017 11:20 a.m,  QTy DESC ANT  1 Sleeveless shirt $19.99  1 Faded jeans $39.99  1 Long dress $67.99 SUBTOTAL $127.97 TAX 6% $7.68     $135.65     CASH $150.00 CHANGE $14.35  Returns accepted within  30 days with receipt only")
+print(res)
+print(getInfo(res))

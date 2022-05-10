@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
 import {useState, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import {NavigationContainer} from '@react-navigation/native';
@@ -51,7 +50,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const Section = ({children, title}): Node => {
+const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -77,7 +76,7 @@ const Section = ({children, title}): Node => {
   );
 };
 const Stack = createNativeStackNavigator();
-const App: () => Node = () => {
+const App = () => {
   let str = 'pr';
   return (
     <NavigationContainer>

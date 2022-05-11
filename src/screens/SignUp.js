@@ -4,17 +4,7 @@ import firebase from '@react-native-firebase/app';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {signInWithPhoneNumber} from '../Authentication';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Button,
-  TextInput,
-} from 'react-native';
+import {SafeAreaView, View, Button, TextInput} from 'react-native';
 
 export const SignUp = () => {
   const navigation = useNavigation();

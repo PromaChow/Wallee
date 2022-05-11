@@ -3577,11 +3577,6 @@
   "resolved" "https://registry.npmjs.org/csstype/-/csstype-3.0.11.tgz"
   "version" "3.0.11"
 
-"curry@^1.2.0":
-  "integrity" "sha1-nm3SiVSNun5lPVrj/pA/59+zOvI="
-  "resolved" "https://registry.npmjs.org/curry/-/curry-1.2.0.tgz"
-  "version" "1.2.0"
-
 "data-urls@^2.0.0":
   "integrity" "sha512-X5eWTSXO/BJmpdIKCRuKUgSCgAN0OwliVK3yPKbwIWU1Tdw5BRajxlzMidvh+gwko9AfQ9zIj52pzF91Q3YAvQ=="
   "resolved" "https://registry.npmjs.org/data-urls/-/data-urls-2.0.0.tgz"
@@ -4717,11 +4712,6 @@
   "integrity" "sha512-47xSUiQioGaB96nqtp5/q55m0aBQSQdyIloMOc/x+QVTDZLNmXE892IIDrJ0hM1A5vcNUDD5tDffkSP5lCaIIA=="
   "resolved" "https://registry.npmjs.org/image-size/-/image-size-0.6.3.tgz"
   "version" "0.6.3"
-
-"immutable@^3.7.5":
-  "integrity" "sha1-wkOZUUVbs5kT2vKBN28VMOEErfM="
-  "resolved" "https://registry.npmjs.org/immutable/-/immutable-3.8.2.tgz"
-  "version" "3.8.2"
 
 "import-fresh@^2.0.0":
   "integrity" "sha1-2BNVwVYS04bGH53dOSLUMEgipUY="
@@ -6949,11 +6939,6 @@
     "split-on-first" "^1.0.0"
     "strict-uri-encode" "^2.0.0"
 
-"ramda@^0.19.1":
-  "integrity" "sha1-icStaXJl/2sfrOnyhkOeJSDWZ5w="
-  "resolved" "https://registry.npmjs.org/ramda/-/ramda-0.19.1.tgz"
-  "version" "0.19.1"
-
 "range-parser@~1.2.1":
   "integrity" "sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg=="
   "resolved" "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz"
@@ -7020,17 +7005,6 @@
     "invariant" "^2.2.4"
     "lodash" "^4.17.21"
     "prop-types" "^15.7.2"
-
-"react-native-gestures@^0.3.0":
-  "integrity" "sha1-xtwMR7Ax3chJB+1ehCtfl/Ju5RA="
-  "resolved" "https://registry.npmjs.org/react-native-gestures/-/react-native-gestures-0.3.0.tgz"
-  "version" "0.3.0"
-  dependencies:
-    "curry" "^1.2.0"
-    "immutable" "^3.7.5"
-    "ramda" "^0.19.1"
-    "rx" "^4.0.6"
-    "transducers.js" "^0.3.2"
 
 "react-native-iphone-x-helper@^1.0.3":
   "integrity" "sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg=="
@@ -7391,11 +7365,6 @@
   "integrity" "sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA=="
   "resolved" "https://registry.npmjs.org/rsvp/-/rsvp-4.8.5.tgz"
   "version" "4.8.5"
-
-"rx@^4.0.6":
-  "integrity" "sha1-pfE/957zt0D+MKqAP7CfmIBdR4I="
-  "resolved" "https://registry.npmjs.org/rx/-/rx-4.1.0.tgz"
-  "version" "4.1.0"
 
 "safe-buffer@~5.1.0", "safe-buffer@~5.1.1", "safe-buffer@5.1.2":
   "integrity" "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="
@@ -8130,11 +8099,6 @@
   "integrity" "sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o="
   "resolved" "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz"
   "version" "0.0.3"
-
-"transducers.js@^0.3.2":
-  "integrity" "sha1-eJAu91XgYGzS/dFjORLxCTyKVDI="
-  "resolved" "https://registry.npmjs.org/transducers.js/-/transducers.js-0.3.2.tgz"
-  "version" "0.3.2"
 
 "tslib@^1.8.1":
   "integrity" "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg=="

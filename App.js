@@ -1,17 +1,8 @@
 import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import CreateJournalView from './src/components/CreateJournalView';
-import {
-  NativeBaseProvider,
-  ScrollView,
-  Fab,
-  Button,
-  Box,
-  Icon,
-  Center,
-  Text,
-  HStack,
-} from 'native-base';
+import {NavigationContainer} from '@react-navigation/native';
+import {NativeBaseProvider} from 'native-base';
 import {Dimensions} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import MainScreen from './src/screens/mainScreen';
@@ -44,19 +35,24 @@ colorValues.forEach(number => {
     fgColors.push(`${name}.${number + 100}`);
   });
 });
+//{/* <Calculator transaction={new Transaction('500', 'User')} /> */}
 
 export const getRandomColor = () =>
   Math.floor(Math.random() * colorNames.length);
 export const journalKeyMemo = {};
 
 export default App = () => {
-  const [showModal, setShowModal] = useState(false);
-
   return (
     <NativeBaseProvider>
-      <MainScreen setShowModal={setShowModal} />
-      {/* <Calculator transaction={new Transaction('500', 'User')} /> */}
-      <CreateJournalView showModal={showModal} setShowModal={setShowModal} />
+      <NavigationContainer>
+        <Drawer.Navigator
+          initialRouteName="Journals"
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Drawer.Screen name="Journals" component={MainScreen} />
+        </Drawer.Navigator>
+      </NavigationContainer>
     </NativeBaseProvider>
   );
 };

@@ -1,17 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {
-  Pressable,
-  Text,
-  HStack,
-  VStack,
-  Modal,
-  Box,
-  Input,
-  Button,
-  Center,
-  Icon,
-  Stack,
-} from 'native-base';
+import {HStack, VStack, Box, Button, Center, Icon, Stack} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {windowHeight, windowWidth} from '../../App';
 

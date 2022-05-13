@@ -38,7 +38,7 @@ const MainScreen = ({navigation}) => {
             Journals
           </Center>
         </Box>
-        <ScrollView horizontal={true} flex="10" bg="teal.100">
+        <Box flex="10" bg="teal.100">
           {Object.keys(journalKeyMemo).map(key => {
             return (
               <JournalView
@@ -48,7 +48,7 @@ const MainScreen = ({navigation}) => {
               />
             );
           })}
-        </ScrollView>
+        </Box>
         <Fab
           renderInPortal={false}
           shadow={2}

@@ -76,7 +76,7 @@ const BackspaceButton = ({deleteLastSymbol}) => {
   );
 };
 
-let KeyPad = ({setExpression, evaluationCallback}) => (
+const KeyPad = React.memo(({setExpression, evaluationCallback}) => (
   <Box flex="3" flexDirection="row" height="100%">
     <HStack flex="3" flexDirection="row" bg="info.100">
       <VStack flex="1">
@@ -132,9 +132,7 @@ let KeyPad = ({setExpression, evaluationCallback}) => (
       </VStack>
     </HStack>
   </Box>
-);
-
-KeyPad = React.memo(KeyPad);
+));
 
 const Calculator = ({transaction}) => {
   const evaluationCallback = useCallback(expression => {

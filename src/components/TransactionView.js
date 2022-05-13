@@ -31,49 +31,66 @@ const TransactionListView = ({
       borderRadius={'md'}
       bg={fgColors[colorIndex]}
       flex="1"
-      width="115"
-      height="85">
-      <Center
-        flexDirection="row"
-        justifyContent="center"
-        paddingBottom={0}
-        mb={2}
-        flex="1">
-        <Center flex="1" m={0}>
-          <Icon as={Feather} name="dollar-sign" size="sm" color="light.300" />
-        </Center>
+      width="full"
+      height="95">
+      <Center flexDirection="row" justifyContent="center" mb={2} flex="1">
         <Center
+          _text={{
+            color: 'light.200',
+            fontSize: `${transaction.amount < 999999 ? 'xl' : 'lg'}`,
+            fontWeight: 'normal',
+          }}
+          flex="2"
           m={0}
+          flexDir="row">
+          <Icon
+            marginX="10px"
+            as={Feather}
+            name="dollar-sign"
+            size="sm"
+            color="light.300"
+          />
+          Amount
+        </Center>
+        <Box
           _text={{
             color: 'light.200',
             fontSize: `${transaction.amount < 999999 ? 'xl' : 'lg'}`,
             fontWeight: 'bold',
           }}
-          flexDirection={'column'}
-          flex="3">
+          flex="1">
           {transaction.amount}
-        </Center>
+        </Box>
       </Center>
 
-      <Center
-        flexDirection="row"
-        justifyContent="center"
-        paddingBottom={0}
-        m={0}
-        flex="1">
-        <Center flex="1" m={0}>
-          <Icon as={Feather} name="clock" size="sm" color="light.300" />
-        </Center>
+      <Center flexDirection="row" justifyContent="center" mb={2} flex="1">
         <Center
-          m={0}
           _text={{
             color: 'light.200',
-            fontSize: 'lg',
+            fontSize: `${transaction.amount < 999999 ? 'xl' : 'lg'}`,
+            fontWeight: 'normal',
           }}
-          flexDirection={'column'}
-          flex="3">
-          {transaction.timeOfCreation.slice(0, 5)}
+          flex="2"
+          m={0}
+          flexDir="row">
+          <Icon
+            marginX="10px"
+            as={Feather}
+            name="clock"
+            size="sm"
+            color="light.300"
+          />
+          Time Of Creation
         </Center>
+        <Box
+          _text={{
+            color: 'light.200',
+            fontSize: `${transaction.amount < 999999 ? 'xl' : 'lg'}`,
+            fontWeight: 'bold',
+          }}
+          flex="1">
+          {transaction.timeOfCreation.slice(0, 5)}
+        </Box>
       </Center>
     </Center>
   );

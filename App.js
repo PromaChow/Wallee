@@ -5,14 +5,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {NativeBaseProvider} from 'native-base';
 import {Dimensions} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MainScreen from './src/screens/mainScreen';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export const colorNames = [
@@ -35,7 +34,6 @@ colorValues.forEach(number => {
     fgColors.push(`${name}.${number + 100}`);
   });
 });
-//{/* <Calculator transaction={new Transaction('500', 'User')} /> */}
 
 export const getRandomColor = () =>
   Math.floor(Math.random() * colorNames.length);
@@ -52,6 +50,7 @@ export default App = () => {
           }}>
           <Drawer.Screen name="Journals" component={MainScreen} />
         </Drawer.Navigator>
+        {/* <Stack.Navigator></Stack.Navigator> */}
       </NavigationContainer>
     </NativeBaseProvider>
   );

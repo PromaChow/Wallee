@@ -33,12 +33,13 @@ const MainScreen = ({navigation}) => {
             _text={{
               padding: '1',
               fontSize: '2xl',
+              fontWeight: 'bold',
               color: 'white',
             }}>
             Journals
           </Center>
         </Box>
-        <Box flex="10" bg="teal.100">
+        <Box flex="10" bg="light.200">
           {Object.keys(journalKeyMemo).map(key => {
             return (
               <JournalView
@@ -57,7 +58,6 @@ const MainScreen = ({navigation}) => {
           onPress={() => setShowModal(true)}
         />
       </Box>
-
       <CreateJournalView showModal={showModal} setShowModal={setShowModal} />
     </>
   );

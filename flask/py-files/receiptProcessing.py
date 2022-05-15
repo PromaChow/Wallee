@@ -119,18 +119,21 @@ def getAmount():
 def getDate(str):
 
     reg_date_1 = re.compile(
-        "([0-9]{2}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2,4})(\s*)?|([0-9]{2,4}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2}(\s*)?)")
+        "([0-9]{1,2}(\s*)?(\/|\.|\-)(\s*)?[0-9]{1,2}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2,4})(\s*)?|([0-9]{2,4}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2}(\s*)?(\/|\.|\-)(\s*)?[0-9]{2}(\s*)?)")
+
     reg_time = re.compile(
-        "(\s*)?(([0-1]?[0-9]|2[0-3])(\s*)?:[0-5][0-9](\s*)?(:[0-5][0-9](\s*))?(p(\s*)?m|a(\s*)?m|P(\s*)?M|A(\s*)?M)?)")
+        "(\s*)?(([0-1]?[0-9]|2[0-3])(\s*)?:[0-5][0-9](\s*)?(:[0-5][0-9](\s*))?(p(\s*|\.)?m(\s*|\.)|a(\s*|\.)?m(\s*|\.)|P(\s*|\.)?M(\s*|\.)|A(\s*|\.)?M(\s*|\.))?)")
     reg_date_2 = re.compile(
         "(((\s*)?([0-9])(\s*)?|(\s*)?([0-2][0-9])(\s*)?|(\s*)?([3][0-1])(\s*)?)(\s*)?(\-|\s)(\s*)?(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\s*)?(\-|\s)?(\s*)?(\d{2,4})?(\s*)?)(\s*)?|((\s*)?(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)(\s*)?(\s*)?(\-|\s)(\s*)?([0-9]{1,2})(\s*)?(\-|\s|\,)?(\s*)?(\d{2,4})?)(\s*)?")
 
     reg_date_3 = re.compile(
         "((([0-9])|([0-2][0-9])|([3][0-1]))(\-|\s)(January|February|March|April|May|June|July|August|September|October|November|December)(\-|\s)?(\d{2,4})?)|((January|February|March|April|May|June|July|August|September|October|November|December)(\-|\s)([0-9]{1,2})(\-|\s|\,)?(\s)?(\d{2,4})?)")
+
     ret = ''
     res = re.search(reg_date_1, str)
     res_2 = re.search(reg_date_2, str)
     res_3 = re.search(reg_date_3, str)
+
     if(res):
         ret += res.group(0)+' '
         time = re.search(reg_time, str)
@@ -174,4 +177,4 @@ def getData(img_path):
     print(getAddress() + " " + getAmount())
 
 
-getData('img.png')
+getData('r13.jpg')

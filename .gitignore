@@ -58,3 +58,7 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+/flask/layoutLM/modelFinal.pt
+
+/flask/layoutLM/layoutlm.ipynb

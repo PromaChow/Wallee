@@ -30,6 +30,22 @@ app = Flask(__name__)
 cors = CORS(app, supports_credentials=True)
 
 
+def getAmount(str):
+    str = str.upper()
+    reg_addr = re.compile("((NET AMOUNT)|(NET PAYABLE AMOUNT))")
+    res = re.search(reg_addr, str)
+    ret = ''
+    amount = ''
+    if(res):
+        #print("hello")
+        ret = res.group(0)
+       
+        regex = re.compile(
+        "((BDT|TK|Tk|Taka|taka)?(\s*)?(([1-9]{1}([0-9]|(\\,)?)*((\\.)[0-9]{2})?)|(([0]{1}((\\.)([0-9]){2})))))|((([1-9]{1}([0-9]|(\\,)?)*((\\.)[0-9]{2})?)|(([0]{1}((\\.)([0-9]){2}))))(\s*)?(Tk\.|Taka|taka))")
+        res_in = re.search(regex, str)
+        if(res_in):
+            amount = res_in.group(0)
+    return ret,amount
 
 @app.route("/image", methods=['GET', 'POST'])
 def hello_world():
@@ -42,10 +58,13 @@ def hello_world():
             fh.write(base64.b64decode(bytesOfimage['image']))
 
     im = cv2.imread(str)
-    print("\n\n"+pytesseract.image_to_string(im))
-    
+    data = pytesseract.image_to_string(im)
+    print(data)
+    amount,ret = getAmount(data)
+    print(ret)
     dic = layoutlm.get_predictions()
     print(dic)
+    
 
     # image, words, boxes, actual_boxes = preprocess(str)
     # dataset_directory = Path(
@@ -71,11 +90,17 @@ def hello_world():
 
 @app.route("/msg", methods=['GET', 'POST'])
 def bye_world():
+    dic = {}
+    sms = ''
     if(request.method == "POST"):
         print("accepted")
         sms = request.get_json()
+        sms = sms['sms']
+    dic = smsProcess.getInfo(sms)
+    print(jsonify(dic))
+    return jsonify(dic)
 
-        return jsonify(smsProcess.getInfo(sms['sms']))
+
     return "<p>Hello, World!</p>"
 
 

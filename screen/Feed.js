@@ -41,6 +41,8 @@ const getSMS = async => {
     '01841-325325',
     '01842-406877',
     'MGBLCARDS',
+    'Proma',
+    '+8801767895677',
   ];
   const data = retrieve_data(getUserID());
   min_date = data['lastAccesssed'];
@@ -65,7 +67,7 @@ const getSMS = async => {
         //console.log('List: ', smsList);
         var arr = JSON.parse(smsList);
         var count = 0;
-        arr.forEach(function (object) {
+        arr.forEach(async object => {
           count++;
           // console.log('Object: ' + object);
           // console.log('-->' + object.date);
@@ -75,7 +77,8 @@ const getSMS = async => {
           const sms = object.body;
           json['type'] = '';
           json['sms'] = object.body;
-          post_sms(object.body);
+          let fetchData = await post_sms(object.body);
+          console.log(fetchData);
           //console.log('\n\njson' + json['sms'] + '\n\n');
         });
       },
@@ -86,27 +89,22 @@ let count = 0;
 
 const post_sms = async sms => {
   const fetchData = new Promise((resolve, reject) => {
-    // console.log(uri);
-    // fetch('http://192.168.88.104:8080/msg', {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     sms: sms,
-    //   }),
-    // })
-    //   .then(response => {
-    //     count++;
-    //     console.log(count);
-    //     console.log();
-    //     response.text();
-    //   })
-    //   .then(data => {
-    //     console.log(data);
-    //     resolve(data);
-    //   });
+    //console.log(uri);
+    fetch('http://192.168.88.104:8080/msg', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        sms: sms,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('data' + data['Balance']);
+        resolve(data);
+      });
   });
 
   return fetchData;

@@ -84,7 +84,7 @@ def getInfo(sms):
     # for word in text3.ents:
     #     print(word.text,word.label_)
 
-    nlp = spacy.load('en_core_web_sm')
+    #nlp = spacy.load('en_core_web_sm')
 
     # for token in text2:
     #      #print (token.text, token.tag_ , token.head, token.dep_)
@@ -278,6 +278,8 @@ sms.insert(len(sms), "Cash-In from A/C: 019025556564 Tk4,030.00 Fee: Tk.00, Your
 for res in sms:
     print("\n\n"+res+"\n\n")
    # res = preProcess(res)
+    dic = getInfo(res)
+    print(type(dic))
     print(getInfo(res))
 
 

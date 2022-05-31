@@ -210,7 +210,7 @@ label_map = {i: label for i, label in enumerate(labels)}
 pad_token_label_id = CrossEntropyLoss().ignore_index
 
 
-model_path='modelFinal.pt'
+model_path='/home/proma/layoutModel/modelFinal.pt'
 model=model_load(model_path,num_labels)
 
 

@@ -87,27 +87,26 @@ let count = 0;
 const post_sms = async sms => {
   const fetchData = new Promise((resolve, reject) => {
     // console.log(uri);
-
-    fetch('http://192.168.237.104:8080/msg', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        sms: sms,
-      }),
-    })
-      .then(response => {
-        count++;
-        console.log(count);
-        console.log();
-        response.text();
-      })
-      .then(data => {
-        console.log(data);
-        resolve(data);
-      });
+    // fetch('http://192.168.88.104:8080/msg', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     sms: sms,
+    //   }),
+    // })
+    //   .then(response => {
+    //     count++;
+    //     console.log(count);
+    //     console.log();
+    //     response.text();
+    //   })
+    //   .then(data => {
+    //     console.log(data);
+    //     resolve(data);
+    //   });
   });
 
   return fetchData;
@@ -117,7 +116,7 @@ const post = async uri => {
   const fetchData = new Promise((resolve, reject) => {
     // console.log(uri);
     ImgToBase64.getBase64String(uri).then(base64String => {
-      fetch('http://192.168.34.104:8080/image', {
+      fetch('http://192.168.88.104:8080/image', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -129,7 +128,7 @@ const post = async uri => {
       })
         .then(response => response.json())
         .then(data => {
-          console.log('data' + data['value']);
+          console.log('data' + data['address']);
           resolve(data);
         });
     });
@@ -149,7 +148,6 @@ export const Feed = () => {
       nextAppState => {
         console.log('Next AppState is: ', nextAppState);
         if (nextAppState === 'background') {
-          
           var date = Date.now();
           console.log(date);
           update_doc(getUserID(), 'lastAccessedDate', '1041379200000');
@@ -201,7 +199,7 @@ export const Feed = () => {
           let uri = await launchImageLibrary();
           let fetchData = await post(uri);
           console.log('fetch');
-          console.log(fetchData);
+          console.log(fetchData['address']);
           // addToStorage(user.uid, uri);
         }}></Button>
 

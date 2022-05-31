@@ -6,13 +6,9 @@ import torch
 from transformers import LayoutLMTokenizer
 from transformers import LayoutLMForTokenClassification
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
+from torch.nn import CrossEntropyLoss
 
-args = {'local_rank': -1,
-        'overwrite_cache': True,
-        'data_dir': '/content/drive/MyDrive/LayoutLM/working/dataset',
-        'model_name_or_path':'microsoft/layoutlm-base-uncased',
-        'max_seq_length': 512,
-        'model_type': 'layoutlm',}
+
 
 # class to turn the keys of a dict into attributes (thanks Stackoverflow)
 class AttrDict(dict):
@@ -20,12 +16,17 @@ class AttrDict(dict):
         super(AttrDict, self).__init__(*args, **kwargs)
         self.__dict__ = self
 
+args = {'local_rank': -1,
+        'overwrite_cache': True,
+        'data_dir': '/content/drive/MyDrive/LayoutLM/working/dataset',
+        'model_name_or_path':'microsoft/layoutlm-base-uncased',
+        'max_seq_length': 512,
+        'model_type': 'layoutlm',}
 args = AttrDict(args)
-
 tokenizer = LayoutLMTokenizer.from_pretrained("microsoft/layoutlm-base-uncased")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def model_load(PATH, num_labels):
+def model_load(PATH, num_labels,device):
 
 
     model = LayoutLMForTokenClassification.from_pretrained("microsoft/layoutlm-base-uncased", num_labels=num_labels)
@@ -188,13 +189,12 @@ def convert_to_features(image, words, boxes, actual_boxes, model):
 
 
 
-image_path='r1.jpg'
-image, words, boxes, actual_boxes = preprocess(image_path)
 
 
 
 
-from torch.nn import CrossEntropyLoss
+
+
 
 def get_labels(path):
     with open(path, "r") as f:
@@ -203,59 +203,72 @@ def get_labels(path):
         labels = ["O"] + labels
     return labels
 
-labels = get_labels("dataset/labels.txt")
-num_labels = len(labels)
-label_map = {i: label for i, label in enumerate(labels)}
-# Use cross entropy ignore index as padding label id so that only real label ids contribute to the loss later
-pad_token_label_id = CrossEntropyLoss().ignore_index
-
-
-model_path='/home/proma/layoutModel/modelFinal.pt'
-model=model_load(model_path,num_labels)
 
 
 
-word_level_predictions, final_boxes,dic = convert_to_features(image, words, boxes, actual_boxes, model)
 
 
-draw = ImageDraw.Draw(image)
-font = ImageFont.load_default()
+
+
 def iob_to_label(label):
     if label != 'O':
         return label[2:]
     else:
         return ""
-label2color = {'total':'green','date':'green','others':'blue','address':'blue','company':'black', '':'blue'}
-#print(word_level_predictions[0:6])
-newl= {}
-cnt = 0
-for prediction, box in zip(word_level_predictions, final_boxes):
-    predicted_label = iob_to_label(label_map[prediction]).lower()
-    if tuple(box) in newl.keys():
-         if newl[tuple(box)] == "" :
-                newl[tuple(box)] = predicted_label
-    else :
-        newl[tuple(box)] = predicted_label
+    
+def get_predictions():
+    
+    
+    
+    
+    
+    image_path='/home/proma/FinanceApp/flask/py-files/rec.jpg'
+    image, words, boxes, actual_boxes = preprocess(image_path)
+    labels = get_labels("/home/proma/FinanceApp/flask/layoutLM/dataset/labels.txt")
+    num_labels = len(labels)
+    label_map = {i: label for i, label in enumerate(labels)}
+    # Use cross entropy ignore index as padding label id so that only real label ids contribute to the loss later
+    pad_token_label_id = CrossEntropyLoss().ignore_index
+    model_path='/home/proma/layoutModel/modelFinal.pt'
+    model= model_load(model_path,num_labels,device)
+    word_level_predictions, final_boxes,dic = convert_to_features(image, words, boxes, actual_boxes, model)
+    label2color = {'total':'green','date':'green','others':'blue','address':'blue','company':'black', '':'blue'}
+    
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.load_default()
+    
+    #print(word_level_predictions[0:6])
+    newl= {}
+    for prediction, box in zip(word_level_predictions, final_boxes):
+        predicted_label = iob_to_label(label_map[prediction]).lower()
+        if tuple(box) in newl.keys():
+            if newl[tuple(box)] == "" :
+                    newl[tuple(box)] = predicted_label
+        else :
+            newl[tuple(box)] = predicted_label
+            
+            #print(newl[tuple(box)])
         
-        #print(newl[tuple(box)])
-    
-    draw.rectangle(box, outline=label2color[predicted_label])    
-    draw.text((box[0] + 10, box[1] - 10), text=predicted_label, fill=label2color[predicted_label], font=font)
-    
-# for key in newl.keys():
-#      print(key,newl[key])
-final_dic = {"address":"", "date":"", "total":"", "company":""}
-for key in newl.keys():
-    if(newl[key] == "address" or newl[key] == "company" ):
-        final_dic[newl[key]]+=dic[key]
-        final_dic[newl[key]]+=" "
-    
-    else:
-        final_dic[newl[key]]=dic[key]
-    #print(key, dic[key])
-for key in final_dic.keys() :
-    print(key, final_dic[key])
-image.save("im.jpg")
+        draw.rectangle(box, outline=label2color[predicted_label])    
+        draw.text((box[0] + 10, box[1] - 10), text=predicted_label, fill=label2color[predicted_label], font=font)
+        
+    # for key in newl.keys():
+    #      print(key,newl[key])
+    final_dic = {"address":"", "date":"", "total":"", "company":""}
+    for key in newl.keys():
+        if(newl[key] == "address" or newl[key] == "company" ):
+            final_dic[newl[key]]+=dic[key]
+            final_dic[newl[key]]+=" "
+        
+        else:
+            final_dic[newl[key]]=dic[key]
+        #print(key, dic[key])
+    for key in final_dic.keys() :
+        print(key, final_dic[key])
+    image.save("im.jpg")
+    return final_dic
+
+
 
 
 

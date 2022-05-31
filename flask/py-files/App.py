@@ -24,6 +24,7 @@ import re
 from matplotlib import pyplot, patches
 import smsProcess
 
+import layoutlm
 
 app = Flask(__name__)
 cors = CORS(app, supports_credentials=True)
@@ -42,6 +43,9 @@ def hello_world():
 
     im = cv2.imread(str)
     print("\n\n"+pytesseract.image_to_string(im))
+    
+    dic = layoutlm.get_predictions()
+    print(dic)
 
     # image, words, boxes, actual_boxes = preprocess(str)
     # dataset_directory = Path(
@@ -60,7 +64,7 @@ def hello_world():
     #         temp += strr.split(' ', 1)[0]+' '
 
     # print(temp)
-    return jsonify({"address": temp})
+    return jsonify(dic)
 
     return "<p>Hello, World!</p>"
 
@@ -77,4 +81,4 @@ def bye_world():
 
 if __name__ == '__main__':
 
-    app.run(host='192.168.237.104', port=8080, debug=True)
+    app.run(host='192.168.88.104', port=8080, debug=True)

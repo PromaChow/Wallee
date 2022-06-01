@@ -1,5 +1,5 @@
 import React from 'react';
-import {VStack, Box, Button, Icon, Avatar} from 'native-base';
+import {Divider, VStack, Box, Button, Icon, Avatar} from 'native-base';
 import MenuButton from './MenuButton';
 
 export const buttonInfo = {
@@ -40,14 +40,12 @@ const SideBar = ({state, navigation}) => {
     <Box flex="1" bg="white">
       <Box
         padding="20px"
+        marginBottom="30px"
         bg="light.200"
-        flexDirection="row"
-        justifyContent={'space-evenly'}
+        alignItems="flex-start"
         shadow="7"
-        width="full"
-        height="130">
+        width="full">
         <Avatar
-          alignSelf="center"
           borderWidth={3}
           borderColor={'blue.500'}
           size="xl"
@@ -56,16 +54,17 @@ const SideBar = ({state, navigation}) => {
           }}
         />
         <Box
+          marginTop="15px"
           justifyContent={'center'}
           alignItems={'center'}
           _text={{
-            fontSize: 'xl',
+            fontSize: '3xl',
             fontWeight: 'semibold',
           }}>
           User Name
         </Box>
       </Box>
-      <VStack space="2" flex="1" alignItems={'flex-start'}>
+      <VStack alignItems={'flex-start'} space="2" flex="1">
         {Object.keys(buttonInfo).map(componentName => (
           <MenuButton
             key={componentName}

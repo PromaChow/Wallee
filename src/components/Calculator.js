@@ -272,35 +272,3 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
 };
 
 export default Calculator;
-
-// const [showModal, setShowModal] = useState(false);
-// <>
-//   <Button onPress={() => setShowModal(true)}>Button</Button>
-//   <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-//     <Modal.Content maxWidth="400px">
-//       <Modal.CloseButton />
-//       <Modal.Header>Add Transaction</Modal.Header>
-//       <Modal.Body>
-//         <Text>Add Here</Text>
-//       </Modal.Body>
-//       <Modal.Footer>
-//         <Button.Group space={2}>
-//           <Button
-//             variant="ghost"
-//             colorScheme="blueGray"
-//             onPress={() => {
-//               setShowModal(false);
-//             }}>
-//             Cancel
-//           </Button>
-//           <Button
-//             onPress={() => {
-//               setShowModal(false);
-//             }}>
-//             Save
-//           </Button>
-//         </Button.Group>
-//       </Modal.Footer>
-//     </Modal.Content>
-//   </Modal>
-// </>

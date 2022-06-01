@@ -20,6 +20,7 @@ import {SignUp} from './screen/SignUp';
 import {Profile_two} from './screen/Profile_two';
 import {CurrencyList} from './screen/CurrencyList';
 import {UserProfile} from './screen/UserProfile';
+import notifee, {EventType} from '@notifee/react-native';
 import {
   getUserID,
   ifExist,
@@ -77,6 +78,18 @@ const Section = ({children, title}) => {
 };
 const Stack = createNativeStackNavigator();
 const App = () => {
+  useEffect(() => {
+    return notifee.onForegroundEvent(({type, detail}) => {
+      switch (type) {
+        case EventType.DISMISSED:
+          console.log('User dismissed notification', detail.notification);
+          break;
+        case EventType.PRESS:
+          console.log('User pressed notification', detail.notification);
+          break;
+      }
+    });
+  }, []);
   let str = 'pr';
   return (
     <NavigationContainer>

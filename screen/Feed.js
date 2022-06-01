@@ -50,6 +50,24 @@ async function SMSNotification() {
   });
 }
 
+async function BudgetNotification() {
+  // Create a channel
+  const channelId = await notifee.createChannel({
+    id: 'default',
+    name: 'Default Channel',
+  });
+
+  // Display a notification
+  await notifee.displayNotification({
+    title: 'Budget Limit',
+    body: 'You will soon exceed your budget limit',
+    android: {
+      channelId,
+      //smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+    },
+  });
+}
+
 const getSMS = async => {
   var json = [];
   var addrs = [

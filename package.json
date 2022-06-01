@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@notifee/react-native": "^5.1.0",
+    "@notifee/react-native": "^5.3.0",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^14.7.0",

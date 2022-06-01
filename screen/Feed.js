@@ -9,6 +9,7 @@ import {AndroidColor} from '@notifee/react-native';
 import SmsAndroid from 'react-native-get-sms-android';
 import {PermissionsAndroid} from 'react-native';
 import {ChangePhoneNumber} from './ChangePhoneNumber';
+
 import {
   getUserID,
   ifExist,
@@ -30,6 +31,24 @@ import {
   TextInput,
   AppState,
 } from 'react-native';
+
+async function SMSNotification() {
+  // Create a channel
+  const channelId = await notifee.createChannel({
+    id: 'default',
+    name: 'Default Channel',
+  });
+
+  // Display a notification
+  await notifee.displayNotification({
+    title: 'Transaction Tracked',
+    body: 'You have new transaction entries tracked',
+    android: {
+      channelId,
+      //smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+    },
+  });
+}
 
 const getSMS = async => {
   var json = [];
@@ -62,7 +81,8 @@ const getSMS = async => {
       fail => {
         console.log('Failed with this error: ' + fail);
       },
-      (count, smsList) => {
+      async (count, smsList) => {
+        await SMSNotification();
         // console.log('Count: ', count);
         //console.log('List: ', smsList);
         var arr = JSON.parse(smsList);

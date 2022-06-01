@@ -21,19 +21,40 @@ import {
 } from 'native-base';
 import Transaction from '../transaction';
 
-const MemoizedTransactions = ({listOfTransactions, colorIndex}) => (
+const MemoizedTransactions = React.memo(({listOfTransactions, colorIndex}) => (
   <VStack space={3} width="full" alignItems="center">
     {listOfTransactions.map(transaction => {
       return (
-        <TransactionListView
-          key={transaction.timeOfCreation}
-          colorIndex={colorIndex}
-          initialTransaction={transaction}
-        />
+        <Box
+          marginX="5px"
+          flexDirection="row"
+          width="auto"
+          key={transaction.timeOfCreation}>
+          <Box flex="4">
+            <TransactionListView
+              colorIndex={colorIndex}
+              initialTransaction={transaction}
+            />
+          </Box>
+          <Box flex="1">
+            <Button
+              height="full"
+              marginLeft="5px"
+              leftIcon={
+                <Icon size="md" as={Feather} name="trash-2" color="red.500" />
+              }
+              variant="unstyled"
+              bg={fgColors[colorIndex]}
+              _text={{
+                fontSize: 'md',
+                fontWeight: 'light',
+              }}></Button>
+          </Box>
+        </Box>
       );
     })}
   </VStack>
-);
+));
 
 const SortMenu = ({
   listOfTransactions,
@@ -102,26 +123,33 @@ const SortMenu = ({
 };
 
 const JournalView = ({
-  title = 'Title',
-  listOfTransactions = [
-    new Transaction(100, 'User'),
-    new Transaction(200, 'User'),
-  ],
-  colorIndex,
+  title = 'Test',
+  listOfTransactions = [new Transaction(100, 'User')],
+  colorIndex = 2,
   navigation,
 }) => {
   const [showSortingModal, setShowSortingModal] = useState(false);
-  const netContrib = useMemo(
+  const netBalance = useMemo(
     () =>
       listOfTransactions.reduce(
         (partialSum, transaction) => partialSum + transaction.amount,
         0,
       ),
-    [netContrib],
+    [netBalance],
   );
 
   return (
-    <Box m="1" bg={bgColors[colorIndex]} borderRadius="md" flex="1">
+    <Box bg={bgColors[colorIndex]} flex="1">
+      <Icon
+        position="absolute"
+        marginTop="12px"
+        marginX="10px"
+        as={Feather}
+        name="chevrons-left"
+        size="md"
+        color="light.300"
+        onPress={() => navigation.goBack()}
+      />
       <Center padding={2} flexDir="row">
         <Box alignItems="center">
           <Heading padding="3px" paddingTop="3" color="white" mx="auto">
@@ -140,11 +168,13 @@ const JournalView = ({
             direction="row"
             justify="space-evenly"
             align="center"
-            h="60">
+            h="auto">
             <Heading py="1" fontSize="xl" color="light.200" fontWeight="normal">
-              Net Contribution:&nbsp;&nbsp;
-              <Text fontWeight="bold">{`${netContrib}\n`}</Text>
-              Entries:&nbsp;&nbsp;
+              Net Balance:&nbsp;&nbsp;
+              <Text
+                fontWeight="bold"
+                color={'success.400'}>{`${netBalance}\n\n`}</Text>
+              # of Entries:&nbsp;&nbsp;
               <Text fontWeight="bold">{listOfTransactions.length}</Text>
             </Heading>
             <Divider
@@ -153,7 +183,7 @@ const JournalView = ({
               thickness="3"
               bg={fgColors[colorIndex]}
             />
-            <Box py="2">
+            <Box>
               <Button
                 onPress={() => setShowSortingModal(true)}
                 leftIcon={
@@ -161,12 +191,30 @@ const JournalView = ({
                     size="md"
                     as={Feather}
                     name="bar-chart"
-                    color="light.200"
+                    color="yellow.300"
                   />
+                }
+                marginBottom="3"
+                variant="unstyled"
+                bg={fgColors[colorIndex]}
+                _text={{
+                  fontSize: 'md',
+                  fontWeight: 'light',
+                }}>
+                Sort Entries
+              </Button>
+              <Button
+                leftIcon={
+                  <Icon size="md" as={Feather} name="filter" color="pink.300" />
                 }
                 variant="unstyled"
                 bg={fgColors[colorIndex]}
-              />
+                _text={{
+                  fontSize: 'md',
+                  fontWeight: 'light',
+                }}>
+                Filter Entries
+              </Button>
             </Box>
           </Flex>
         </Box>

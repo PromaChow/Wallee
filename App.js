@@ -7,6 +7,7 @@ import {Dimensions} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MainScreen from './src/screens/mainScreen';
+import JournalView from './src/components/JournalView';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
@@ -49,6 +50,7 @@ export default App = () => {
             headerShown: false,
           }}>
           <Drawer.Screen name="Journals" component={MainScreen} />
+          <Drawer.Screen name="Test" component={JournalView} />
         </Drawer.Navigator>
         {/* <Stack.Navigator></Stack.Navigator> */}
       </NavigationContainer>

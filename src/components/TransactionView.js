@@ -48,11 +48,12 @@ const TransactionListView = ({
             as={Feather}
             name="dollar-sign"
             size="sm"
-            color="light.300"
+            color="success.400"
           />
           Amount
         </Center>
         <Box
+          marginLeft="-15px"
           _text={{
             color: 'light.200',
             fontSize: `${transaction.amount < 999999 ? 'xl' : 'lg'}`,
@@ -78,11 +79,12 @@ const TransactionListView = ({
             as={Feather}
             name="clock"
             size="sm"
-            color="light.300"
+            color="warning.400"
           />
-          Time Of Creation
+          Created
         </Center>
         <Box
+          marginLeft="-15px"
           _text={{
             color: 'light.200',
             fontSize: `${transaction.amount < 999999 ? 'xl' : 'lg'}`,

@@ -1,10 +1,21 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {HStack, VStack, Box, Button, Center, Icon, Stack} from 'native-base';
+import {
+  HStack,
+  VStack,
+  Box,
+  Text,
+  Button,
+  Divider,
+  Center,
+  Icon,
+  Stack,
+} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {windowHeight, windowWidth} from '../../App';
+import Transaction from '../transaction';
+import BackButton from './BackButton';
 
 const NumButton = ({renderSymbol, appendSymbol}) => {
-  console.log(`Re-Rendered ${renderSymbol}`);
   return (
     <Button
       variant="ghost"
@@ -134,10 +145,8 @@ const KeyPad = React.memo(({setExpression, evaluationCallback}) => (
   </Box>
 ));
 
-const Calculator = ({transaction}) => {
+const Calculator = ({transaction = new Transaction(500), navigation}) => {
   const evaluationCallback = useCallback(expression => {
-    console.log('callback created');
-
     if (expression === '') return '0';
 
     if (['+', '-', '*', '/', '.'].includes(expression[expression.length - 1]))
@@ -161,91 +170,96 @@ const Calculator = ({transaction}) => {
 
   return (
     <>
-      <Center flex="1" bg="white" maxH={windowHeight * 0.5}>
+      <Center flex="1" bg="light.200" maxH={windowHeight * 0.6}>
         <Box
+          padding="8px"
           flexDir="row"
           width="full"
           bg="primary.500"
-          justifyContent="space-between">
-          <Stack
-            flex="1"
-            direction={{
-              base: 'column',
-              md: 'row',
-            }}
-            space={4}>
-            <Button
-              onPress={() => {
-                setExpression(evaluationCallback(currentExpression));
-                setKeyPadOpen(!keypadOpen);
-              }}
-              _text={{
-                fontSize: 'xl',
-                color: 'white',
-              }}
-              leftIcon={
-                keypadOpen ? (
-                  <Icon size="md" as={Feather} name="check" color="white" />
-                ) : (
-                  <Icon size="md" as={Feather} name="edit" color="white" />
-                )
-              }>
-              {keypadOpen ? 'Done' : 'Edit'}
-            </Button>
-          </Stack>
+          justifyContent="space-between"
+          shadow="5">
+          <BackButton navigation={navigation} />
           <Box
-            alignItems="flex-end"
+            alignItems="center"
             justifyContent="center"
             flex="2"
             _text={{
               py: '1',
               pr: '5',
-              fontSize: '2xl',
+              fontSize: 'xl',
               color: 'white',
+              fontWeight: 'normal',
             }}>
-            {keypadOpen ? 'Editing' : 'Details'}
+            {keypadOpen ? 'Editing Entry' : 'Entry Details'}
           </Box>
         </Box>
-        <Center flex="2" bg="white">
-          <Center flex="1">
-            <Box
+        <Center
+          padding="20px"
+          flex="2"
+          bg="white"
+          borderRadius="lg"
+          width="90%"
+          marginY="10px"
+          borderTopWidth="8px"
+          borderTopColor="success.600"
+          shadow="7">
+          <Box
+            marginTop="15px"
+            marginBottom="10px"
+            _text={{
+              fontSize: '4xl',
+              fontWeight: 'semibold',
+              color: 'success.600',
+            }}
+            flexDirection="row"
+            justifyContent="space-between">
+            <Text flex="1" marginTop="15px" fontSize={'xl'} color="light.600">
+              Amount
+            </Text>
+            {currentExpression}
+          </Box>
+          <Divider thickness="2px" marginTop="5px" />
+          <Center padding="5px" marginTop="5px" marginBottom="15px">
+            <Button
+              variant="unstyled"
+              height="auto"
+              onPress={() => {
+                setExpression(evaluationCallback(currentExpression));
+                setKeyPadOpen(!keypadOpen);
+              }}
               _text={{
-                fontSize: 'xl',
-                color: 'black',
-              }}>
-              Cash Flow
-            </Box>
-            <Box
-              _text={{
-                fontSize: '4xl',
-                fontWeight: 'semibold',
-                color: 'success.600',
-              }}>
-              {currentExpression}
-            </Box>
+                fontSize: 'lg',
+                color: 'blue.600',
+              }}
+              leftIcon={
+                keypadOpen ? (
+                  <Icon size="md" as={Feather} name="check" color="blue.600" />
+                ) : (
+                  <Icon size="md" as={Feather} name="edit" color="blue.600" />
+                )
+              }>
+              {keypadOpen ? 'DONE EDITING' : 'EDIT ENTRY'}
+            </Button>
           </Center>
         </Center>
 
-        <Box
-          flex="1"
-          alignItems="center"
+        <Center
+          padding="20px"
           _text={{
             fontSize: 'xl',
-            color: 'black',
-          }}>
-          Time Of Creation: {transaction.timeOfCreation}
-        </Box>
-        <Box
-          flex="1"
-          alignItems={'center'}
-          _text={{
-            fontSize: 'xl',
-            color: 'black',
-          }}>
-          Created By : {transaction.creator}
-        </Box>
+            color: 'light.600',
+          }}
+          flex="2"
+          bg="white"
+          borderRadius="lg"
+          width="90%"
+          shadow="7"
+          marginBottom="5px">
+          Created By:&nbsp;{transaction.creator}
+          On {transaction.timeOfCreation}
+        </Center>
       </Center>
-      <Box flex="1" bg="white">
+      <Box flex="1" bg="light.200">
         {keypadOpen && (
           <KeyPad
             setExpression={setExpression}

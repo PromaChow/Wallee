@@ -14,11 +14,16 @@ const MainScreen = ({navigation}) => {
 
   return (
     <>
-      <Box bg="gray.400" flex={1}>
-        <Box width={windowWidth}>
+      <Box bg="light.200" flex={1}>
+        <Box
+          bg="primary.500"
+          width={windowWidth}
+          padding="8px"
+          marginBottom="2"
+          shadow="7">
           <Icon
-            mt="2"
-            ml="2"
+            mt="4"
+            ml="3"
             position="absolute"
             zIndex={2}
             size="md"
@@ -33,7 +38,7 @@ const MainScreen = ({navigation}) => {
             _text={{
               padding: '1',
               fontSize: '2xl',
-              fontWeight: 'bold',
+              fontWeight: 'normal',
               color: 'white',
             }}>
             Journals

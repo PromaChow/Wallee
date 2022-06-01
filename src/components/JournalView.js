@@ -9,6 +9,7 @@ import {
   FormControl,
   Button,
   Box,
+  Fab,
   Icon,
   Center,
   Text,
@@ -20,41 +21,50 @@ import {
   Flex,
 } from 'native-base';
 import Transaction from '../transaction';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import BackButton from './BackButton';
 
-const MemoizedTransactions = React.memo(({listOfTransactions, colorIndex}) => (
-  <VStack space={3} width="full" alignItems="center">
-    {listOfTransactions.map(transaction => {
-      return (
-        <Box
-          marginX="5px"
-          flexDirection="row"
-          width="auto"
-          key={transaction.timeOfCreation}>
-          <Box flex="4">
-            <TransactionListView
-              colorIndex={colorIndex}
-              initialTransaction={transaction}
-            />
+const Stack = createNativeStackNavigator();
+
+const MemoizedTransactions = React.memo(
+  ({listOfTransactions, colorIndex, listUpdated}) => (
+    <VStack space={3} width="full" alignItems="center">
+      {listOfTransactions.map(transaction => {
+        return (
+          <Box
+            height="95px"
+            marginX="5px"
+            marginY="2px"
+            shadow="7"
+            flexDirection="row"
+            key={transaction.timeOfCreation}>
+            <Box flex="4">
+              <TransactionListView
+                colorIndex={colorIndex}
+                initialTransaction={transaction}
+              />
+            </Box>
+            <Box flex="1">
+              <Button
+                height="full"
+                marginLeft="5px"
+                leftIcon={
+                  <Icon size="md" as={Feather} name="trash-2" color="red.500" />
+                }
+                variant="unstyled"
+                bg={fgColors[colorIndex]}
+                _text={{
+                  fontSize: 'md',
+                  fontWeight: 'light',
+                }}></Button>
+            </Box>
           </Box>
-          <Box flex="1">
-            <Button
-              height="full"
-              marginLeft="5px"
-              leftIcon={
-                <Icon size="md" as={Feather} name="trash-2" color="red.500" />
-              }
-              variant="unstyled"
-              bg={fgColors[colorIndex]}
-              _text={{
-                fontSize: 'md',
-                fontWeight: 'light',
-              }}></Button>
-          </Box>
-        </Box>
-      );
-    })}
-  </VStack>
-));
+        );
+      })}
+    </VStack>
+  ),
+);
 
 const SortMenu = ({
   listOfTransactions,
@@ -125,10 +135,12 @@ const SortMenu = ({
 const JournalView = ({
   title = 'Test',
   listOfTransactions = [new Transaction(100, 'User')],
-  colorIndex = 2,
+  colorIndex = 5,
   navigation,
 }) => {
   const [showSortingModal, setShowSortingModal] = useState(false);
+  const [listUpdated, setListUpdated] = useState(false);
+
   const netBalance = useMemo(
     () =>
       listOfTransactions.reduce(
@@ -140,16 +152,7 @@ const JournalView = ({
 
   return (
     <Box bg={bgColors[colorIndex]} flex="1">
-      <Icon
-        position="absolute"
-        marginTop="12px"
-        marginX="10px"
-        as={Feather}
-        name="chevrons-left"
-        size="md"
-        color="light.300"
-        onPress={() => navigation.goBack()}
-      />
+      <BackButton navigation={navigation} />
       <Center padding={2} flexDir="row">
         <Box alignItems="center">
           <Heading padding="3px" paddingTop="3" color="white" mx="auto">
@@ -223,12 +226,23 @@ const JournalView = ({
         <MemoizedTransactions
           listOfTransactions={listOfTransactions}
           colorIndex={colorIndex}
+          listUpdated={listUpdated}
         />
       </ScrollView>
       <SortMenu
         showSortingModal={showSortingModal}
         setShowSortingModal={setShowSortingModal}
         listOfTransactions={listOfTransactions}
+      />
+      <Fab
+        renderInPortal={false}
+        shadow={2}
+        size="md"
+        icon={<Icon color="white" as={Feather} name="plus" size="md" />}
+        onPress={() => {
+          listOfTransactions.push(new Transaction(200));
+          setListUpdated(!setListUpdated);
+        }}
       />
     </Box>
   );

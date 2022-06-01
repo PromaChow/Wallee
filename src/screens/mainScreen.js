@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import CreateJournalView from '../components/CreateJournalView';
-import {ScrollView, Fab, Box, Icon, Center} from 'native-base';
+import {ScrollView, Fab, Box, Icon, IconButton, Center} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {windowWidth, journalKeyMemo, windowHeight} from '../../App';
 
@@ -21,18 +21,20 @@ const MainScreen = ({navigation}) => {
           padding="8px"
           marginBottom="2"
           shadow="7">
-          <Icon
-            mt="4"
-            ml="3"
-            position="absolute"
+          <IconButton
             zIndex={2}
+            position="absolute"
+            marginTop="6px"
+            marginX="8px"
             size="md"
-            as={Feather}
-            name="menu"
-            color="white"
-            onPress={() => {
-              navigation.toggleDrawer();
-            }}></Icon>
+            variant="ghost"
+            _icon={{
+              as: Feather,
+              name: 'menu',
+              color: 'white',
+            }}
+            onPress={() => navigation.toggleDrawer()}
+          />
           <Center
             bg="primary.500"
             _text={{

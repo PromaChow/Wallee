@@ -1,16 +1,19 @@
 import React from 'react';
-import {Icon} from 'native-base';
+import {IconButton} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 
 const BackButton = ({navigation}) => (
-  <Icon
+  <IconButton
     position="absolute"
-    marginTop="12px"
-    marginX="10px"
-    as={Feather}
-    name="chevrons-left"
+    marginTop="5px"
+    marginX="8px"
     size="md"
-    color="white"
+    variant="ghost"
+    _icon={{
+      as: Feather,
+      name: 'chevrons-left',
+      color: 'white',
+    }}
     onPress={() => navigation.goBack()}
   />
 );

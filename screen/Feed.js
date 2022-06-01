@@ -9,6 +9,8 @@ import {AndroidColor} from '@notifee/react-native';
 import SmsAndroid from 'react-native-get-sms-android';
 import {PermissionsAndroid} from 'react-native';
 import {ChangePhoneNumber} from './ChangePhoneNumber';
+import BackgroundService from 'react-native-background-actions';
+import SmsListener from 'react-native-android-sms-listener';
 
 import {
   getUserID,
@@ -68,7 +70,7 @@ async function BudgetNotification() {
   });
 }
 
-const getSMS = async => {
+const getSMS = async () => {
   var json = [];
   var addrs = [
     'bKash',
@@ -80,15 +82,20 @@ const getSMS = async => {
     'MGBLCARDS',
     'Proma',
     '+8801767895677',
+    '1234',
   ];
-  const data = retrieve_data(getUserID());
-  min_date = data['lastAccesssed'];
+
+  const data = await retrieve_data(getUserID());
+  min_date = data['lastAccessedDate'];
+
+  console.log('min_date' + min_date);
+
   for (let addr of addrs) {
     console.log(addr);
     var filter = {
       box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
 
-      minDate: 1608832800000, // timestamp (in milliseconds since UNIX epoch)
+      minDate: min_date, // timestamp (in milliseconds since UNIX epoch)
       maxDate: Date.now(), // timestamp (in milliseconds since UNIX epoch)
 
       address: addr,
@@ -100,7 +107,6 @@ const getSMS = async => {
         console.log('Failed with this error: ' + fail);
       },
       async (count, smsList) => {
-        await SMSNotification();
         // console.log('Count: ', count);
         //console.log('List: ', smsList);
         var arr = JSON.parse(smsList);
@@ -119,8 +125,11 @@ const getSMS = async => {
           console.log(fetchData);
           //console.log('\n\njson' + json['sms'] + '\n\n');
         });
+
+        await SMSNotification();
       },
     );
+    update_doc(getUserID(), 'lastAccessedDate', Date.now());
   }
 };
 let count = 0;
@@ -178,16 +187,23 @@ export const Feed = () => {
   const [aState, setAppState] = useState(AppState.currentState);
   useEffect(() => {
     getSMS();
-
+    SmsListener.addListener(message => {
+      console.log('hi');
+      getSMS();
+      var date = Date.now();
+      console.log(date);
+      console.log(getUserID());
+      //update_doc(getUserID(), 'lastAccessedDate', Date.now());
+    });
     const appStateListener = AppState.addEventListener(
       'change',
       nextAppState => {
         console.log('Next AppState is: ', nextAppState);
         if (nextAppState === 'background') {
+          getSMS();
           var date = Date.now();
           console.log(date);
-          update_doc(getUserID(), 'lastAccessedDate', '1041379200000');
-          getSMS();
+          console.log(getUserID());
         }
         setAppState(nextAppState);
       },

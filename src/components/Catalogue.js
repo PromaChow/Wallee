@@ -2,13 +2,22 @@ import React, {useState} from 'react';
 import CreateJournalView from '../components/CreateJournalView';
 import {ScrollView, Fab, Box, Icon, IconButton, Center} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
-import {windowWidth, journalKeyMemo, windowHeight} from '../../App';
+import {
+  windowWidth,
+  journalKeyMemo,
+  windowHeight,
+  getRandomColor,
+} from '../../App';
 import NavBar from '../components/NavBar';
 import Calculator from '../components/Calculator';
 import JournalListView from '../components/JournalListView';
 import Transaction from '../transaction';
 import listOfJournals from '../userSpace';
 import MenuButton from '../components/MenuButton';
+import {IncomeJournal, ExpenseJournal} from '../journal';
+
+listOfJournals['Dummy'] = new IncomeJournal('Dummy');
+journalKeyMemo['Dummy'] = getRandomColor();
 
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);

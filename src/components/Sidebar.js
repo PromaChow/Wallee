@@ -4,9 +4,9 @@ import MenuItem from './MenuItem';
 
 export const buttonInfo = {
   Test: {iconName: 'alert-triangle', displayName: 'Test'},
-  Journals: {
+  Catalogue: {
     iconName: 'book',
-    displayName: 'Journals',
+    displayName: 'Catalogue',
   },
   Statistics: {
     iconName: 'pie-chart',

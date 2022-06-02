@@ -10,8 +10,7 @@ import {
 } from './FireStoreHelperFunctions';
 
 const listOfJournals = {};
-
-listOfJournals['Dummy'] = new IncomeJournal('Dummy');
+export let currency = 'BDT';
 
 const uid = 'fiOgc2ghJOTWt0klUDmDHguM5c22';
 

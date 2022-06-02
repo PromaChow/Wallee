@@ -38,7 +38,7 @@ const MemoizedTransactions = React.memo(
             marginY="2px"
             shadow="7"
             flexDirection="row"
-            key={transaction.getCreationTimeSliced(0, 9)}>
+            key={transaction.timeOfCreation.getTime()}>
             <Box flex="4">
               <TransactionListView
                 colorIndex={colorIndex}

@@ -13,10 +13,12 @@ import NavBar from '../components/NavBar';
 
 const Test = ({navigation}) => {
   return (
-    <Center>
+    <>
       <NavBar title={'Test'} navigation={navigation} />
-      <Catalogue />
-    </Center>
+      <Center width="full">
+        <Catalogue />
+      </Center>
+    </>
   );
 };
 

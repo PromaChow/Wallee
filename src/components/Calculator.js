@@ -225,7 +225,6 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
               height="auto"
               onPress={() => {
                 transaction.lastAccessTime = new Date();
-
                 setExpression(evaluationCallback(currentExpression));
                 setKeyPadOpen(!keypadOpen);
               }}
@@ -258,7 +257,9 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
           shadow="7"
           marginBottom="5px">
           Created By:&nbsp;{transaction.creator}
-          On {transaction.getCreationTimeSliced(0, 9)}
+          On
+          {transaction.getCreationTimeSliced(0, 9) +
+            transaction.getCreationDateSliced()}
         </Center>
       </Center>
       <Box flex="1" bg="light.200">

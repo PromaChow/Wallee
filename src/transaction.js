@@ -14,16 +14,18 @@ export default class Transaction {
   }
 
   getCreationTimeSliced(startIndex, endIndex) {
-    return (
-      this.timeOfCreation.toTimeString().slice(startIndex, endIndex) +
-      new Date().toDateString()
-    );
+    return this.timeOfCreation.toTimeString().slice(startIndex, endIndex);
   }
 
   getLastAccessTimeSliced(startIndex, endIndex) {
-    return (
-      this.lastAccessTime.toTimeString().slice(startIndex, endIndex) +
-      new Date().toDateString()
-    );
+    return this.lastAccessTime.toTimeString().slice(startIndex, endIndex);
+  }
+
+  getCreationDateSliced(startIndex, endIndex) {
+    return this.timeOfCreation.toDateString().slice(startIndex, endIndex);
+  }
+
+  getLastAccessDateSliced(startIndex, endIndex) {
+    return this.lastAccessTime.toDateString().slice(startIndex, endIndex);
   }
 }

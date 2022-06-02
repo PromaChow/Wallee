@@ -10,7 +10,9 @@ const MenuItem = ({active, componentName, navigation}) => (
     marginLeft="10px"
     borderRadius="md"
     paddingRight="1/6"
-    overflowX="clip"
+    _pressed={{
+      bg: 'primary.300',
+    }}
     onPress={() => {
       navigation.navigate(componentName);
     }}

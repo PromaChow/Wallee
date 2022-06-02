@@ -173,7 +173,7 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
       <Center flex="1" bg="light.200" maxH={windowHeight * 0.6}>
         <Box
           padding="8px"
-          flexDir="row"
+          flexDirection="row"
           width="full"
           bg="primary.500"
           justifyContent="space-between"
@@ -198,7 +198,7 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
           flex="2"
           bg="white"
           borderRadius="lg"
-          width="90%"
+          width="92%"
           marginY="10px"
           borderTopWidth="8px"
           borderTopColor="success.600"
@@ -211,7 +211,7 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
               fontWeight: 'semibold',
               color: 'success.600',
             }}
-            flexDirection="rowhttps://www.reddit.com/r/Angryupvote/comments/v2ese4/title/?utm_source=share&utm_medium=web2x&context=3"
+            flexDirection="row"
             justifyContent="space-between">
             <Text flex="1" marginTop="15px" fontSize={'xl'} color="light.600">
               Amount
@@ -252,7 +252,7 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
           flex="2"
           bg="white"
           borderRadius="lg"
-          width="90%"
+          width="92%"
           shadow="7"
           marginBottom="5px">
           Created By:&nbsp;{transaction.creator}

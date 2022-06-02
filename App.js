@@ -49,13 +49,13 @@ export default App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="Journals"
+          initialRouteName="Test"
           screenOptions={{
             headerShown: false,
           }}
           drawerContent={props => <SideBar {...props} />}>
           <Drawer.Screen name="Journals" component={MainScreen} />
-          <Drawer.Screen name="Test" component={Test} />
+          <Drawer.Screen name="Test" component={Calculator} />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

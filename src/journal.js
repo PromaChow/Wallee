@@ -21,6 +21,12 @@ export class Journal {
   addTransaction(transaction) {
     this.listOfTransactions.push(transaction);
   }
+
+  calculateContribution() {
+    for (const transaction of this.listOfTransactions) {
+      this.contribution += transaction.amount;
+    }
+  }
 }
 
 export class IncomeJournal extends Journal {
@@ -28,7 +34,9 @@ export class IncomeJournal extends Journal {
     super();
   }
 
-  contribute() {}
+  contribute(netBalance) {
+    netBalance += this.contribution;
+  }
 }
 
 export class ExpenseJournal extends Journal {
@@ -36,5 +44,7 @@ export class ExpenseJournal extends Journal {
     super();
   }
 
-  contribute() {}
+  contribute(netBalance) {
+    netBalance -= this.contribution;
+  }
 }

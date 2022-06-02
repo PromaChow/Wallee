@@ -1,16 +1,31 @@
 import React, {useEffect, useState} from 'react';
-
-var notif = [{id: '', text: ''}];
-
+var notif = [];
+var notif = [
+  {
+    id: '12344',
+    type: '0',
+    title: 'Transaction Tracked',
+    text: 'You have new transaction entries tracked',
+    icon: require('./data/trans.jpeg'),
+  },
+];
+notif.splice(notif.length, 0, {
+  id: '12312345',
+  type: 0,
+  title: 'Transaction Tracked',
+  text: 'You have new transaction entries tracked',
+  icon: require('./data/trans.jpeg'),
+});
 export const getNotification = () => {
-  return currency;
+  return notif;
 };
 
-export const insertNotif = text => {
+export const insertNotif = (title, text, type, icon) => {
+  type = type;
   id = Date.now();
-  notif.splice(notif.length, 0, {id, text});
+  notif.splice(notif.length, 0, {id, type, title, text, icon});
 };
 
-export const deleteNotif = position => {
-  notif.splice(position, 1);
+export const deleteNotif = () => {
+  notif = [];
 };

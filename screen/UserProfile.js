@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {add_User} from '../FireStoreHelperFunctions';
+import {addToStorage, add_User} from '../FireStoreHelperFunctions';
 import firebase from '@react-native-firebase/app';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import AnimatedLinearGradient, {
@@ -12,8 +12,17 @@ import Icon from 'react-native-vector-icons/Feather';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {Dimensions} from 'react-native';
-import {update_doc, getUserID} from '../FireStoreHelperFunctions';
-
+import {
+  update_doc,
+  getUserID,
+  retrieve_data,
+  getPhoneNumber,
+} from '../FireStoreHelperFunctions';
+import {
+  launchImageLibrary,
+  launchCamera,
+  launchImageProfilePicture,
+} from '../imageHandlerFunctions';
 import {
   SafeAreaView,
   ScrollView,
@@ -26,6 +35,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  ImageBackground,
 } from 'react-native';
 
 const window = Dimensions.get('window');
@@ -34,250 +44,249 @@ const screen = Dimensions.get('screen');
 export const UserProfile = ({navigation}) => {
   const [username, setName] = React.useState('');
   const [isModalVisible, setModalVisible] = useState(false);
+  const [image, setImage] = useState(require('../data/pfp.jpg'));
+  const [curr, setCurrency] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [email, setEmail] = useState('');
+  const [border, setBorder] = useState(0);
+  const [press, setPress] = useState(0);
+  const [focus, setFocus] = useState(0);
+  const [condition, setCondition] = useState(0);
+  const [isImageChanged, setImageChanged] = useState(false);
+  console.log('con' + condition);
+
+  //console.log(username, currency, image);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  return (
-    <SafeAreaView style={styles.content}>
-      <Modal
-        transparent={true}
-        isVisible={isModalVisible}
-        onBackdropPress={() => setModalVisible(false)}>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <View
-            style={{
-              width: 300,
-              height: 300,
-              backgroundColor: '#033030',
-              opacity: 0.5,
-              justifyContent: 'center',
-              borderRadius: 15,
+  const setData = async () => {
+    const doc = await retrieve_data(getUserID());
+    const image = doc['profilePhoto'];
+    if (image === '') console.log('no image');
+    else {
+      setImage(image);
+      setCondition(1);
+    }
+    const username = doc['name'];
+    setName(username);
+    const currency = doc['currency'];
+    //console.log(currency['currency']['code']);
+    setCurrency(currency['currency']['code']);
+
+    const amount = doc['primaryAmount'];
+    setAmount(amount);
+
+    const email = doc['email'];
+    setEmail(email);
+  };
+  useEffect(() => {
+    setData();
+  }, []);
+
+  if (condition === 0) {
+    return (
+      <SafeAreaView style={styles.content}>
+        <View style={styles.containerUpperView}>
+          <TouchableOpacity
+            onPress={async () => {
+              const img = await launchImageProfilePicture();
+              setImage(img.path);
+              setImageChanged(true);
+              setCondition(1);
             }}>
-            <Text
+            <Image
               style={{
-                color: '#FFFFFF',
+                width: 140,
+                height: 140,
+                borderWidth: 0.5,
+                borderColor: '#3c824d',
+                borderRadius: 90,
+                marginRight: 20,
                 alignSelf: 'center',
-                marginTop: 10,
-                fontFamily: 'fantasy',
-                fontSize: 20,
-              }}>
-              Sorry
-            </Text>
-            <Text
-              style={{
-                color: '#FFFFFF',
-                alignSelf: 'center',
-                margin: 20,
-                marginTop: 40,
-                fontFamily: 'fantasy',
-              }}>
-              If you didn't get the code by SMS, please check your cellular data
-              settings and phone number
-            </Text>
-            <TouchableOpacity
-              style={styles.modalButtonContainer}
-              onPress={async () => {
-                navigation.navigate('SignUp');
-              }}>
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: 12,
-                  fontFamily: 'fantasy',
-                  alignSelf: 'center',
-                }}>
-                EDIT PHONE NUMBER
-              </Text>
-            </TouchableOpacity>
-          </View>
+              }}
+              source={require('../data/pfp.jpg')}
+            />
+          </TouchableOpacity>
         </View>
-      </Modal>
-
-      <View
-        style={{
-          width: window.width,
-          flex: 0.5,
-          borderBottomLeftRadius: 40,
-          borderBottomRightRadius: 40,
-          // backgroundColor: '#000000',
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            borderBottomWidth: 0.5,
-            borderBottomColor: '#000000',
-            //backgroundColor: '#005600',
-          }}>
-          <Image
-            style={{
-              width: 140,
-              height: 140,
-              borderWidth: 1,
-              borderRadius: 75,
-              marginLeft: 20,
-              marginTop: 80,
-              marginBottom: 10,
-              opacity: 0.5,
-            }}
-            source={require('../data/profile.jpeg')}
-          />
-          <View
-            style={{
-              justifyContent: 'center',
-              //backgroundColor: '#005500',
-            }}>
-            <Text
-              style={{
-                position: 'relative',
-                color: '#000000',
-                fontFamily: 'fantasy',
-                opacity: 0.5,
-                fontSize: 15,
-                alignSelf: 'center',
-                marginHorizontal: 30,
-                marginTop: 60,
-              }}>
-              Username
-            </Text>
-
-            <Text
-              style={{
-                position: 'relative',
-                color: '#000000',
-                fontFamily: 'fantasy',
-                fontSize: 17,
-                marginHorizontal: 30,
-              }}>
-              Proma
-            </Text>
-          </View>
-        </View>
-
-        {/* <Icon
-          name="user"
-          color="#115e59"
-          size={130}
-          style={{opacity: 0.7, marginTop: 80}}></Icon> */}
-      </View>
-
-      <View
-        style={{
-          width: window.width,
-          flex: 0.5,
-          borderBottomLeftRadius: 40,
-          borderBottomRightRadius: 40,
-          // backgroundColor: '#000000',
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            borderBottomWidth: 0.5,
-            borderBottomColor: '#000000',
-            //backgroundColor: '#005600',
-          }}>
-          <Image
-            style={{
-              width: 140,
-              height: 140,
-              borderWidth: 1,
-              borderRadius: 75,
-              marginLeft: 20,
-              marginTop: 80,
-              marginBottom: 10,
-              opacity: 0.5,
-            }}
-            source={require('../data/profile.jpeg')}
-          />
-          <View
-            style={{
-              justifyContent: 'center',
-              //backgroundColor: '#005500',
-            }}>
-            <Text
-              style={{
-                position: 'relative',
-                color: '#000000',
-                fontFamily: 'fantasy',
-                opacity: 0.5,
-                fontSize: 15,
-                alignSelf: 'center',
-                marginHorizontal: 30,
-                marginTop: 60,
-              }}>
-              Username
-            </Text>
-
-            <Text
-              style={{
-                position: 'relative',
-                color: '#000000',
-                fontFamily: 'fantasy',
-                fontSize: 17,
-                marginHorizontal: 30,
-              }}>
-              Proma
-            </Text>
-          </View>
-        </View>
-
-        {/* <Icon
-          name="user"
-          color="#115e59"
-          size={130}
-          style={{opacity: 0.7, marginTop: 80}}></Icon> */}
-      </View>
-
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#00000',
-          borderBottomWidth: 0.5,
-          borderBottomColor: '#000000',
-        }}></View>
-
-      <View style={styles.bottomContainer}>
-        <TouchableOpacity
-          onPress={async () => {
-            if (username === '') {
-              toggleModal(!isModalVisible);
-            } else {
-              await update_doc(getUserID(), 'name', username).then(() => {
-                navigation.navigate('Profile_two');
-              });
+        <View style={styles.containerBottomView}>
+          <Text style={styles.text}>Username</Text>
+          <TextInput
+            style={
+              focus === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
             }
-          }}>
-          <Icon
-            name="arrow-right-circle"
-            color="#115e59"
-            size={80}
-            style={{opacity: 0.6, marginRight: 30, marginBottom: 20}}></Icon>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  );
+            editable={true}
+            onFocus={() => {
+              setFocus(1);
+            }}
+            onBlur={() => {
+              setFocus(0);
+            }}
+            onChangeText={username => {
+              setName(username);
+            }}>
+            {username}
+          </TextInput>
+
+          <Text style={styles.text}>Phone Number</Text>
+          <TextInput style={styles.textInputStyleDisabled} editable={false}>
+            {getPhoneNumber()}
+          </TextInput>
+
+          <Text style={styles.text}>Email</Text>
+          <TextInput
+            style={
+              press === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
+            }
+            editable={true}
+            onFocus={() => {
+              setPress(1);
+            }}
+            onBlur={() => {
+              setPress(0);
+            }}
+            onChangeText={email => {
+              setEmail(email);
+            }}>
+            {email}
+          </TextInput>
+
+          <Text style={styles.text}>Total Amount</Text>
+          <TextInput style={styles.textInputStyleDisabled} editable={false}>
+            {curr + ' ' + amount}
+          </TextInput>
+          <TouchableOpacity
+            style={styles.appButtonContainer}
+            onPress={async () => {
+              update_doc(getUserID(), 'name', username);
+              update_doc(getUserID(), 'email', email);
+              navigation.navigate('Feed');
+            }}>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                fontSize: 12,
+                fontFamily: 'fantasy',
+                alignSelf: 'center',
+              }}>
+              SAVE
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (condition === 1) {
+    return (
+      <SafeAreaView style={styles.content}>
+        <View style={styles.containerUpperView}>
+          <TouchableOpacity
+            onPress={async () => {
+              const img = await launchImageProfilePicture();
+              setImage(img.path);
+              setImageChanged(true);
+              setCondition(1);
+            }}>
+            <Image
+              style={{
+                width: 140,
+                height: 140,
+                borderWidth: 0.5,
+                borderColor: '#3c824d',
+                borderRadius: 90,
+                marginRight: 20,
+                alignSelf: 'center',
+              }}
+              source={{uri: image}}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.containerBottomView}>
+          <Text style={styles.text}>Username</Text>
+          <TextInput
+            style={
+              focus === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
+            }
+            editable={true}
+            onFocus={() => {
+              setFocus(1);
+            }}
+            onBlur={() => {
+              setFocus(0);
+            }}
+            onChangeText={username => {
+              setName(username);
+            }}>
+            {username}
+          </TextInput>
+
+          <Text style={styles.text}>Phone Number</Text>
+          <TextInput style={styles.textInputStyleDisabled} editable={false}>
+            {getPhoneNumber()}
+          </TextInput>
+
+          <Text style={styles.text}>Email</Text>
+          <TextInput
+            style={
+              press === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
+            }
+            editable={true}
+            onFocus={() => {
+              setPress(1);
+            }}
+            onBlur={() => {
+              setPress(0);
+            }}
+            onChangeText={email => {
+              setEmail(email);
+            }}>
+            {email}
+          </TextInput>
+          <Text style={styles.text}>Total Amount</Text>
+          <TextInput style={styles.textInputStyleDisabled} editable={false}>
+            {curr + ' ' + amount}
+          </TextInput>
+          <TouchableOpacity
+            style={styles.appButtonContainer}
+            onPress={async () => {
+              console.log(email);
+              update_doc(getUserID(), 'name', username);
+              update_doc(getUserID(), 'email', email);
+              if (isImageChanged === true) addToStorage(getUserID(), image);
+              navigation.navigate('Feed');
+            }}>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                fontSize: 12,
+                fontFamily: 'fantasy',
+                alignSelf: 'center',
+              }}>
+              SAVE
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#95cca3',
+    opacity: 0.8,
   },
   bottomContainer: {
     width: window.width,
     flex: 1,
     justifyContent: 'flex-end',
+    backgroundColor: 'blue',
     alignItems: 'flex-end',
   },
+
   contentButton: {
     flex: 2,
     flexDirection: 'row',
@@ -305,20 +314,53 @@ const styles = StyleSheet.create({
     color: '#115e59',
   },
 
-  textInputStyle: {
-    borderRadius: 10,
-    paddingVertical: 20,
-    alignContent: 'center',
+  containerBottomView: {
+    flex: 2,
+    backgroundColor: 'white',
+    marginHorizontal: 5,
+    borderTopStartRadius: 40,
+    borderTopEndRadius: 40,
+  },
+
+  containerUpperView: {
+    flex: 0.8,
+    backgroundColor: '#95cca3',
+    alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#115e59',
-    borderBottomWidth: 2,
-    margin: 40,
-    opacity: 0.5,
-    height: 65,
-    width: 300,
-    fontSize: 18,
-    paddingHorizontal: 10,
-    color: '#115e59',
+    // marginTop: 250,
+    // marginHorizontal: 5,
+    // borderTopStartRadius: 40,
+    // borderTopEndRadius: 40,
+  },
+
+  textInputStyle: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#708074',
+    marginHorizontal: 40,
+    alignItems: 'stretch',
+    color: '#000000',
+    fontSize: 16,
+    fontFamily: 'fantasy',
+  },
+
+  textInputStyleonFocus: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#80c491',
+    marginHorizontal: 40,
+    alignItems: 'stretch',
+    color: '#000000',
+    fontSize: 16,
+    fontFamily: 'fantasy',
+  },
+
+  textInputStyleDisabled: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#708074',
+    marginHorizontal: 40,
+    opacity: 0.6,
+    alignItems: 'stretch',
+    color: '#000000',
+    fontSize: 16,
     fontFamily: 'fantasy',
   },
 
@@ -328,11 +370,14 @@ const styles = StyleSheet.create({
 
   appButtonContainer: {
     elevation: 15,
-    backgroundColor: '#86b8b2',
+    backgroundColor: '#74b384',
     borderRadius: 10,
     paddingVertical: 15,
     paddingHorizontal: 50,
     borderColor: '#115e59',
+    alignSelf: 'center',
+    marginVertical: 30,
+    marginRight: 30,
   },
 
   modalButtonContainer: {
@@ -388,5 +433,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     color: '#000000',
+  },
+
+  text: {
+    fontSize: 14,
+    color: '#708074',
+    marginTop: 50,
+    marginLeft: 40,
+    fontFamily: 'fantasy',
   },
 });

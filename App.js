@@ -21,6 +21,7 @@ import {Profile_two} from './screen/Profile_two';
 import {CurrencyList} from './screen/CurrencyList';
 import {UserProfile} from './screen/UserProfile';
 import notifee, {EventType} from '@notifee/react-native';
+import {Notification} from './screen/Notification';
 import {
   getUserID,
   ifExist,
@@ -126,6 +127,16 @@ const App = () => {
         {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
         <Stack.Screen name="Profile_two" component={Profile_two} />
         <Stack.Screen name="CurrenyList" component={CurrencyList} />
+        <Stack.Screen
+          name="Notification"
+          component={Notification}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+        <Stack.Screen
+          name="UserProfile"
+          component={UserProfile}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
     // <NavigationContainer>

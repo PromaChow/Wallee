@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
   },
+
   bottomContainer: {
     width: window.width,
     flex: 1,

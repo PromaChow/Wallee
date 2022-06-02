@@ -13,32 +13,37 @@ import {
 } from 'react-native';
 import {array} from '../data/currency';
 import {setCurrency} from '../CurrencyService';
+import Icon from 'react-native-vector-icons/Feather';
+import {
+  getNotification,
+  insertNotif,
+  deleteNotif,
+} from '../NotificationService';
 
-const getCurrency = selected => {
-  console.log(selected.currency.code + ' ');
-  setCurrency(selected);
+const getNotif = () => {
+  return getNotification();
 };
 
-const Item = ({item, navigation}) => (
+const Item = ({item, navigation, src}) => (
   <View style={styles.item}>
     <TouchableOpacity
       style={{flexDirection: 'row'}}
       onPress={() => {
-        getCurrency(item);
-        navigation.navigate('Profile_two');
+        // getCurrency(item);
+        // navigation.navigate('Profile_two');
       }}>
       <Image
         style={{
-          width: 25,
-          height: 25,
+          width: 60,
+          height: 60,
           borderWidth: 1,
-          borderColor: 'red',
-          borderRadius: 12.5,
+          borderColor: 'grey',
+          borderRadius: 30,
           marginRight: 20,
         }}
-        source={{uri: 'data:image/png;base64, ' + item.flag}}
+        source={item.icon}
       />
-      <Text style={styles.title}>{item.currency.code}</Text>
+      <Text style={styles.text}>{item.text}</Text>
     </TouchableOpacity>
   </View>
 );
@@ -58,72 +63,122 @@ const ItemSeparatorView = () => {
 
 export const Notification = ({navigation}) => {
   const [search, setSearch] = React.useState('');
-  const [filteredDataSource, setFilteredDataSource] = React.useState(array);
-  const [masterDataSource, setMasterDataSource] = React.useState(array);
+  const [masterDataSource, setMasterDataSource] = React.useState(getNotif());
 
   const renderItem = ({item}) => {
-    return <Item item={item} navigation={navigation}></Item>;
+    console.log(item.type);
+    if (item.type === '0') var src = '../data/trans.jpeg';
+    else var src = '../data/budget.png';
+    return <Item item={item} src={src} navigation={navigation}></Item>;
   };
-
-  const searchFilterFunction = text => {
-    // Check if searched text is not blank
-    if (text) {
-      // Inserted text is not blank
-      // Filter the masterDataSource and update FilteredDataSource
-      const newData = masterDataSource.filter(function (item) {
-        // Applying filter for the inserted text in search bar
-        const itemData = item.currency.code
-          ? item.currency.code.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setFilteredDataSource(newData);
-      setSearch(text);
-    } else {
-      // Inserted text is blank
-      // Update FilteredDataSource with masterDataSource
-      setFilteredDataSource(masterDataSource);
-      setSearch(text);
-    }
-  };
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        style={styles.textInputStyle}
-        underlineColorAndroid="transparent"
-        onChangeText={text => searchFilterFunction(text)}
-        value={search}
-        placeholder="Search Here"
-        placeholderTextColor="#696866"
-      />
-
-      <FlatList
-        data={filteredDataSource}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        ItemSeparatorComponent={ItemSeparatorView}
-      />
-    </SafeAreaView>
-  );
+  if (masterDataSource.length > 0) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.containerView}>
+          <Text style={styles.title}>Notification</Text>
+          <FlatList
+            data={masterDataSource}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            ItemSeparatorComponent={ItemSeparatorView}
+          />
+        </View>
+      </SafeAreaView>
+    );
+  } else {
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.nocontainerView}>
+          <Image
+            style={{
+              width: 150,
+              height: 150,
+              borderWidth: 1,
+              borderRadius: 100,
+              marginRight: 20,
+            }}
+            source={require('../data/notif.jpeg')}
+          />
+          <Text style={styles.textNonotif}>
+            You don't have any notifications so far
+          </Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#b5ccab',
   },
+
+  nocontainerView: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    marginBottom: 10,
+    borderTopEndRadius: 40,
+    borderTopStartRadius: 40,
+  },
+  containerView: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    marginTop: 40,
+    marginBottom: 10,
+    borderTopEndRadius: 40,
+    borderTopStartRadius: 40,
+  },
+
   item: {
     backgroundColor: '#FFFFFF',
     padding: 10,
-    marginHorizontal: 1,
+    margin: 10,
+    paddingVertical: 20,
+    opacity: 0.9,
   },
   title: {
-    fontSize: 15,
+    fontSize: 23,
     color: '#000000',
+    fontWeight: 'bold',
+    opacity: 0.7,
+    margin: 20,
+    borderBottomColor: '#696866',
+    borderBottomWidth: 0.1,
+    fontFamily: 'fantasy',
   },
 
+  clear: {
+    fontSize: 23,
+    color: '#000000',
+    backgroundColor: '#000000',
+    fontWeight: 'bold',
+    opacity: 0.7,
+    margin: 20,
+    borderBottomColor: '#696866',
+    borderBottomWidth: 0.1,
+    fontFamily: 'fantasy',
+    alignSelf: 'flex-end',
+  },
+
+  text: {
+    fontSize: 15,
+    color: '#000000',
+    opacity: 0.65,
+    marginTop: 10,
+    marginRight: 70,
+  },
+
+  textNonotif: {
+    fontSize: 18,
+    color: '#000000',
+    opacity: 0.65,
+    marginTop: 20,
+    alignSelf: 'center',
+  },
   textInputStyle: {
     height: 40,
     borderWidth: 1,

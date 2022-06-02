@@ -38,6 +38,11 @@ const add_User = uid => {
     });
 };
 
+const getPhoneNumber = () => {
+  const user = firebase.auth().currentUser;
+  if (user) return user.phoneNumber;
+};
+
 const update_doc = async (uid, key, value) => {
   firestore()
     .collection('Users')
@@ -102,4 +107,11 @@ const addToStorage = async (uid, uri) => {
 
   console.log(task instanceof Promise);
 };
-export {getUserID, add_User, retrieve_data, update_doc, addToStorage};
+export {
+  getUserID,
+  add_User,
+  retrieve_data,
+  update_doc,
+  addToStorage,
+  getPhoneNumber,
+};

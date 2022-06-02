@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {add_User} from '../FireStoreHelperFunctions';
+import {addToStorage, add_User} from '../FireStoreHelperFunctions';
 import firebase from '@react-native-firebase/app';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import AnimatedLinearGradient, {
@@ -140,7 +140,7 @@ export const Profile_two = ({navigation}) => {
                   overflow: 'hidden',
                 }}
                 onPress={() => {
-                  uid = getUserID();
+                  const uid = getUserID();
                   update_doc(uid, 'currency', currencyMode);
                   update_doc(uid, 'primaryAmount', amount);
                   update_doc(uid, 'lastAccessedDate', 1041404266000);

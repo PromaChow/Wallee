@@ -11,6 +11,11 @@ import {PermissionsAndroid} from 'react-native';
 import {ChangePhoneNumber} from './ChangePhoneNumber';
 import BackgroundService from 'react-native-background-actions';
 import SmsListener from 'react-native-android-sms-listener';
+import {
+  getNotification,
+  insertNotif,
+  deleteNotif,
+} from '../NotificationService';
 
 import {
   getUserID,
@@ -18,9 +23,14 @@ import {
   add_User,
   retrieve_data,
   update_doc,
+  addToStorage,
 } from '../FireStoreHelperFunctions';
 
-import {launchImageLibrary, launchCamera} from '../imageHandlerFunctions';
+import {
+  launchImageLibrary,
+  launchCamera,
+  launchImageProfilePicture,
+} from '../imageHandlerFunctions';
 import {
   SafeAreaView,
   ScrollView,
@@ -32,6 +42,7 @@ import {
   Button,
   TextInput,
   AppState,
+  Image,
 } from 'react-native';
 
 async function SMSNotification() {
@@ -50,6 +61,12 @@ async function SMSNotification() {
       //smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
     },
   });
+  insertNotif(
+    'Transaction Tracked',
+    'You have new transaction entries tracked',
+    '0',
+    require('../data/trans.jpeg'),
+  );
 }
 
 async function BudgetNotification() {
@@ -170,7 +187,7 @@ const post_sms = async sms => {
   return fetchData;
 };
 
-const post = async uri => {
+const post_image = async uri => {
   const fetchData = new Promise((resolve, reject) => {
     // console.log(uri);
     ImgToBase64.getBase64String(uri).then(base64String => {
@@ -198,16 +215,9 @@ const post = async uri => {
 // console.log(tesseract);
 export const Feed = () => {
   const [aState, setAppState] = useState(AppState.currentState);
+  const [image, setImage] = useState();
   useEffect(() => {
     getSMS();
-    SmsListener.addListener(message => {
-      console.log('hi');
-      getSMS();
-      var date = Date.now();
-      console.log(date);
-      console.log(getUserID());
-      //update_doc(getUserID(), 'lastAccessedDate', Date.now());
-    });
     const appStateListener = AppState.addEventListener(
       'change',
       nextAppState => {
@@ -237,7 +247,18 @@ export const Feed = () => {
           console.log(uri);
           // addToStorage(user.uid, uri);
         }}></Button>
-
+      <Button
+        title="phone"
+        onPress={async () => {
+          console.log(user.phoneNumber + user.uid);
+          // addToStorage(user.uid, uri);
+        }}></Button>
+      <Button
+        title="Edit Profile"
+        onPress={async () => {
+          navigation.navigate('UserProfile');
+          // addToStorage(user.uid, uri);
+        }}></Button>
       <Button
         title="choose cam"
         onPress={async () => {
@@ -245,7 +266,6 @@ export const Feed = () => {
           console.log(uri);
           addToStorage(user.uid, uri);
         }}></Button>
-
       <Button
         title="Sign Out"
         style={{backgroundColor: '#000000', alignItems: 'center'}}
@@ -262,12 +282,19 @@ export const Feed = () => {
         title="Recognize Image"
         onPress={async () => {
           let uri = await launchImageLibrary();
-          let fetchData = await post(uri);
+          let fetchData = await post_image(uri);
           console.log('fetch');
           console.log(fetchData['address']);
           // addToStorage(user.uid, uri);
         }}></Button>
 
+        
+      <Button
+        title="Notif"
+        onPress={async () => {
+          navigation.navigate('Notification');
+          // addToStorage(user.uid, uri);
+        }}></Button>
       <Button
         title="choose cam"
         onPress={async () => {
@@ -275,7 +302,6 @@ export const Feed = () => {
           console.log(uri);
           addToStorage(user.uid, uri);
         }}></Button>
-
       <Button
         title="Refresh"
         onPress={async () => {
@@ -296,11 +322,17 @@ export const Feed = () => {
             console.log('Camera permission denied');
           }
         }}></Button>
-
       <Button
         title="Change Phone Number"
         onPress={async () => {
           navigation.navigate('ChangePhoneNumber');
+        }}></Button>
+      <Button
+        title="Change Image"
+        onPress={async () => {
+          let uri = await launchImageProfilePicture();
+          setImage(uri);
+          console.log(uri);
         }}></Button>
     </SafeAreaView>
   );

@@ -1,5 +1,5 @@
 import {Journal, IncomeJournal, ExpenseJournal} from '../journal';
-import TransactionListView from './TransactionView';
+import TransactionListView from './TransactionListView';
 import {windowHeight, bgColors, fgColors} from '../../App';
 import listOfJournals from '../userSpace';
 import React, {useMemo, useState} from 'react';

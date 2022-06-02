@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {bgColors} from '../../App';
 import {
-  HStack,
-  VStack,
   Pressable,
   Box,
   Text,
@@ -13,10 +11,6 @@ import {
   Stack,
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
-import {windowHeight, windowWidth} from '../../App';
-import Transaction from '../transaction';
-import BackButton from './BackButton';
-import {LightSpeedInLeft} from 'react-native-reanimated';
 import {ExpenseJournal, IncomeJournal, Journal} from '../journal';
 import mainScreen from '../screens/mainScreen';
 

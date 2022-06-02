@@ -11,7 +11,6 @@ import JournalView from './src/components/JournalView';
 import Calculator from './src/components/Calculator';
 import SideBar from './src/components/Sidebar';
 import Test from './src/screens/Test';
-import Catalogue from './src/components/Catalogue';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;

@@ -211,7 +211,7 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
               fontWeight: 'semibold',
               color: 'success.600',
             }}
-            flexDirection="row"
+            flexDirection="rowhttps://www.reddit.com/r/Angryupvote/comments/v2ese4/title/?utm_source=share&utm_medium=web2x&context=3"
             justifyContent="space-between">
             <Text flex="1" marginTop="15px" fontSize={'xl'} color="light.600">
               Amount

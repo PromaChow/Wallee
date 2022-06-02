@@ -1,8 +1,9 @@
 import React from 'react';
 import {Divider, VStack, Box, Button, Icon, Avatar} from 'native-base';
-import MenuButton from './MenuButton';
+import MenuItem from './MenuItem';
 
 export const buttonInfo = {
+  Test: {iconName: 'alert-triangle', displayName: 'Test'},
   Journals: {
     iconName: 'book',
     displayName: 'Journals',
@@ -66,7 +67,7 @@ const SideBar = ({state, navigation}) => {
       </Box>
       <VStack alignItems={'flex-start'} space="2" flex="1">
         {Object.keys(buttonInfo).map(componentName => (
-          <MenuButton
+          <MenuItem
             key={componentName}
             active={currentRoute == componentName}
             componentName={componentName}

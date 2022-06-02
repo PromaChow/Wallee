@@ -1,34 +1,22 @@
 import React from 'react';
-import {Button, Icon, Box, Menu} from 'native-base';
+import {IconButton} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
-import {buttonInfo} from './Sidebar';
 
-const MenuButton = ({active, componentName, navigation}) => (
-  <Button
-    bg={active ? undefined : 'transparent'}
-    variant="solid"
-    marginLeft="10px"
-    borderRadius="md"
-    paddingRight="1/6"
-    overflowX="clip"
-    onPress={() => {
-      navigation.navigate(componentName);
+const MenuButton = ({navigation}) => (
+  <IconButton
+    zIndex={2}
+    position="absolute"
+    marginTop="6px"
+    marginX="8px"
+    size="md"
+    variant="ghost"
+    _icon={{
+      as: Feather,
+      name: 'menu',
+      color: 'white',
     }}
-    leftIcon={
-      <Icon
-        marginRight="10px"
-        size="md"
-        as={Feather}
-        opacity={0.7}
-        name={buttonInfo[componentName].iconName}
-      />
-    }
-    _text={{
-      color: active ? 'blue.50' : 'trueGray.500',
-      fontSize: 'lg',
-    }}>
-    {buttonInfo[componentName].displayName}
-  </Button>
+    onPress={() => navigation.toggleDrawer()}
+  />
 );
 
-export default React.memo(MenuButton);
+export default MenuButton;

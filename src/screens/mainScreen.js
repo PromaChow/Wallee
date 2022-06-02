@@ -3,11 +3,12 @@ import CreateJournalView from '../components/CreateJournalView';
 import {ScrollView, Fab, Box, Icon, IconButton, Center} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {windowWidth, journalKeyMemo, windowHeight} from '../../App';
-
+import NavBar from '../components/NavBar';
 import Calculator from '../components/Calculator';
 import JournalView from '../components/JournalView';
 import Transaction from '../transaction';
 import listOfJournals from '../userSpace';
+import MenuButton from '../components/MenuButton';
 
 const MainScreen = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
@@ -15,37 +16,7 @@ const MainScreen = ({navigation}) => {
   return (
     <>
       <Box bg="light.200" flex={1}>
-        <Box
-          bg="primary.500"
-          width={windowWidth}
-          padding="8px"
-          marginBottom="2"
-          shadow="7">
-          <IconButton
-            zIndex={2}
-            position="absolute"
-            marginTop="6px"
-            marginX="8px"
-            size="md"
-            variant="ghost"
-            _icon={{
-              as: Feather,
-              name: 'menu',
-              color: 'white',
-            }}
-            onPress={() => navigation.toggleDrawer()}
-          />
-          <Center
-            bg="primary.500"
-            _text={{
-              padding: '1',
-              fontSize: '2xl',
-              fontWeight: 'normal',
-              color: 'white',
-            }}>
-            Journals
-          </Center>
-        </Box>
+        <NavBar title={'Journals'} navigation={navigation} />;
         <Box flex="10" bg="light.200">
           {Object.keys(journalKeyMemo).map(key => {
             return (

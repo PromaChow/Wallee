@@ -10,6 +10,7 @@ import MainScreen from './src/screens/mainScreen';
 import JournalView from './src/components/JournalView';
 import Calculator from './src/components/Calculator';
 import SideBar from './src/components/Sidebar';
+import Test from './src/screens/Test';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
@@ -40,6 +41,7 @@ colorValues.forEach(number => {
 
 export const getRandomColor = () =>
   Math.floor(Math.random() * colorNames.length);
+
 export const journalKeyMemo = {};
 
 export default App = () => {
@@ -53,10 +55,8 @@ export default App = () => {
           }}
           drawerContent={props => <SideBar {...props} />}>
           <Drawer.Screen name="Journals" component={MainScreen} />
-          <Drawer.Screen name="Test" component={JournalView} />
-          <Drawer.Screen name="Calculator" component={Calculator} />
+          <Drawer.Screen name="Test" component={Test} />
         </Drawer.Navigator>
-        {/* <Stack.Navigator></Stack.Navigator> */}
       </NavigationContainer>
     </NativeBaseProvider>
   );

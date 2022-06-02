@@ -6,7 +6,7 @@ import {NativeBaseProvider} from 'native-base';
 import {Dimensions} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import MainScreen from './src/screens/mainScreen';
+import Catalogue from './src/components/Catalogue';
 import JournalView from './src/components/JournalView';
 import Calculator from './src/components/Calculator';
 import SideBar from './src/components/Sidebar';
@@ -49,14 +49,13 @@ export default App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="Test"
+          initialRouteName="Catalogue"
           screenOptions={{
             headerShown: false,
           }}
           drawerContent={props => <SideBar {...props} />}>
-          <Drawer.Screen name="Journals" component={MainScreen} />
+          <Drawer.Screen name="Catalogue" component={Catalogue} />
           <Drawer.Screen name="JournalView" component={Calculator} />
-          <Drawer.Screen name="Test" component={Test} />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

@@ -12,7 +12,6 @@ import {
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {ExpenseJournal, IncomeJournal, Journal} from '../journal';
-import mainScreen from '../screens/mainScreen';
 
 const JournalListView = ({journal, colorIndex = 2, navigation}) => {
   return (

@@ -13,8 +13,7 @@ export class Journal {
     this.title = title;
     this.contribution = 0;
     this.creator = creator;
-    this.timeOfCreation =
-      new Date().toTimeString().slice(0, 9) + new Date().toDateString();
+    this.timeOfCreation = new Date();
     this.lastAccessTime = this.timeOfCreation;
   }
 
@@ -26,6 +25,20 @@ export class Journal {
     for (const transaction of this.listOfTransactions) {
       this.contribution += transaction.amount;
     }
+  }
+
+  getCreationTimeSliced(startIndex, endIndex) {
+    return (
+      this.timeOfCreation.toTimeString().slice(startIndex, endIndex) +
+      new Date().toDateString()
+    );
+  }
+
+  getLastAccessTimeSliced(startIndex, endIndex) {
+    return (
+      this.lastAccessTime.toTimeString().slice(startIndex, endIndex) +
+      new Date().toDateString()
+    );
   }
 }
 

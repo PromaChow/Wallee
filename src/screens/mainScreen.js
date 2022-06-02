@@ -16,7 +16,7 @@ const MainScreen = ({navigation}) => {
   return (
     <>
       <Box bg="light.200" flex={1}>
-        <NavBar title={'Journals'} navigation={navigation} />;
+        <NavBar title={'Journals'} navigation={navigation} />
         <Box flex="10" bg="light.200">
           {Object.keys(journalKeyMemo).map(key => {
             return (

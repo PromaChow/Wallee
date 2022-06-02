@@ -91,7 +91,7 @@ const TransactionListView = ({
             fontWeight: 'bold',
           }}
           flex="1">
-          {transaction.timeOfCreation.slice(0, 5)}
+          {transaction.getCreationTimeSliced(0, 5)}
         </Box>
       </Center>
     </Center>

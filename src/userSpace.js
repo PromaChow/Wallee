@@ -11,6 +11,8 @@ import {
 
 const listOfJournals = {};
 
+listOfJournals['Dummy'] = new IncomeJournal('Dummy');
+
 const uid = 'fiOgc2ghJOTWt0klUDmDHguM5c22';
 
 export default listOfJournals;

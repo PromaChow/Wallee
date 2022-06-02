@@ -9,6 +9,8 @@ import Transaction from '../transaction';
 import listOfJournals from '../userSpace';
 import MenuButton from '../components/MenuButton';
 import NavBar from '../components/NavBar';
+import JournalListView from '../components/JournalListView';
+import {IncomeJournal} from '../journal';
 
 const Test = ({navigation}) => {
   return (

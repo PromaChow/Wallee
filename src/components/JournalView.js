@@ -1,6 +1,6 @@
 import {Journal, IncomeJournal, ExpenseJournal} from '../journal';
 import TransactionListView from './TransactionListView';
-import {windowHeight, bgColors, fgColors} from '../../App';
+import {windowHeight, bgColors, fgColors, journalKeyMemo} from '../../App';
 import listOfJournals from '../userSpace';
 import React, {useMemo, useState} from 'react';
 import Feather from 'react-native-vector-icons/Feather';
@@ -132,18 +132,13 @@ const SortMenu = ({
   );
 };
 
-const JournalView = ({
-  title = 'Test',
-  listOfTransactions = [new Transaction(100, 'User')],
-  colorIndex = 5,
-  navigation,
-}) => {
+const JournalView = ({journal, colorIndex = 5, navigation}) => {
   const [showSortingModal, setShowSortingModal] = useState(false);
   const [listUpdated, setListUpdated] = useState(false);
 
   const netBalance = useMemo(
     () =>
-      listOfTransactions.reduce(
+      journal.listOfTransactions.reduce(
         (partialSum, transaction) => partialSum + transaction.amount,
         0,
       ),
@@ -163,7 +158,7 @@ const JournalView = ({
               size="sm"
               color="light.300"
             />{' '}
-            {title}
+            {journal.title}
           </Heading>
           <Divider my="2" thickness="3" bg={fgColors[colorIndex]} />
           <Flex
@@ -178,7 +173,7 @@ const JournalView = ({
                 fontWeight="bold"
                 color={'success.400'}>{`${netBalance}\n\n`}</Text>
               # of Entries:&nbsp;&nbsp;
-              <Text fontWeight="bold">{listOfTransactions.length}</Text>
+              <Text fontWeight="bold">{journal.listOfTransactions.length}</Text>
             </Heading>
             <Divider
               orientation="vertical"
@@ -224,7 +219,7 @@ const JournalView = ({
       </Center>
       <ScrollView width="full" paddingTop="30px">
         <MemoizedTransactions
-          listOfTransactions={listOfTransactions}
+          listOfTransactions={journal.listOfTransactions}
           colorIndex={colorIndex}
           listUpdated={listUpdated}
         />
@@ -232,7 +227,7 @@ const JournalView = ({
       <SortMenu
         showSortingModal={showSortingModal}
         setShowSortingModal={setShowSortingModal}
-        listOfTransactions={listOfTransactions}
+        listOfTransactions={journal.listOfTransactions}
       />
       <Fab
         renderInPortal={false}
@@ -240,7 +235,7 @@ const JournalView = ({
         size="md"
         icon={<Icon color="white" as={Feather} name="plus" size="md" />}
         onPress={() => {
-          listOfTransactions.push(new Transaction(200));
+          journal.listOfTransactions.push(new Transaction(200));
           setListUpdated(!setListUpdated);
         }}
       />

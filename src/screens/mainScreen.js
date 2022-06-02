@@ -21,8 +21,7 @@ const MainScreen = ({navigation}) => {
           {Object.keys(journalKeyMemo).map(key => {
             return (
               <JournalView
-                key={key}
-                title={key}
+                journal={listOfJournals[key]}
                 colorIndex={journalKeyMemo[key]}
               />
             );

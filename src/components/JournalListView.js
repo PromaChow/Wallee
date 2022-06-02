@@ -14,7 +14,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {ExpenseJournal, IncomeJournal, Journal} from '../journal';
 import mainScreen from '../screens/mainScreen';
 
-const Catalogue = ({journal, colorIndex = 2, navigation}) => {
+const JournalListView = ({journal, colorIndex = 2, navigation}) => {
   return (
     <Pressable>
       <Box
@@ -75,4 +75,4 @@ const Catalogue = ({journal, colorIndex = 2, navigation}) => {
   );
 };
 
-export default Catalogue;
+export default JournalListView;

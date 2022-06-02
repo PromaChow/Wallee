@@ -3,23 +3,10 @@ import Transaction from '../transaction';
 import {windowWidth} from '../../App';
 import {bgColors, fgColors} from '../../App';
 import Feather from 'react-native-vector-icons/Feather';
-
 import {useState} from 'react';
-import {
-  Modal,
-  NativeBaseProvider,
-  Box,
-  Icon,
-  Center,
-  Text,
-  Spinner,
-} from 'native-base';
+import {Modal, Box, Icon, Center, Text} from 'native-base';
 
-const TransactionListView = ({
-  maxWidth = '150',
-  colorIndex = 3,
-  initialTransaction,
-}) => {
+const TransactionListView = ({colorIndex = 3, initialTransaction}) => {
   const [transaction, setTransaction] = useState(initialTransaction);
   const [showModal, setShowModal] = useState(false);
   return (

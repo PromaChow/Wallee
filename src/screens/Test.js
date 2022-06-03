@@ -16,9 +16,9 @@ const Test = ({navigation}) => {
   return (
     <>
       {/* <NavBar title={'Test'} navigation={navigation} /> */}
-      <Center width="full" flex={1}>
+      <Box width="full" flex={1}>
         <JournalView journal={listOfJournals['Dummy']} />
-      </Center>
+      </Box>
     </>
   );
 };

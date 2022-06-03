@@ -62,7 +62,7 @@ export default App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="Test"
+          initialRouteName="Catalogue"
           screenOptions={{
             headerShown: false,
           }}

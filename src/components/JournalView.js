@@ -2,7 +2,7 @@ import {Journal, IncomeJournal, ExpenseJournal} from '../journal';
 import TransactionListView from './TransactionListView';
 import {windowHeight, bgColors, fgColors, journalKeyMemo} from '../../App';
 import listOfJournals from '../userSpace';
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import {
   Modal,
@@ -27,8 +27,8 @@ import BackButton from './BackButton';
 
 const Stack = createNativeStackNavigator();
 
-const MemoizedTransactions = React.memo(
-  ({listOfTransactions, colorIndex, listUpdated}) => (
+const ListOfTransactions = ({listOfTransactions, colorIndex, listUpdated}) => (
+  <ScrollView flex="1">
     <VStack space={3} width="full" alignItems="center">
       {listOfTransactions.map(transaction => {
         return (
@@ -63,7 +63,7 @@ const MemoizedTransactions = React.memo(
         );
       })}
     </VStack>
-  ),
+  </ScrollView>
 );
 
 const SortMenu = ({
@@ -145,6 +145,12 @@ const JournalView = ({journal, colorIndex = 5, navigation}) => {
     [netBalance],
   );
 
+  const handleAddTransaction = () => {
+    console.log('pressed');
+    journal.listOfTransactions.push(new Transaction(200));
+    setListUpdated(!setListUpdated);
+  };
+
   return (
     <Box bg={bgColors[colorIndex]} flex="1">
       <BackButton navigation={navigation} />
@@ -218,7 +224,7 @@ const JournalView = ({journal, colorIndex = 5, navigation}) => {
         </Box>
       </Center>
       <ScrollView width="full" paddingTop="30px">
-        <MemoizedTransactions
+        <ListOfTransactions
           listOfTransactions={journal.listOfTransactions}
           colorIndex={colorIndex}
           listUpdated={listUpdated}
@@ -234,10 +240,7 @@ const JournalView = ({journal, colorIndex = 5, navigation}) => {
         shadow={2}
         size="md"
         icon={<Icon color="white" as={Feather} name="plus" size="md" />}
-        onPress={() => {
-          journal.listOfTransactions.push(new Transaction(200));
-          setListUpdated(!setListUpdated);
-        }}
+        onPress={handleAddTransaction}
       />
     </Box>
   );

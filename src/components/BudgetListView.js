@@ -79,7 +79,10 @@ const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
           <Progress
             width="90%"
             size="lg"
-            colorScheme={bgColors[colorIndex]}
+            bg="info.300"
+            _filledTrack={{
+              bg: proportion < 100 ? 'info.500' : 'red.500',
+            }}
             value={proportion}
           />
         </Box>

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import notifee from '@notifee/react-native';
 import SmsAndroid from 'react-native-get-sms-android';
 import {PermissionsAndroid, AppState} from 'react-native';
 import BackgroundService from 'react-native-background-actions';
@@ -14,11 +13,12 @@ import {
 } from '../FireStoreHelperFunctions';
 import {listOfAutoTransactions} from '../userSpace';
 import {ListOfTransactions} from '../components/JournalView';
+import {Box} from 'native-base';
 
 const dummy = {
   Date: '27.07.21 ',
   Balance: 'undefined',
-  Amount: 'BDT 636.00',
+  Amount: '636',
   Type: 'Credit',
 };
 
@@ -90,26 +90,25 @@ const getSMS = async () => {
 };
 
 const post_sms = async sms => {
-  const fetchData = new Promise((resolve, reject) => {
-    //console.log(uri);
-    fetch('http://192.168.88.104:8080/msg', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        sms: sms,
-      }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('data' + data['Balance']);
-        resolve(data);
-      });
-  });
+  //   const fetchData = new Promise((resolve, reject) => {
+  //     fetch('http://192.168.88.104:8080/msg', {
+  //       method: 'POST',
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         sms: sms,
+  //       }),
+  //     })
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         console.log('data' + data['Balance']);
+  //         resolve(data);
+  //       });
+  //   });
 
-  return fetchData;
+  return new Promise.resolve(dummy);
 };
 
 export const AutoPilot = () => {
@@ -136,4 +135,13 @@ export const AutoPilot = () => {
       appStateListener?.remove();
     };
   }, []);
+
+  return (
+    <Box
+      _text={{
+        fontSize: 'lg',
+      }}>
+      Hello
+    </Box>
+  );
 };

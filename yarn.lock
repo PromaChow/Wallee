@@ -4130,6 +4130,11 @@
   "resolved" "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz"
   "version" "5.0.1"
 
+"eventemitter3@^4.0.7":
+  "integrity" "sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw=="
+  "resolved" "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.7.tgz"
+  "version" "4.0.7"
+
 "exec-sh@^0.3.2":
   "integrity" "sha512-nQn+hI3yp+oD0huYhKwvYI32+JFeq+XkNcD1GAo3Y/MjxsfVGmrrzrnzjWiNY6f+pUCP440fThsFh5gZrRAU/w=="
   "resolved" "https://registry.npmjs.org/exec-sh/-/exec-sh-0.3.6.tgz"
@@ -6996,6 +7001,13 @@
   "resolved" "https://registry.npmjs.org/react-native-android-sms-listener/-/react-native-android-sms-listener-0.8.0.tgz"
   "version" "0.8.0"
 
+"react-native-background-actions@^2.6.7":
+  "integrity" "sha512-qjHeks9EbLIXeb2xn3AR0eLVlUh/sAboKt0tI3ZN8leEEL1xmZUvpbk0fN6RKRpxpv7ATVHgWjGMK1FNoYh+Ug=="
+  "resolved" "https://registry.npmjs.org/react-native-background-actions/-/react-native-background-actions-2.6.7.tgz"
+  "version" "2.6.7"
+  dependencies:
+    "eventemitter3" "^4.0.7"
+
 "react-native-codegen@^0.0.8":
   "integrity" "sha512-k/944+0XD+8l7zDaiKfYabyEKmAmyZgS1mj+4LcSRPyHnrjgCHKrh/Y6jM6kucQ6xU1+1uyMmF/dSkikxK8i+Q=="
   "resolved" "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.0.8.tgz"
@@ -7090,7 +7102,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
-"react-native@*", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@0.67.4":
+"react-native@*", "react-native@>=0.42.0", "react-native@>=0.47.0", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@0.67.4":
   "integrity" "sha512-NA9d9lNJu9TViEJu2uZxWXUP+QNUilGGA5tdMbVFedNroOH1lnQ3n/FAVoGK1gqGarCgNTtheBxUpEa979Cu8w=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.67.4.tgz"
   "version" "0.67.4"

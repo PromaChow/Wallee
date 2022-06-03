@@ -16,6 +16,7 @@ import Calculator from './src/components/Calculator';
 import SideBar from './src/components/Sidebar';
 import Test from './src/screens/Test';
 import NavCatalogue from './src/components/Catalogue';
+import {AutoPilot} from './src/screens/AutoPilot';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
@@ -70,7 +71,7 @@ export default App = () => {
           drawerContent={props => <SideBar {...props} />}>
           <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
           <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
-          {/* <Drawer.Screen name="Test" component={Test} /> */}
+          <Drawer.Screen name="AutoPilot" component={AutoPilot} />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

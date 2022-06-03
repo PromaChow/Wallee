@@ -1,22 +1,13 @@
 import React from 'react';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import auth from '@react-native-firebase/auth';
+import firebase from '@react-native-firebase/app';
 
-const ifExist = (uid, b) => {
-  firestore()
-    .collection('Users')
-    .doc(uid)
-    .get()
-    .then(documentSnapshot => {
-      if (documentSnapshot.exists) {
-        console.log('hi');
-        b = true;
-        return true;
-      } else {
-        b = false;
-        return false;
-      }
-    });
+const getUserID = () => {
+  const user = firebase.auth().currentUser;
+  if (user) return user.uid;
+  else return null;
 };
 
 const add_User = uid => {
@@ -36,12 +27,20 @@ const add_User = uid => {
             name: '',
             currency: null,
             primaryAmount: 0.0,
+            lastAccessedDate: 1041379200000,
+            profilePhoto: '',
+            email: '',
           })
           .then(() => {
             console.log('User added!');
           });
       }
     });
+};
+
+const getPhoneNumber = () => {
+  const user = firebase.auth().currentUser;
+  if (user) return user.phoneNumber;
 };
 
 const update_doc = async (uid, key, value) => {
@@ -56,17 +55,23 @@ const update_doc = async (uid, key, value) => {
 
 const retrieve_data = async uid => {
   //console.log("hi");
-  firestore()
-    .collection('Users')
-    .doc(uid)
-    .get()
-    .then(documentSnapshot => {
-      console.log('User exists: ', documentSnapshot.exists);
+  const user = new Promise((resolve, reject) => {
+    firestore()
+      .collection('Users')
+      .doc(uid)
+      .get()
+      .then(documentSnapshot => {
+        console.log('User exists: ', documentSnapshot.exists);
 
-      if (documentSnapshot.exists) {
-        console.log('User data: ', documentSnapshot.data());
-      }
-    });
+        if (documentSnapshot.exists) {
+          const document = documentSnapshot.data();
+          console.log(document['primaryAmount']);
+          //console.log('User data: ', documentSnapshot.data());
+          resolve(documentSnapshot.data());
+        }
+      });
+  });
+  return await user;
 };
 
 const deletePrivFiles = async uid => {
@@ -102,4 +107,11 @@ const addToStorage = async (uid, uri) => {
 
   console.log(task instanceof Promise);
 };
-export {ifExist, add_User, retrieve_data, update_doc, addToStorage};
+export {
+  getUserID,
+  add_User,
+  retrieve_data,
+  update_doc,
+  addToStorage,
+  getPhoneNumber,
+};

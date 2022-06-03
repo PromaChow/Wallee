@@ -288,7 +288,6 @@ export const Feed = () => {
           // addToStorage(user.uid, uri);
         }}></Button>
 
-        
       <Button
         title="Notif"
         onPress={async () => {
@@ -325,7 +324,7 @@ export const Feed = () => {
       <Button
         title="Change Phone Number"
         onPress={async () => {
-          navigation.navigate('ChangePhoneNumber');
+          navigation.navigate('ChangePhoneNumberOuter');
         }}></Button>
       <Button
         title="Change Image"
@@ -333,6 +332,12 @@ export const Feed = () => {
           let uri = await launchImageProfilePicture();
           setImage(uri);
           console.log(uri);
+        }}></Button>
+
+      <Button
+        title="TOP"
+        onPress={async () => {
+          navigation.navigate('OTPScreenChange');
         }}></Button>
     </SafeAreaView>
   );

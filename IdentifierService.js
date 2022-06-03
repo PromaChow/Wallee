@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {retrieve_data, getUserID, update_doc} from './FireStoreHelperFunctions';
 
 var addrs = [
   'bKash',
@@ -12,13 +13,19 @@ var addrs = [
   '+8801767895677',
   '1234',
 ];
-
+export const fillAddress = async () => {
+  const data = await retrieve_data(getUserID());
+  addrs = data['ID'];
+};
 export const getAddress = () => {
   return addrs;
 };
 
 export const insertAddress = addr => {
-  if (ifExists(addr) == false) addrs.splice(addrs.length, 0, addr);
+  if (ifExists(addr) == false) {
+    addrs.splice(addrs.length, 0, addr);
+    update_doc(getUserID(), 'ID', addrs);
+  }
 };
 
 const ifExists = addr => {

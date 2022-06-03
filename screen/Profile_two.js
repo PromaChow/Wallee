@@ -140,10 +140,23 @@ export const Profile_two = ({navigation}) => {
                   overflow: 'hidden',
                 }}
                 onPress={() => {
+                  var addrs = [
+                    'bKash',
+                    '16216',
+                    'JANATA BANK',
+                    'NAGAD',
+                    '01841-325325',
+                    '01842-406877',
+                    'MGBLCARDS',
+                    'Proma',
+                    '+8801767895677',
+                    '1234',
+                  ];
                   const uid = getUserID();
                   update_doc(uid, 'currency', currencyMode);
                   update_doc(uid, 'primaryAmount', amount);
                   update_doc(uid, 'lastAccessedDate', 1041404266000);
+                  update_doc(uid, 'ID', addrs);
                   navigation.navigate('Feed');
                 }}>
                 <Text

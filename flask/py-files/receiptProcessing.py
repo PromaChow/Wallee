@@ -177,4 +177,4 @@ def getData(img_path):
     print(getAddress() + " " + getAmount())
 
 
-getData('r13.jpg')
+

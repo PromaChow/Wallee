@@ -275,12 +275,12 @@ sms.insert(len(sms), '''Your payment for iPayBRTA Tran-No:2103040849330/BDT 23,2
 sms.insert(len(sms), "Tk3,000.00 transferred to A/C:017916155391 Fee:Tk.00, Your A/C Balance: Tk1,054.00 TxnId:2890470643 Date:11-APR-22 03:26:20 pm. Download https://bit.ly/nexuspay")
 sms.insert(len(sms), "Cash-In from A/C: 019025556564 Tk4,030.00 Fee: Tk.00, Your A/C Balance: Tk4,074.00.TxnId:2868070895 Date:01-APR-22 05:24:25 pm. Download https://bit.ly/nexuspay")
 sms.insert(len(sms), "Dear Card Member, BDT 50000.00 has been credited to your MGBL Credit Card 452989*2604 on 23.05.21. Thank you")
-for res in sms:
-    print("\n\n"+res+"\n\n")
-   # res = preProcess(res)
-    dic = getInfo(res)
-    print(type(dic))
-    print(getInfo(res))
+# for res in sms:
+#     print("\n\n"+res+"\n\n")
+#    # res = preProcess(res)
+#     dic = getInfo(res)
+#     print(type(dic))
+#     print(getInfo(res))
 
 
 # print(getInfo(sms[0]))

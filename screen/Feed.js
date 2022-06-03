@@ -11,6 +11,7 @@ import {PermissionsAndroid} from 'react-native';
 import {ChangePhoneNumber} from './ChangePhoneNumber';
 import BackgroundService from 'react-native-background-actions';
 import SmsListener from 'react-native-android-sms-listener';
+import {fillAddress} from '../IdentifierService';
 import {
   getNotification,
   insertNotif,
@@ -89,19 +90,9 @@ async function BudgetNotification() {
 
 const getSMS = async () => {
   var json = [];
-  var addrs = [
-    'bKash',
-    '16216',
-    'JANATA BANK',
-    'NAGAD',
-    '01841-325325',
-    '01842-406877',
-    'MGBLCARDS',
-    'Proma',
-    '+8801767895677',
-    '1234',
-  ];
-
+  var data_1 = await retrieve_data(getUserID());
+  const addrs = data_1['ID'];
+  console.log(addrs.length);
   const data = await retrieve_data(getUserID());
   min_date = data['lastAccessedDate'];
 
@@ -117,9 +108,10 @@ const getSMS = async () => {
       buttonPositive: 'OK',
     },
   );
+
   if (granted === PermissionsAndroid.RESULTS.GRANTED) {
     for (let addr of addrs) {
-      console.log(addr);
+      console.log('addr' + addr);
       var filter = {
         box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
 
@@ -217,6 +209,7 @@ export const Feed = () => {
   const [aState, setAppState] = useState(AppState.currentState);
   const [image, setImage] = useState();
   useEffect(() => {
+    fillAddress();
     getSMS();
     const appStateListener = AppState.addEventListener(
       'change',
@@ -338,6 +331,37 @@ export const Feed = () => {
         title="TOP"
         onPress={async () => {
           navigation.navigate('Setting');
+        }}></Button>
+
+      <Button
+        title="add"
+        onPress={() => {
+          var addrs = [
+            'bKash',
+            '16216',
+            'JANATA BANK',
+            'NAGAD',
+            '01841-325325',
+            '01842-406877',
+            'MGBLCARDS',
+            'Proma',
+            '+8801767895677',
+            '1234',
+          ];
+
+          update_doc(getUserID(), 'ID', addrs);
+        }}></Button>
+
+      <Button
+        title="retrieve"
+        onPress={async () => {
+          const data = await retrieve_data(getUserID());
+          const arr = data['ID'];
+          console.log(typeof arr);
+          for (let addr of arr) {
+            console.log(addr);
+            console.log(typeof addr);
+          }
         }}></Button>
     </SafeAreaView>
   );

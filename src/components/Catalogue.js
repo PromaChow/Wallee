@@ -16,9 +16,6 @@ import listOfJournals from '../userSpace';
 import MenuButton from '../components/MenuButton';
 import {IncomeJournal, ExpenseJournal} from '../journal';
 
-listOfJournals['Dummy'] = new IncomeJournal('Dummy');
-journalKeyMemo['Dummy'] = getRandomColor();
-
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
 

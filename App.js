@@ -26,6 +26,7 @@ import {ChangePhoneNumberOuter} from './screen/ChangePhoneNumberOuter';
 import {OTPScreenChange} from './screen/OTPScreenChange';
 import {Setting} from './screen/Setting.js';
 import {Identifiers} from './screen/Identifiers';
+import {HomePage} from './screen/HomePage';
 import {
   getUserID,
   ifExist,
@@ -163,6 +164,12 @@ const App = () => {
         <Stack.Screen
           name="Identifiers"
           component={Identifiers}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="HomePage"
+          component={HomePage}
           options={{headerShown: false, title: 'Welcome'}}
         />
       </Stack.Navigator>

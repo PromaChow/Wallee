@@ -12,6 +12,7 @@ import {ChangePhoneNumber} from './ChangePhoneNumber';
 import BackgroundService from 'react-native-background-actions';
 import SmsListener from 'react-native-android-sms-listener';
 import {fillAddress} from '../IdentifierService';
+import {GetJournal} from '../dummyJournal';
 import {
   getNotification,
   insertNotif,
@@ -362,6 +363,12 @@ export const Feed = () => {
             console.log(addr);
             console.log(typeof addr);
           }
+        }}></Button>
+
+      <Button
+        title="homePage"
+        onPress={() => {
+          navigation.navigate('HomePage');
         }}></Button>
     </SafeAreaView>
   );

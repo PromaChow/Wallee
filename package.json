@@ -41,6 +41,7 @@
     "react-native-image-crop-picker": "^0.37.3",
     "react-native-image-picker": "^4.7.3",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-material-cards": "^1.0.16",
     "react-native-modal": "^13.0.1",
     "react-native-modal-dropdown": "^1.0.2",
     "react-native-phone-number-input": "^2.1.0",

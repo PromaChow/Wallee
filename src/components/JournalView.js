@@ -132,9 +132,10 @@ const SortMenu = ({
   );
 };
 
-const JournalView = ({journal, colorIndex = 5, navigation}) => {
+const JournalView = ({colorIndex = 5, navigation, route}) => {
   const [showSortingModal, setShowSortingModal] = useState(false);
   const [listUpdated, setListUpdated] = useState(false);
+  const {journal} = route.params;
 
   const netBalance = useMemo(
     () =>
@@ -246,4 +247,4 @@ const JournalView = ({journal, colorIndex = 5, navigation}) => {
   );
 };
 
-export default React.memo(JournalView);
+export default JournalView;

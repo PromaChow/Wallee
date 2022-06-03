@@ -15,6 +15,7 @@ import {ExpenseJournal, IncomeJournal} from './src/journal';
 import Calculator from './src/components/Calculator';
 import SideBar from './src/components/Sidebar';
 import Test from './src/screens/Test';
+import NavCatalogue from './src/components/Catalogue';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
@@ -69,6 +70,7 @@ export default App = () => {
           drawerContent={props => <SideBar {...props} />}>
           <Drawer.Screen name="Catalogue" component={Catalogue} />
           <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
+          <Drawer.Screen name="JournalView" component={JournalView} />
           <Drawer.Screen name="Test" component={Test} />
         </Drawer.Navigator>
       </NavigationContainer>

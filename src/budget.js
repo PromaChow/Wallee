@@ -6,6 +6,7 @@ export class Budget {
 
   constructor(referenceJournal, amount) {
     this.referenceJournal = referenceJournal;
+    this.amount = amount;
   }
 }
 
@@ -15,5 +16,6 @@ export class Goal {
 
   constructor(referenceJournal, amount) {
     this.referenceJournal = referenceJournal;
+    this.amount = amount;
   }
 }

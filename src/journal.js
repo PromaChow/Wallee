@@ -9,9 +9,9 @@ export class Journal {
   dateOfCreation;
   lastAccessTime;
 
-  constructor(title, creator = 'User') {
+  constructor(title, contribution, creator = 'User') {
     this.title = title;
-    this.contribution = 0;
+    this.contribution = contribution;
     this.creator = creator;
     this.timeOfCreation = new Date();
     this.lastAccessTime = this.timeOfCreation;

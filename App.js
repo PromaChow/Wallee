@@ -11,7 +11,7 @@ import JournalView from './src/components/JournalView';
 import BudgetScreen from './src/screens/BudgetScreen';
 import {Budget} from './src/budget';
 import listOfJournals, {listOfBudgets} from './src/userSpace';
-import {IncomeJournal} from './src/journal';
+import {ExpenseJournal, IncomeJournal} from './src/journal';
 import Calculator from './src/components/Calculator';
 import SideBar from './src/components/Sidebar';
 import Test from './src/screens/Test';
@@ -53,7 +53,7 @@ export const journalKeyMemo = {};
 Remove Next Few lines
 *
 */
-listOfJournals['Dummy'] = new IncomeJournal('Dummy');
+listOfJournals['Dummy'] = new ExpenseJournal('Dummy', 40);
 journalKeyMemo['Dummy'] = getRandomColor();
 listOfBudgets['Dummy'] = new Budget(listOfJournals['Dummy'], 20);
 
@@ -62,12 +62,13 @@ export default App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="Catalogue"
+          initialRouteName="BudgetScreen"
           screenOptions={{
             headerShown: false,
           }}
           drawerContent={props => <SideBar {...props} />}>
           <Drawer.Screen name="Catalogue" component={Catalogue} />
+          <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
           <Drawer.Screen name="JournalView" component={Calculator} />
         </Drawer.Navigator>
       </NavigationContainer>

@@ -16,6 +16,10 @@ export const buttonInfo = {
     iconName: 'book',
     displayName: 'Catalogue',
   },
+  BudgetScreen: {
+    iconName: 'trending-down',
+    displayName: 'Budgets',
+  },
   Statistics: {
     iconName: 'pie-chart',
     displayName: 'Statistics',

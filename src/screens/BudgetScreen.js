@@ -12,6 +12,7 @@ import MenuButton from '../components/MenuButton';
 import {IncomeJournal, ExpenseJournal} from '../journal';
 import BudgetListView from '../components/BudgetListView';
 import {Budget} from '../budget';
+import {listOfBudgets} from '../userSpace';
 
 const BudgetScreen = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
@@ -19,7 +20,7 @@ const BudgetScreen = ({navigation}) => {
   return (
     <>
       <Box bg="light.200" flex={1}>
-        <NavBar title={'Catalogue'} navigation={navigation} />
+        <NavBar title={'Budgets'} navigation={navigation} />
         <ScrollView flex="1">
           <Box alignItems="center" bg="light.200">
             {Object.keys(journalKeyMemo).map(key => {

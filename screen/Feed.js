@@ -337,7 +337,7 @@ export const Feed = () => {
       <Button
         title="TOP"
         onPress={async () => {
-          navigation.navigate('OTPScreenChange');
+          navigation.navigate('Setting');
         }}></Button>
     </SafeAreaView>
   );

@@ -24,6 +24,7 @@ import notifee, {EventType} from '@notifee/react-native';
 import {Notification} from './screen/Notification';
 import {ChangePhoneNumberOuter} from './screen/ChangePhoneNumberOuter';
 import {OTPScreenChange} from './screen/OTPScreenChange';
+import {Setting} from './screen/Setting.js';
 import {
   getUserID,
   ifExist,
@@ -149,6 +150,12 @@ const App = () => {
         <Stack.Screen
           name="OTPScreenChange"
           component={OTPScreenChange}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="Setting"
+          component={Setting}
           options={{headerShown: false, title: 'Welcome'}}
         />
       </Stack.Navigator>

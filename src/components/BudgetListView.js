@@ -17,7 +17,7 @@ import {ExpenseJournal, IncomeJournal, Journal} from '../journal';
 
 const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
   const proportion =
-    (budget.amount / budget.referenceJournal.contribution) * 100;
+    (budget.referenceJournal.contribution / budget.amount) * 100;
 
   return (
     <Pressable>
@@ -66,7 +66,7 @@ const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
             marginX="20px"
             flex="4"
             alignItems="flex-end">
-            {`${budget.amount} / ${budget.referenceJournal.contribution}`}
+            {`${budget.referenceJournal.contribution} / ${budget.amount}`}
           </Center>
         </Box>
         <Box

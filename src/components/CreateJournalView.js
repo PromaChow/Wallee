@@ -64,8 +64,8 @@ const CreateJournalView = ({showModal, setShowModal}) => {
                   if (!(key in journalKeyMemo)) {
                     listOfJournals[key] =
                       journalType === 'income'
-                        ? new IncomeJournal(journalName, 'User')
-                        : new ExpenseJournal(journalName, 'User');
+                        ? new IncomeJournal(journalName, 0)
+                        : new ExpenseJournal(journalName, 0);
 
                     journalKeyMemo[key] = getRandomColor();
                   }

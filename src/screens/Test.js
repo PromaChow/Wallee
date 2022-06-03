@@ -15,8 +15,10 @@ import {IncomeJournal} from '../journal';
 const Test = ({navigation}) => {
   return (
     <>
-      <NavBar title={'Test'} navigation={navigation} />
-      <Center width="full"></Center>
+      {/* <NavBar title={'Test'} navigation={navigation} /> */}
+      <Center width="full" flex={1}>
+        <JournalView journal={listOfJournals['Dummy']} />
+      </Center>
     </>
   );
 };

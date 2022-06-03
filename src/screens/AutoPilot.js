@@ -12,6 +12,8 @@ import {
   update_doc,
   addToStorage,
 } from '../FireStoreHelperFunctions';
+import {listOfAutoTransactions} from '../userSpace';
+import {ListOfTransactions} from '../components/JournalView';
 
 const dummy = {
   Date: '27.07.21 ',
@@ -113,8 +115,10 @@ const post_sms = async sms => {
 export const AutoPilot = () => {
   const [aState, setAppState] = useState(AppState.currentState);
   const [image, setImage] = useState();
+
   useEffect(() => {
     getSMS();
+
     const appStateListener = AppState.addEventListener(
       'change',
       nextAppState => {

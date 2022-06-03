@@ -41,11 +41,13 @@ const CreateBudget = ({showModal, setShowModal}) => {
                 onChange={nextValue => {
                   setJournalName(nextValue);
                 }}>
-                {Object.keys(journalKeyMemo).map(key => (
-                  <Radio key={key} value={key} my="1">
-                    {key}
-                  </Radio>
-                ))}
+                {Object.keys(journalKeyMemo).map(key =>
+                  key in listOfBudgets ? null : (
+                    <Radio key={key} value={key} my="1">
+                      {key}
+                    </Radio>
+                  ),
+                )}
               </Radio.Group>
             </FormControl>
           </Modal.Body>

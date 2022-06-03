@@ -147,7 +147,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
 
   const handleAddTransaction = () => {
     journal.addTransaction(new Transaction(200));
-    // component should rerender here
+    // component should re-render here
   };
 
   return (

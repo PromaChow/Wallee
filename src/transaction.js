@@ -6,7 +6,7 @@ export default class Transaction {
   dateOfCreation;
   lastAccessTime;
 
-  constructor(amount, creator = 'User', paymentMethod = 'Cash') {
+  constructor(amount, creator = 'User') {
     this.amount = amount;
     this.creator = creator;
     this.timeOfCreation = new Date();

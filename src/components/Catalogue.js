@@ -30,6 +30,7 @@ const Catalogue = ({navigation}) => {
                   key={key}
                   journal={listOfJournals[key]}
                   colorIndex={journalKeyMemo[key]}
+                  navigation={navigation}
                 />
               );
             })}

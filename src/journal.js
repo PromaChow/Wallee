@@ -9,7 +9,7 @@ export class Journal {
   dateOfCreation;
   lastAccessTime;
 
-  constructor(title, contribution, creator = 'User') {
+  constructor(title, contribution = 0, creator = 'User') {
     this.title = title;
     this.contribution = contribution;
     this.creator = creator;

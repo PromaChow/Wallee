@@ -27,7 +27,7 @@ import BackButton from './BackButton';
 
 const Stack = createNativeStackNavigator();
 
-const ListOfTransactions = ({listOfTransactions, colorIndex}) => (
+export const ListOfTransactions = ({listOfTransactions, colorIndex}) => (
   <ScrollView flex="1">
     <VStack space={3} width="full" alignItems="center">
       {listOfTransactions.map(transaction => {
@@ -136,17 +136,18 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
   const [showSortingModal, setShowSortingModal] = useState(false);
   const {journal} = route.params;
 
-  const netBalance = useMemo(
-    () =>
-      journal.listOfTransactions.reduce(
-        (partialSum, transaction) => partialSum + transaction.amount,
-        0,
-      ),
-    [netBalance],
-  );
+  // const netBalance = useMemo(
+  //   () =>
+  //     journal.listOfTransactions.reduce(
+  //       (partialSum, transaction) => partialSum + transaction.amount,
+  //       0,
+  //     ),
+  //   [netBalance],
+  // );
 
   const handleAddTransaction = () => {
-    journal.listOfTransactions.push(new Transaction(200));
+    journal.addTransaction(new Transaction(200));
+    // component should rerender here
   };
 
   return (
@@ -175,7 +176,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
               Net Balance:&nbsp;&nbsp;
               <Text
                 fontWeight="bold"
-                color={'success.400'}>{`${netBalance}\n\n`}</Text>
+                color={'success.400'}>{`${journal.contribution}\n\n`}</Text>
               # of Entries:&nbsp;&nbsp;
               <Text fontWeight="bold">{journal.listOfTransactions.length}</Text>
             </Heading>
@@ -225,7 +226,6 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
         <ListOfTransactions
           listOfTransactions={journal.listOfTransactions}
           colorIndex={colorIndex}
-          listUpdated={listUpdated}
         />
       </ScrollView>
       <SortMenu

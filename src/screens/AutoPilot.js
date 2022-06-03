@@ -20,6 +20,8 @@ const dummy = {
   Type: 'Credit',
 };
 
+const responseToTransaction = response => {};
+
 const getSMS = async () => {
   var json = [];
   var addrs = ['Pathao'];

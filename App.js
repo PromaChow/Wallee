@@ -8,7 +8,9 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Catalogue from './src/components/Catalogue';
 import JournalView from './src/components/JournalView';
-import listOfJournals from './src/userSpace';
+import BudgetScreen from './src/screens/BudgetScreen';
+import {Budget} from './src/budget';
+import listOfJournals, {listOfBudgets} from './src/userSpace';
 import {IncomeJournal} from './src/journal';
 import Calculator from './src/components/Calculator';
 import SideBar from './src/components/Sidebar';
@@ -46,8 +48,14 @@ export const getRandomColor = () =>
 
 export const journalKeyMemo = {};
 
+/*
+  *
+Remove Next Few lines
+*
+*/
 listOfJournals['Dummy'] = new IncomeJournal('Dummy');
 journalKeyMemo['Dummy'] = getRandomColor();
+listOfBudgets['Dummy'] = new Budget(listOfJournals['Dummy'], 20);
 
 export default App = () => {
   return (

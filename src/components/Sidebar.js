@@ -1,5 +1,13 @@
 import React from 'react';
-import {Divider, VStack, Box, Button, Icon, Avatar} from 'native-base';
+import {
+  ScrollView,
+  Divider,
+  VStack,
+  Box,
+  Button,
+  Icon,
+  Avatar,
+} from 'native-base';
 import MenuItem from './MenuItem';
 
 export const buttonInfo = {
@@ -41,7 +49,7 @@ const SideBar = ({state, navigation}) => {
     <Box flex="1" bg="white">
       <Box
         padding="20px"
-        marginBottom="30px"
+        marginBottom="20px"
         bg="light.200"
         alignItems="flex-start"
         shadow="7"
@@ -65,16 +73,18 @@ const SideBar = ({state, navigation}) => {
           User Name
         </Box>
       </Box>
-      <VStack alignItems={'flex-start'} space="2" flex="1">
-        {Object.keys(buttonInfo).map(componentName => (
-          <MenuItem
-            key={componentName}
-            active={currentRoute == componentName}
-            componentName={componentName}
-            navigation={navigation}
-          />
-        ))}
-      </VStack>
+      <ScrollView flex="1">
+        <VStack alignItems={'flex-start'} space="2">
+          {Object.keys(buttonInfo).map(componentName => (
+            <MenuItem
+              key={componentName}
+              active={currentRoute == componentName}
+              componentName={componentName}
+              navigation={navigation}
+            />
+          ))}
+        </VStack>
+      </ScrollView>
     </Box>
   );
 };

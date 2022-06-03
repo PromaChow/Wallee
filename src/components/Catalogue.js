@@ -30,7 +30,6 @@ const Catalogue = ({navigation}) => {
                   key={key}
                   journal={listOfJournals[key]}
                   colorIndex={journalKeyMemo[key]}
-                  navigation={navigation}
                 />
               );
             })}
@@ -41,7 +40,7 @@ const Catalogue = ({navigation}) => {
           shadow={2}
           size="md"
           icon={<Icon color="white" as={Feather} name="plus" size="md" />}
-          // onPress={() => setShowModal(true)}
+          onPress={() => setShowModal(true)}
         />
       </Box>
       <CreateJournalView showModal={showModal} setShowModal={setShowModal} />
@@ -49,4 +48,16 @@ const Catalogue = ({navigation}) => {
   );
 };
 
-export default Catalogue;
+const NavCatalogue = () => (
+  <Stack.Navigator
+    initialRouteName="Catalogue"
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen name="JournalView" component={JournalView} />
+    <Stack.Screen name="Catalogue" component={Catalogue} />
+    <Stack.Screen name="Calculator" component={Calculator} />
+  </Stack.Navigator>
+);
+
+export default NavCatalogue;

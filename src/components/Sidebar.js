@@ -12,7 +12,7 @@ import MenuItem from './MenuItem';
 
 export const buttonInfo = {
   Test: {iconName: 'alert-triangle', displayName: 'Test'},
-  Catalogue: {
+  NavCatalogue: {
     iconName: 'book',
     displayName: 'Catalogue',
   },

@@ -15,16 +15,8 @@ import {ExpenseJournal, IncomeJournal, Journal} from '../journal';
 
 const JournalListView = ({journal, colorIndex = 2, navigation}) => {
   return (
-    <Pressable
-      onPress={() => {
-        navigation.navigate('JournalView', {
-          journal: journal,
-        });
-      }}>
+    <Pressable>
       <Box
-        onPress={() => {
-          console.log('pressed');
-        }}
         paddingY="5px"
         alignItems={'space-between'}
         bg="white"

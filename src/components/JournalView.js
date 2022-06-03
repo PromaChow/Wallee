@@ -27,7 +27,7 @@ import BackButton from './BackButton';
 
 const Stack = createNativeStackNavigator();
 
-const ListOfTransactions = ({listOfTransactions, colorIndex, listUpdated}) => (
+const ListOfTransactions = ({listOfTransactions, colorIndex}) => (
   <ScrollView flex="1">
     <VStack space={3} width="full" alignItems="center">
       {listOfTransactions.map(transaction => {
@@ -134,7 +134,6 @@ const SortMenu = ({
 
 const JournalView = ({colorIndex = 5, navigation, route}) => {
   const [showSortingModal, setShowSortingModal] = useState(false);
-  const [listUpdated, setListUpdated] = useState(false);
   const {journal} = route.params;
 
   const netBalance = useMemo(
@@ -147,9 +146,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
   );
 
   const handleAddTransaction = () => {
-    console.log('pressed');
     journal.listOfTransactions.push(new Transaction(200));
-    setListUpdated(!setListUpdated);
   };
 
   return (

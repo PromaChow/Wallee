@@ -9,42 +9,43 @@ import {
   Center,
 } from 'native-base';
 import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
-import listOfJournals from '../userSpace';
+import listOfJournals, {listOfBudgets} from '../userSpace';
 import {journalKeyMemo, getRandomColor} from '../../App';
+import {Budget} from '../budget';
 
-const CreateJournalView = ({showModal, setShowModal}) => {
-  const [journalName, setJournalName] = useState('');
-  const [journalType, setJournalType] = useState('income');
+const CreateBudget = ({showModal, setShowModal}) => {
+  const [amount, setAmount] = useState('0');
+  const [journalName, setJournalName] = useState(
+    Object.keys(listOfJournals)[0],
+  );
 
   return (
     <Center>
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">
           <Modal.CloseButton />
-          <Modal.Header>Create New Journal</Modal.Header>
+          <Modal.Header>Create Budget</Modal.Header>
           <Modal.Body>
             <FormControl>
-              <FormControl.Label>Name</FormControl.Label>
+              <FormControl.Label>Enter Budget Amount</FormControl.Label>
               <Input
-                value={journalName}
+                value={amount}
                 w="100%"
-                onChangeText={text => setJournalName(text)}
-                placeholder="Enter Journal Name"
+                onChangeText={text => setAmount(text)}
               />
             </FormControl>
             <FormControl mt="3">
-              <FormControl.Label>Chose Journal Type</FormControl.Label>
+              <FormControl.Label>Chose Target Journal</FormControl.Label>
               <Radio.Group
-                value={journalType}
+                value={journalName}
                 onChange={nextValue => {
-                  setJournalType(nextValue);
+                  setJournalName(nextValue);
                 }}>
-                <Radio value="income" my={1}>
-                  Income
-                </Radio>
-                <Radio value="expense" my={1}>
-                  Expense
-                </Radio>
+                {Object.keys(journalKeyMemo).map(key => (
+                  <Radio key={key} value={key} my="1">
+                    {key}
+                  </Radio>
+                ))}
               </Radio.Group>
             </FormControl>
           </Modal.Body>
@@ -60,19 +61,14 @@ const CreateJournalView = ({showModal, setShowModal}) => {
               </Button>
               <Button
                 onPress={() => {
-                  const key = `${journalName}`;
-                  if (!(key in journalKeyMemo)) {
-                    listOfJournals[key] =
-                      journalType === 'income'
-                        ? new IncomeJournal(journalName, 'User')
-                        : new ExpenseJournal(journalName, 'User');
-
-                    journalKeyMemo[key] = getRandomColor();
-                  }
+                  listOfBudgets[journalName] = new Budget(
+                    listOfJournals[journalName],
+                    amount,
+                  );
 
                   setShowModal(false);
                 }}>
-                Save
+                Create
               </Button>
             </Button.Group>
           </Modal.Footer>
@@ -82,4 +78,4 @@ const CreateJournalView = ({showModal, setShowModal}) => {
   );
 };
 
-export default CreateJournalView;
+export default CreateBudget;

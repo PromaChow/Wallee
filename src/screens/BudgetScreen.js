@@ -4,15 +4,11 @@ import {ScrollView, Fab, Box, Icon, IconButton, Center} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {windowWidth, journalKeyMemo, windowHeight} from '../../App';
 import NavBar from '../components/NavBar';
-import Calculator from '../components/Calculator';
-import JournalListView from '../components/JournalListView';
-import Transaction from '../transaction';
-import listOfJournals from '../userSpace';
-import MenuButton from '../components/MenuButton';
 import {IncomeJournal, ExpenseJournal} from '../journal';
 import BudgetListView from '../components/BudgetListView';
 import {Budget} from '../budget';
 import {listOfBudgets} from '../userSpace';
+import CreateBudget from '../components/CreateBudget';
 
 const BudgetScreen = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
@@ -23,7 +19,7 @@ const BudgetScreen = ({navigation}) => {
         <NavBar title={'Budgets'} navigation={navigation} />
         <ScrollView flex="1">
           <Box alignItems="center" bg="light.200">
-            {Object.keys(journalKeyMemo).map(key => {
+            {Object.keys(listOfBudgets).map(key => {
               return (
                 <BudgetListView
                   key={key}
@@ -42,7 +38,7 @@ const BudgetScreen = ({navigation}) => {
           onPress={() => setShowModal(true)}
         />
       </Box>
-      <CreateJournalView showModal={showModal} setShowModal={setShowModal} />
+      <CreateBudget showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

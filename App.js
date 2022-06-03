@@ -55,7 +55,7 @@ Remove Next Few lines
 */
 listOfJournals['Dummy'] = new ExpenseJournal('Dummy', 40);
 journalKeyMemo['Dummy'] = getRandomColor();
-listOfBudgets['Dummy'] = new Budget(listOfJournals['Dummy'], 20);
+// listOfBudgets['Dummy'] = new Budget(listOfJournals['Dummy'], 20);
 
 export default App = () => {
   return (

@@ -149,11 +149,16 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
   // );
 
   const handleAddTransaction = () => {
-    const dummy = new Transaction(200);
-    journal.addTransaction(dummy);
+    const candidateTransaction = new Transaction(0);
+    navigation.navigate('Calculator', {
+      transaction: candidateTransaction,
+    });
 
-    // component should re-render here
-    setListOfTransactions([...listOfTransactions, dummy]);
+    // Delegate to Save Button
+    // journal.addTransaction(candidateTransaction);
+
+    // Delegate state update to Save button
+    // setListOfTransactions([...listOfTransactions, candidateTransaction]);
   };
 
   return (

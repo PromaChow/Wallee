@@ -14,6 +14,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {windowHeight, windowWidth} from '../../App';
 import Transaction from '../transaction';
 import BackButton from './BackButton';
+import {ListOfTransactions} from './JournalView';
 
 const NumButton = ({renderSymbol, appendSymbol}) => {
   return (
@@ -145,7 +146,9 @@ const KeyPad = React.memo(({setExpression, evaluationCallback}) => (
   </Box>
 ));
 
-const Calculator = ({transaction = new Transaction(500), navigation}) => {
+const Calculator = ({navigation, route}) => {
+  const {transaction} = route.params;
+
   const evaluationCallback = useCallback(expression => {
     if (expression === '') return '0';
 
@@ -162,11 +165,11 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
   const [currentExpression, setExpression] = useState(transaction.amount);
   const [keypadOpen, setKeyPadOpen] = useState(false);
 
-  useEffect(() => {
-    return () => {
-      transaction.amount = currentExpression;
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     transaction.amount = currentExpression;
+  //   };
+  // }, []);
 
   return (
     <>
@@ -227,6 +230,9 @@ const Calculator = ({transaction = new Transaction(500), navigation}) => {
                 transaction.lastAccessTime = new Date();
                 setExpression(evaluationCallback(currentExpression));
                 setKeyPadOpen(!keypadOpen);
+
+                // Delegate this to "Save Button"
+                // transaction.amount = parseInt(currentExpression);
               }}
               _text={{
                 fontSize: 'lg',

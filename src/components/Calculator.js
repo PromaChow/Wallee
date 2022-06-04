@@ -166,12 +166,6 @@ const Calculator = ({navigation, route}) => {
   const [currentExpression, setExpression] = useState(transaction.amount);
   const [keypadOpen, setKeyPadOpen] = useState(false);
 
-  // useEffect(() => {
-  //   return () => {
-  //     transaction.amount = currentExpression;
-  //   };
-  // }, []);
-
   return (
     <>
       <Center flex="1" bg="light.200" maxH={windowHeight * 0.6}>

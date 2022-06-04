@@ -144,6 +144,26 @@ const SortMenu = ({
                   switch (sortType) {
                     case 'mostAmount':
                       listOfTransactions.sort((a, b) => b.amount - a.amount);
+                      break;
+
+                    case 'leastAmount':
+                      listOfTransactions.sort((a, b) => a.amount - b.amount);
+                      break;
+
+                    case 'latest':
+                      listOfTransactions.sort(
+                        (a, b) =>
+                          b.timeOfCreation.getTime() -
+                          a.timeOfCreation.getTime(),
+                      );
+                      break;
+
+                    case 'earliest':
+                      listOfTransactions.sort(
+                        (a, b) =>
+                          a.timeOfCreation.getTime() -
+                          b.timeOfCreation.getTime(),
+                      );
                   }
                   setShowSortingModal(false);
                 }}>
@@ -165,15 +185,6 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
   );
   useRefresh();
 
-  // const isFocused = useIsFocused();
-
-  // useEffect(() => console.log('Use this to fix'), [isFocused]);
-
-  // const netBalance = useMemo(
-  //   () =>
-  //   [netBalance],
-  // );
-
   const handleAddTransaction = () => {
     const candidateTransaction = new Transaction(0);
 
@@ -181,11 +192,6 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
       transaction: candidateTransaction,
       journal: journal,
     });
-
-    // Delegate to Save Button
-
-    // Delegate state update to Save button
-    // setListOfTransactions([...listOfTransactions, candidateTransaction]);
   };
 
   return (

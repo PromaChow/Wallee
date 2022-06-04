@@ -64,7 +64,7 @@ export default App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="NavCatalogue"
+          initialRouteName="Test"
           screenOptions={{
             headerShown: false,
           }}
@@ -72,6 +72,7 @@ export default App = () => {
           <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
           <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
           <Drawer.Screen name="AutoPilot" component={AutoPilot} />
+          <Drawer.Screen name="Test" component={Test} />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

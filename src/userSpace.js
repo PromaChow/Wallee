@@ -11,7 +11,7 @@ import {
 
 const listOfJournals = {};
 export const listOfBudgets = {};
-export const listOfAutoTransactions = {};
+export const listOfAutoTransactions = [new Transaction(21, 'AutoPilot')];
 export let currency = 'BDT';
 
 const uid = 'fiOgc2ghJOTWt0klUDmDHguM5c22';

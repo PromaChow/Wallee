@@ -27,44 +27,62 @@ import BackButton from './BackButton';
 
 const Stack = createNativeStackNavigator();
 
-export const ListOfTransactions = ({listOfTransactions, colorIndex}) => (
-  <ScrollView flex="1">
-    <VStack space={3} width="full" alignItems="center">
-      {listOfTransactions.map(transaction => {
-        return (
-          <Box
-            height="95px"
-            marginX="5px"
-            marginY="2px"
-            shadow="7"
-            flexDirection="row"
-            key={transaction.timeOfCreation.getTime()}>
-            <Box flex="4">
-              <TransactionListView
-                colorIndex={colorIndex}
-                initialTransaction={transaction}
-              />
+export const ListOfTransactions = ({
+  listOfTransactions,
+  colorIndex,
+  navigation,
+  handlePress, // Pass to Child
+  handleDelete, // Use Own -> Passed from Parent
+  route,
+}) => {
+  if (listOfJournals === undefined) {
+    listOfJournals = route.params.listOfJournals;
+  }
+
+  return (
+    <ScrollView flex="1">
+      <VStack space={3} width="full" alignItems="center">
+        {listOfTransactions.map(transaction => {
+          return (
+            <Box
+              height="95px"
+              marginX="5px"
+              marginY="2px"
+              shadow="7"
+              flexDirection="row"
+              key={transaction.timeOfCreation.getTime()}>
+              <Box flex="4">
+                <TransactionListView
+                  colorIndex={colorIndex}
+                  initialTransaction={transaction}
+                />
+              </Box>
+              <Box flex="1">
+                <Button
+                  height="full"
+                  marginLeft="5px"
+                  leftIcon={
+                    <Icon
+                      size="md"
+                      as={Feather}
+                      name="trash-2"
+                      color="red.500"
+                    />
+                  }
+                  variant="unstyled"
+                  bg={fgColors[colorIndex]}
+                  _text={{
+                    fontSize: 'md',
+                    fontWeight: 'light',
+                  }}></Button>
+              </Box>
             </Box>
-            <Box flex="1">
-              <Button
-                height="full"
-                marginLeft="5px"
-                leftIcon={
-                  <Icon size="md" as={Feather} name="trash-2" color="red.500" />
-                }
-                variant="unstyled"
-                bg={fgColors[colorIndex]}
-                _text={{
-                  fontSize: 'md',
-                  fontWeight: 'light',
-                }}></Button>
-            </Box>
-          </Box>
-        );
-      })}
-    </VStack>
-  </ScrollView>
-);
+          );
+        })}
+      </VStack>
+    </ScrollView>
+  );
+};
 
 const SortMenu = ({
   listOfTransactions,

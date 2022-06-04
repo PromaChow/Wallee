@@ -31,7 +31,7 @@ const getSMS = async () => {
   var addrs = ['Pathao'];
 
   const data = await retrieve_data(dummyID);
-  min_date = data['lastAccessedDate'];
+  const min_date = data['lastAccessedDate'];
 
   console.log('min_date' + min_date);
   const granted = await PermissionsAndroid.request(
@@ -111,6 +111,7 @@ const post_sms = async sms => {
   //   });
 
   const response = new Promise.resolve(dummy);
+  return response;
   console.log(response);
 };
 
@@ -141,6 +142,7 @@ export const AutoPilot = () => {
 
   return (
     <Box
+      alignItems={'center'}
       _text={{
         fontSize: 'lg',
       }}>

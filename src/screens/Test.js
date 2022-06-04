@@ -10,17 +10,43 @@ import listOfJournals from '../userSpace';
 import MenuButton from '../components/MenuButton';
 import NavBar from '../components/NavBar';
 import JournalListView from '../components/JournalListView';
-import {IncomeJournal} from '../journal';
+import {IncomeJournal, ExpenseJournal} from '../journal';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {ListOfTransactions} from '../components/JournalView';
+import {listOfAutoTransactions} from '../userSpace';
+import TransactionListView from '../components/TransactionListView';
+import SelectJournals from '../components/SelectJournal';
+
+const Stack = createNativeStackNavigator();
 
 const Test = ({navigation}) => {
+  const [showModal, setShowModal] = useState(false);
+  const handlePress = () => {
+    setShowModal(true);
+  };
+
   return (
     <>
-      {/* <NavBar title={'Test'} navigation={navigation} /> */}
-      <Box width="full" flex={1}>
-        <JournalView journal={listOfJournals['Dummy']} />
+      <NavBar title={'Test'} navigation={navigation}></NavBar>
+      <Box height={'120px'} alignItems={'center'}>
+        <TransactionListView
+          initialTransaction={new Transaction(55)}
+          handlePress={handlePress}
+        />
       </Box>
+      <SelectJournals showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };
+
+const NavPilot = () => (
+  <Stack.Navigator
+    initialRouteName="ListOfTransactions"
+    screenOptions={{
+      headerShown: false,
+    }}>
+    // ListOfAutoTransactions goes here
+  </Stack.Navigator>
+);
 
 export default Test;

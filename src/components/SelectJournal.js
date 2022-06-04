@@ -12,19 +12,21 @@ import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
 import listOfJournals, {listOfBudgets} from '../userSpace';
 import {journalKeyMemo, getRandomColor} from '../../App';
 import {Budget} from '../budget';
+import Transaction from '../transaction';
 
-const SelectJournals = ({filter, showModal, setShowModal}) => {
+const SelectJournals = ({showModal, setShowModal}) => {
   const [journalName, setJournalName] = useState(
     Object.keys(listOfJournals)[0],
   );
 
-  if (filter === undefined) filter = entry => true;
-  else {
-    filter =
-      filter === 'Credit'
-        ? entry => !(entry instanceof IncomeJournal)
-        : entry => entry instanceof IncomeJournal;
-  }
+  // Code for Filtering Journals
+  // if (filter === undefined) filter = entry => true;
+  // else {
+  //   filter =
+  //     filter === 'Credit'
+  //       ? entry => !(entry instanceof IncomeJournal)
+  //       : entry => entry instanceof IncomeJournal;
+  // }
 
   return (
     <Center>
@@ -39,13 +41,11 @@ const SelectJournals = ({filter, showModal, setShowModal}) => {
                 onChange={nextValue => {
                   setJournalName(nextValue);
                 }}>
-                {Object.entries(journalKeyMemo).map(entry =>
-                  filter(entry) ? (
-                    <Radio key={key} value={key} my="1">
-                      {key}
-                    </Radio>
-                  ) : null,
-                )}
+                {Object.keys(journalKeyMemo).map(key => (
+                  <Radio key={key} value={key} my="1">
+                    {key}
+                  </Radio>
+                ))}
               </Radio.Group>
             </FormControl>
           </Modal.Body>
@@ -61,9 +61,8 @@ const SelectJournals = ({filter, showModal, setShowModal}) => {
               </Button>
               <Button
                 onPress={() => {
-                  listOfBudgets[journalName] = new Budget(
-                    listOfJournals[journalName],
-                    amount,
+                  listOfJournals[journalName].addTransaction(
+                    new Transaction(99),
                   );
 
                   setShowModal(false);

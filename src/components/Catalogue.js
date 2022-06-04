@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CreateJournalView from '../components/CreateJournalView';
 import {ScrollView, Fab, Box, Icon, IconButton, Center} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
@@ -11,12 +11,20 @@ import listOfJournals from '../userSpace';
 import MenuButton from '../components/MenuButton';
 import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useIsFocused} from '@react-navigation/native';
 import JournalView from './JournalView';
+import {useFocus} from 'native-base/lib/typescript/components/primitives/Pressable/Pressable';
 
 const Stack = createNativeStackNavigator();
 
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
+  const [isRefreshed, setIsRefreshed] = useState(false);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    setIsRefreshed(!setIsRefreshed);
+  }, [isFocused]);
 
   return (
     <>

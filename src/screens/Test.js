@@ -18,6 +18,7 @@ import TransactionListView from '../components/TransactionListView';
 import SelectJournals from '../components/SelectJournal';
 
 const Stack = createNativeStackNavigator();
+const test = [new Transaction(55)];
 
 const Test = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ScrollView,
   Divider,
@@ -8,7 +8,10 @@ import {
   Icon,
   Avatar,
 } from 'native-base';
+
 import MenuItem from './MenuItem';
+
+import {retrieve_data, getUserID} from '../FireStoreHelperFunctions';
 
 export const buttonInfo = {
   Test: {iconName: 'alert-triangle', displayName: 'Test'},
@@ -48,6 +51,24 @@ export const buttonInfo = {
 
 const SideBar = ({state, navigation}) => {
   const currentRoute = state.routeNames[state.index];
+  const [image, setImage] = useState();
+  const [username, setName] = useState();
+
+  const setData = async () => {
+    const doc = await retrieve_data(getUserID());
+    const image = doc['profilePhoto'];
+    if (image === '') console.log('no image');
+    else {
+      setImage(image);
+    }
+    const username = doc['name'];
+    setName(username);
+  };
+
+  useEffect(() => {
+    console.log('Ren render');
+    setData();
+  }, []);
 
   return (
     <Box flex="1" bg="white">
@@ -60,10 +81,13 @@ const SideBar = ({state, navigation}) => {
         width="full">
         <Avatar
           borderWidth={3}
-          borderColor={'blue.500'}
+          borderColor={'#99b897'}
           size="xl"
           source={{
-            uri: 'https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80',
+            uri:
+              image === ''
+                ? 'https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80'
+                : image,
           }}
         />
         <Box
@@ -74,7 +98,7 @@ const SideBar = ({state, navigation}) => {
             fontSize: '3xl',
             fontWeight: 'semibold',
           }}>
-          User Name
+          {username}
         </Box>
       </Box>
       <ScrollView flex="1">

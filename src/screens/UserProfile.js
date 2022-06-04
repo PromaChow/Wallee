@@ -70,6 +70,7 @@ export const UserProfile = ({navigation}) => {
     }
     const username = doc['name'];
     setName(username);
+
     const currency = doc['currency'];
     //console.log(currency['currency']['code']);
     setCurrency(currency['currency']['code']);
@@ -80,6 +81,7 @@ export const UserProfile = ({navigation}) => {
     const email = doc['email'];
     setEmail(email);
   };
+
   useEffect(() => {
     setData();
   }, []);

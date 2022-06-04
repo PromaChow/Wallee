@@ -10,7 +10,7 @@ import {
   retrieve_data,
   update_doc,
   addToStorage,
-} from './FireStoreHelperFunctions';
+} from '../FireStoreHelperFunctions';
 import {listOfAutoTransactions} from '../userSpace';
 import {ListOfTransactions} from '../components/JournalView';
 import {Box} from 'native-base';

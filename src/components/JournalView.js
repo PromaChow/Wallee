@@ -1,8 +1,14 @@
 import {Journal, IncomeJournal, ExpenseJournal} from '../journal';
 import TransactionListView from './TransactionListView';
-import {windowHeight, bgColors, fgColors, journalKeyMemo} from '../../App';
+import {
+  windowHeight,
+  bgColors,
+  fgColors,
+  journalKeyMemo,
+  useRefresh,
+} from '../../App';
 import listOfJournals from '../userSpace';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import {
   Modal,
@@ -24,6 +30,7 @@ import Transaction from '../transaction';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BackButton from './BackButton';
+import {useIsFocused} from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
@@ -156,24 +163,26 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
   const [listOfTransactions, setListOfTransactions] = useState(
     journal.listOfTransactions,
   );
+  useRefresh();
+
+  // const isFocused = useIsFocused();
+
+  // useEffect(() => console.log('Use this to fix'), [isFocused]);
 
   // const netBalance = useMemo(
   //   () =>
-  //     listOfTransactions.reduce(
-  //       (partialSum, transaction) => partialSum + transaction.amount,
-  //       0,
-  //     ),
   //   [netBalance],
   // );
 
   const handleAddTransaction = () => {
     const candidateTransaction = new Transaction(0);
+
     navigation.navigate('Calculator', {
       transaction: candidateTransaction,
+      journal: journal,
     });
 
     // Delegate to Save Button
-    // journal.addTransaction(candidateTransaction);
 
     // Delegate state update to Save button
     // setListOfTransactions([...listOfTransactions, candidateTransaction]);
@@ -205,7 +214,9 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
               Net Balance:&nbsp;&nbsp;
               <Text
                 fontWeight="bold"
-                color={'success.400'}>{`${journal.contribution}\n\n`}</Text>
+                color={
+                  'success.400'
+                }>{`${journal.calculateContribution()}\n\n`}</Text>
               # of Entries:&nbsp;&nbsp;
               <Text fontWeight="bold">{listOfTransactions.length}</Text>
             </Heading>

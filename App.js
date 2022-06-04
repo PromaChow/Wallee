@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 import 'react-native-gesture-handler';
 import React from 'react';
 import {useState, useEffect} from 'react';
@@ -60,7 +53,6 @@ import {
   View,
   Button,
   TextInput,
-  ProgressBarAndroid,
   AppState,
 } from 'react-native';
 
@@ -101,6 +93,15 @@ export const getRandomColor = () =>
 export const journalKeyMemo = {};
 listOfJournals['Dummy'] = new ExpenseJournal('Dummy', 40);
 journalKeyMemo['Dummy'] = getRandomColor();
+
+// Custom Refresh Hook
+export const useRefresh = () => {
+  const [refresh, setRefresh] = useState(false);
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    setRefresh(!refresh);
+  }, [isFocused]);
+};
 
 const Drawer = createDrawerNavigator();
 

@@ -23,9 +23,12 @@ export class Journal {
   }
 
   calculateContribution() {
-    for (const transaction of this.listOfTransactions) {
-      this.contribution += transaction.amount;
-    }
+    this.contribution = this.listOfTransactions.reduce(
+      (partialSum, transaction) => partialSum + transaction.amount,
+      0,
+    );
+
+    return this.contribution;
   }
 
   getCreationTimeSliced(startIndex, endIndex) {

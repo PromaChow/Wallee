@@ -12,18 +12,13 @@ import MenuButton from './MenuButton';
 import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import JournalView from './JournalView';
-import {useIsFocused} from '@react-navigation/native';
+import {useRefresh} from '../../App';
 
 const Stack = createNativeStackNavigator();
 
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    setRefresh(!refresh);
-  }, [isFocused]);
+  useRefresh();
 
   return (
     <>

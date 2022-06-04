@@ -9,6 +9,7 @@ import {
   Center,
   Icon,
   Stack,
+  IconButton,
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {windowHeight, windowWidth} from '../../App';
@@ -147,7 +148,7 @@ const KeyPad = React.memo(({setExpression, evaluationCallback}) => (
 ));
 
 const Calculator = ({navigation, route}) => {
-  const {transaction} = route.params;
+  const {transaction, journal} = route.params;
 
   const evaluationCallback = useCallback(expression => {
     if (expression === '') return '0';
@@ -186,6 +187,7 @@ const Calculator = ({navigation, route}) => {
             alignItems="center"
             justifyContent="center"
             flex="2"
+            mr="-12"
             _text={{
               py: '1',
               pr: '5',
@@ -195,6 +197,20 @@ const Calculator = ({navigation, route}) => {
             }}>
             {keypadOpen ? 'Editing Entry' : 'Entry Details'}
           </Box>
+          <IconButton
+            _icon={{
+              as: Feather,
+              name: 'save',
+              variant: 'outline',
+              color: 'white',
+              size: 'md',
+            }}
+            onPress={() => {
+              transaction.amount = parseInt(currentExpression);
+              journal.addTransaction(transaction);
+              navigation.goBack();
+            }}
+          />
         </Box>
         <Center
           padding="20px"
@@ -224,15 +240,12 @@ const Calculator = ({navigation, route}) => {
           <Divider thickness="2px" marginTop="5px" />
           <Center padding="5px" marginTop="5px" marginBottom="15px">
             <Button
-              variant="unstyled"
+              variant="outline"
               height="auto"
               onPress={() => {
                 transaction.lastAccessTime = new Date();
                 setExpression(evaluationCallback(currentExpression));
                 setKeyPadOpen(!keypadOpen);
-
-                // Delegate this to "Save Button"
-                // transaction.amount = parseInt(currentExpression);
               }}
               _text={{
                 fontSize: 'lg',

@@ -19,7 +19,7 @@ import {ChangePhoneNumber} from './src/screens/ChangePhoneNumber';
 import {SignUp} from './src/screens/SignUp';
 import {Profile_two} from './src/screens/Profile_two';
 import {CurrencyList} from './src/screens/CurrencyList';
-import {UserProfile} from './src/screens/UserProfile';
+import ProfileWithFeed from './src/screens/UserProfile';
 import notifee, {EventType} from '@notifee/react-native';
 import {Notification} from './src/screens/Notification';
 import {ChangePhoneNumberOuter} from './src/screens/ChangePhoneNumberOuter';
@@ -126,7 +126,6 @@ const Section = ({children, title}) => {
     </View>
   );
 };
-const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const App = () => {
   useEffect(() => {
@@ -155,6 +154,7 @@ const App = () => {
           <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
           <Drawer.Screen name="AutoPilot" component={AutoPilot} />
           <Drawer.Screen name="Test" component={Test} />
+          <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

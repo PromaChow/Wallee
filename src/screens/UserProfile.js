@@ -37,11 +37,16 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Feed} from './Feed';
 
 const window = Dimensions.get('window');
 const screen = Dimensions.get('screen');
 
-export const UserProfile = ({navigation}) => {
+const Stack = createNativeStackNavigator();
+
+const UserProfile = ({navigation}) => {
   const [username, setName] = React.useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState(require('../data/pfp.jpg'));
@@ -273,6 +278,17 @@ export const UserProfile = ({navigation}) => {
     );
   }
 };
+
+export default ProfileWithFeed = () => (
+  <Stack.Navigator
+    initialRouteName="UserProfile"
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen name="Profile" component={UserProfile} />
+    <Stack.Screen name="Feed" component={Feed} />
+  </Stack.Navigator>
+);
 
 const styles = StyleSheet.create({
   content: {

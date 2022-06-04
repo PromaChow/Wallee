@@ -270,7 +270,6 @@ def get_predictions():
 
 
 
-print(get_predictions())
 
 
 

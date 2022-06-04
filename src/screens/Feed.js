@@ -13,6 +13,8 @@ import BackgroundService from 'react-native-background-actions';
 import SmsListener from 'react-native-android-sms-listener';
 import {fillAddress} from '../IdentifierService';
 import {GetJournal} from '../dummyJournal';
+import {setPrefferedCurrencyMode} from '../userSpace';
+import {getRate} from '../userSpace';
 import {
   getNotification,
   insertNotif,
@@ -46,6 +48,8 @@ import {
   AppState,
   Image,
 } from 'react-native';
+
+import {retrievePreferredCurrency, getRates} from '../preferredCurrencyService';
 
 async function SMSNotification() {
   // Create a channel
@@ -337,20 +341,7 @@ export const Feed = () => {
       <Button
         title="add"
         onPress={() => {
-          var addrs = [
-            'bKash',
-            '16216',
-            'JANATA BANK',
-            'NAGAD',
-            '01841-325325',
-            '01842-406877',
-            'MGBLCARDS',
-            'Proma',
-            '+8801767895677',
-            '1234',
-          ];
-
-          update_doc(getUserID(), 'ID', addrs);
+          update_doc(getUserID(), 'preferredCurrency', '');
         }}></Button>
 
       <Button
@@ -369,6 +360,12 @@ export const Feed = () => {
         title="homePage"
         onPress={() => {
           navigation.navigate('HomePage');
+        }}></Button>
+
+      <Button
+        title="preffered Currency"
+        onPress={() => {
+          console.log(getRates());
         }}></Button>
     </SafeAreaView>
   );

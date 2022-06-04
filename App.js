@@ -40,7 +40,9 @@ import SideBar from './src/components/Sidebar';
 import Test from './src/screens/Test';
 import NavCatalogue from './src/components/Catalogue';
 import {AutoPilot} from './src/screens/AutoPilot';
-
+import {PrefferedCurrencyOuter} from './src/screens/PrefferedCurrencyOuter';
+import {PreferredCurrencytwo} from './src/screens/PreferredCurrencytwo';
+import {PreferredCurrencyList} from './src/screens/PreferredCurrencyList';
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
 export const colorNames = [
@@ -143,21 +145,116 @@ const App = () => {
   }, []);
   let str = 'pr';
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName="Test"
-          screenOptions={{
-            headerShown: false,
-          }}
-          drawerContent={props => <SideBar {...props} />}>
-          <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
-          <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
-          <Drawer.Screen name="AutoPilot" component={AutoPilot} />
-          <Drawer.Screen name="Test" component={Test} />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </NativeBaseProvider>
+    // <NativeBaseProvider>
+    //   <NavigationContainer>
+    //     <Drawer.Navigator
+    //       initialRouteName="Test"
+    //       screenOptions={{
+    //         headerShown: false,
+    //       }}
+    //       drawerContent={props => <SideBar {...props} />}>
+    //       <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
+    //       <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
+    //       <Drawer.Screen name="AutoPilot" component={AutoPilot} />
+    //       <Drawer.Screen name="Test" component={Test} />
+    //     </Drawer.Navigator>
+    //   </NavigationContainer>
+    // </NativeBaseProvider>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{title: 'Welcome'}}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{title: 'Welcome'}}
+        />
+        <Stack.Screen
+          name="Feed"
+          component={Feed}
+          options={{title: 'Welcome'}}
+        />
+
+        <Stack.Screen name="OTP" component={OTP} options={{title: 'Welcome'}} />
+
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="ChangePhoneNumber"
+          component={ChangePhoneNumber}
+          options={{headerShown: true, title: 'Change Number'}}
+        />
+        {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+        <Stack.Screen name="Profile_two" component={Profile_two} />
+        <Stack.Screen name="CurrenyList" component={CurrencyList} />
+        <Stack.Screen
+          name="Notification"
+          component={Notification}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+        <Stack.Screen
+          name="UserProfile"
+          component={UserProfile}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="ChangePhoneNumberOuter"
+          component={ChangePhoneNumberOuter}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="OTPScreenChange"
+          component={OTPScreenChange}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="Setting"
+          component={Setting}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="Identifiers"
+          component={Identifiers}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="HomePage"
+          component={HomePage}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="PrefferedCurrencyOuter"
+          component={PrefferedCurrencyOuter}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="PreferredCurrencytwo"
+          component={PreferredCurrencytwo}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="PreferredCurrencyList"
+          component={PreferredCurrencyList}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+
     // <NavigationContainer>
     //   <Stack.Navigator>
     //     <Stack.Screen name="UserProfile" component={UserProfile} />

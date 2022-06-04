@@ -82,6 +82,9 @@ export const Setting = ({navigation}) => {
             borderBottomWidth: 0.5,
             marginTop: 20,
             marginHorizontal: 20,
+          }}
+          onPress={() => {
+            navigation.navigate('PrefferedCurrencyOuter');
           }}>
           <Icon
             name="dollar-sign"

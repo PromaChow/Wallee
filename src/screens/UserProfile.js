@@ -172,7 +172,7 @@ export const UserProfile = ({navigation}) => {
               SAVE
             </Text>
           </TouchableOpacity>
-        </View>
+        </View>{' '}
       </SafeAreaView>
     );
   }
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
   },
 
   containerUpperView: {
-    flex: 0.8,
+    flex: 0.6,
     backgroundColor: '#95cca3',
     alignItems: 'center',
     justifyContent: 'center',

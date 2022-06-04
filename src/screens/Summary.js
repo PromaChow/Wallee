@@ -16,7 +16,7 @@ import {
   getAddress,
   deleteIdentifier,
   insertAddress,
-} from '../IdentifierService';
+} from '../../IdentifierService';
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 import {

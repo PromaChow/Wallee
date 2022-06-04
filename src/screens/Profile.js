@@ -1,12 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {add_User} from '../FireStoreHelperFunctions';
 import firebase from '@react-native-firebase/app';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-import AnimatedLinearGradient, {
-  presetColors,
-} from 'react-native-animated-linear-gradient';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Feather';
 import MaskedView from '@react-native-community/masked-view';

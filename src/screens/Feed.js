@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import {recognizeImage} from '../mlkit';
+import {recognizeImage} from '../../mlkit';
 import ImgToBase64 from 'react-native-image-base64';
 import notifee from '@notifee/react-native';
 import {AndroidColor} from '@notifee/react-native';

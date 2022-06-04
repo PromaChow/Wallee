@@ -12,7 +12,7 @@ import {
   TouchableNativeFeedback,
   ScrollView,
 } from 'react-native';
-import {array} from '../data/currency';
+import {array} from '../../data/currency';
 import {setCurrency} from '../CurrencyService';
 import Icon from 'react-native-vector-icons/Feather';
 

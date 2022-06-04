@@ -10,7 +10,7 @@ import {
   update_doc,
   copy_user,
   getUser,
-} from './FireStoreHelperFunctions';
+} from './src/FireStoreHelperFunctions';
 
 let confirm = null;
 

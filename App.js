@@ -8,25 +8,24 @@
 
 import React from 'react';
 import {useState, useEffect} from 'react';
-import firestore from '@react-native-firebase/firestore';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen} from './screen/HomeScreen';
-import {Profile} from './screen/Profile';
-import {Feed} from './screen/Feed';
-import {OTP} from './screen/OTPScreen';
-import {ChangePhoneNumber} from './screen/ChangePhoneNumber';
-import {SignUp} from './screen/SignUp';
-import {Profile_two} from './screen/Profile_two';
-import {CurrencyList} from './screen/CurrencyList';
-import {UserProfile} from './screen/UserProfile';
+import {HomeScreen} from './src/screens/HomeScreen';
+import {Profile} from './src/screens/Profile';
+import {Feed} from './src/screens/Feed';
+import {OTP} from './src/screens/OTPScreen';
+import {ChangePhoneNumber} from './src/screens/ChangePhoneNumber';
+import {SignUp} from './src/screens/SignUp';
+import {Profile_two} from './src/screens/Profile_two';
+import {CurrencyList} from './src/screens/CurrencyList';
+import {UserProfile} from './src/screens/UserProfile';
 import notifee, {EventType} from '@notifee/react-native';
-import {Notification} from './screen/Notification';
-import {ChangePhoneNumberOuter} from './screen/ChangePhoneNumberOuter';
-import {OTPScreenChange} from './screen/OTPScreenChange';
-import {Setting} from './screen/Setting.js';
-import {Identifiers} from './screen/Identifiers';
-import {HomePage} from './screen/HomePage';
+import {Notification} from './src/screens/Notification';
+import {ChangePhoneNumberOuter} from './src/screens/ChangePhoneNumberOuter';
+import {OTPScreenChange} from './src/screens/OTPScreenChange';
+import {Setting} from './src/screens/Setting.js';
+import {Identifiers} from './src/screens/Identifiers';
+import {HomePage} from './src/screens/HomePage';
 import {
   getUserID,
   ifExist,

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {addToStorage, add_User} from '../FireStoreHelperFunctions';
+import {addToStorage} from '../FireStoreHelperFunctions';
 import firebase from '@react-native-firebase/app';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import AnimatedLinearGradient, {

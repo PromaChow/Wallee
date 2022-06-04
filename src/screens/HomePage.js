@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {signInWithPhoneNumber} from '../Authentication';
+import {signInWithPhoneNumber} from '../../Authentication';
 import PhoneInput from 'react-native-phone-number-input';
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';

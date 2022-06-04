@@ -135,10 +135,13 @@ const SortMenu = ({
 const JournalView = ({colorIndex = 5, navigation, route}) => {
   const [showSortingModal, setShowSortingModal] = useState(false);
   const {journal} = route.params;
+  const [listOfTransactions, setListOfTransactions] = useState(
+    journal.listOfTransactions,
+  );
 
   // const netBalance = useMemo(
   //   () =>
-  //     journal.listOfTransactions.reduce(
+  //     listOfTransactions.reduce(
   //       (partialSum, transaction) => partialSum + transaction.amount,
   //       0,
   //     ),
@@ -146,8 +149,11 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
   // );
 
   const handleAddTransaction = () => {
-    journal.addTransaction(new Transaction(200));
+    const dummy = new Transaction(200);
+    journal.addTransaction(dummy);
+
     // component should re-render here
+    setListOfTransactions([...listOfTransactions, dummy]);
   };
 
   return (
@@ -178,7 +184,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
                 fontWeight="bold"
                 color={'success.400'}>{`${journal.contribution}\n\n`}</Text>
               # of Entries:&nbsp;&nbsp;
-              <Text fontWeight="bold">{journal.listOfTransactions.length}</Text>
+              <Text fontWeight="bold">{listOfTransactions.length}</Text>
             </Heading>
             <Divider
               orientation="vertical"
@@ -224,14 +230,14 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
       </Center>
       <ScrollView width="full" paddingTop="30px">
         <ListOfTransactions
-          listOfTransactions={journal.listOfTransactions}
+          listOfTransactions={listOfTransactions}
           colorIndex={colorIndex}
         />
       </ScrollView>
       <SortMenu
         showSortingModal={showSortingModal}
         setShowSortingModal={setShowSortingModal}
-        listOfTransactions={journal.listOfTransactions}
+        listOfTransactions={listOfTransactions}
       />
       <Fab
         renderInPortal={false}

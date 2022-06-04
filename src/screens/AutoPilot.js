@@ -22,13 +22,15 @@ const dummy = {
   Type: 'Credit',
 };
 
+const dummyID = 'E6lOhV4rPFNFCnJ7MAEZKiSdVuJ2';
+
 const responseToTransaction = response => {};
 
 const getSMS = async () => {
   var json = [];
   var addrs = ['Pathao'];
 
-  const data = await retrieve_data(getUserID());
+  const data = await retrieve_data(dummyID);
   min_date = data['lastAccessedDate'];
 
   console.log('min_date' + min_date);
@@ -54,7 +56,7 @@ const getSMS = async () => {
 
         address: addr,
       };
-      update_doc(getUserID(), 'lastAccessedDate', Date.now());
+      update_doc(dummyID);
       SmsAndroid.list(
         JSON.stringify(filter),
         fail => {
@@ -108,7 +110,8 @@ const post_sms = async sms => {
   //       });
   //   });
 
-  return new Promise.resolve(dummy);
+  const response = new Promise.resolve(dummy);
+  console.log(response);
 };
 
 export const AutoPilot = () => {
@@ -126,7 +129,7 @@ export const AutoPilot = () => {
           getSMS();
           var date = Date.now();
           console.log(date);
-          console.log(getUserID());
+          console.log(dummyID);
         }
         setAppState(nextAppState);
       },

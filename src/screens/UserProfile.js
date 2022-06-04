@@ -94,92 +94,98 @@ const UserProfile = ({navigation}) => {
   if (condition === 0) {
     return (
       <SafeAreaView style={styles.content}>
-        <View style={styles.containerUpperView}>
-          <TouchableOpacity
-            onPress={async () => {
-              const img = await launchImageProfilePicture();
-              setImage(img.path);
-              setImageChanged(true);
-              setCondition(1);
-            }}>
-            <Image
-              style={{
-                width: 140,
-                height: 140,
-                borderWidth: 0.5,
-                borderColor: '#3c824d',
-                borderRadius: 90,
-                marginRight: 20,
-                alignSelf: 'center',
-              }}
-              source={require('../data/pfp.jpg')}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.containerBottomView}>
-          <Text style={styles.text}>Username</Text>
-          <TextInput
-            style={
-              focus === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
-            }
-            editable={true}
-            onFocus={() => {
-              setFocus(1);
-            }}
-            onBlur={() => {
-              setFocus(0);
-            }}
-            onChangeText={username => {
-              setName(username);
-            }}>
-            {username}
-          </TextInput>
-
-          <Text style={styles.text}>Phone Number</Text>
-          <TextInput style={styles.textInputStyleDisabled} editable={false}>
-            {getPhoneNumber()}
-          </TextInput>
-
-          <Text style={styles.text}>Email</Text>
-          <TextInput
-            style={
-              press === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
-            }
-            editable={true}
-            onFocus={() => {
-              setPress(1);
-            }}
-            onBlur={() => {
-              setPress(0);
-            }}
-            onChangeText={email => {
-              setEmail(email);
-            }}>
-            {email}
-          </TextInput>
-
-          <Text style={styles.text}>Total Amount</Text>
-          <TextInput style={styles.textInputStyleDisabled} editable={false}>
-            {curr + ' ' + amount}
-          </TextInput>
-          <TouchableOpacity
-            style={styles.appButtonContainer}
-            onPress={async () => {
-              update_doc(getUserID(), 'name', username);
-              update_doc(getUserID(), 'email', email);
-              navigation.navigate('Feed');
-            }}>
-            <Text
-              style={{
-                color: '#FFFFFF',
-                fontSize: 12,
-                fontFamily: 'fantasy',
-                alignSelf: 'center',
+        <ScrollView style={{flex: 1}}>
+          <View style={styles.containerUpperView}>
+            <TouchableOpacity
+              onPress={async () => {
+                const img = await launchImageProfilePicture();
+                setImage(img.path);
+                setImageChanged(true);
+                setCondition(1);
               }}>
-              SAVE
-            </Text>
-          </TouchableOpacity>
-        </View>
+              <Image
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderWidth: 0.5,
+                  borderColor: '#3c824d',
+                  borderRadius: 90,
+                  marginRight: 20,
+                  alignSelf: 'center',
+                }}
+                source={require('../data/pfp.jpg')}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.containerBottomView}>
+            <Text style={styles.text}>Username</Text>
+            <TextInput
+              style={
+                focus === 0
+                  ? styles.textInputStyle
+                  : styles.textInputStyleonFocus
+              }
+              editable={true}
+              onFocus={() => {
+                setFocus(1);
+              }}
+              onBlur={() => {
+                setFocus(0);
+              }}
+              onChangeText={username => {
+                setName(username);
+              }}>
+              {username}
+            </TextInput>
+
+            <Text style={styles.text}>Phone Number</Text>
+            <TextInput style={styles.textInputStyleDisabled} editable={false}>
+              {getPhoneNumber()}
+            </TextInput>
+
+            <Text style={styles.text}>Email</Text>
+            <TextInput
+              style={
+                press === 0
+                  ? styles.textInputStyle
+                  : styles.textInputStyleonFocus
+              }
+              editable={true}
+              onFocus={() => {
+                setPress(1);
+              }}
+              onBlur={() => {
+                setPress(0);
+              }}
+              onChangeText={email => {
+                setEmail(email);
+              }}>
+              {email}
+            </TextInput>
+
+            <Text style={styles.text}>Total Amount</Text>
+            <TextInput style={styles.textInputStyleDisabled} editable={false}>
+              {curr + ' ' + amount}
+            </TextInput>
+            <TouchableOpacity
+              style={styles.appButtonContainer}
+              onPress={async () => {
+                update_doc(getUserID(), 'name', username);
+                update_doc(getUserID(), 'email', email);
+                navigation.navigate('Feed');
+              }}>
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontSize: 12,
+                  fontFamily: 'fantasy',
+                  alignSelf: 'center',
+                }}>
+                SAVE
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -187,93 +193,99 @@ const UserProfile = ({navigation}) => {
   if (condition === 1) {
     return (
       <SafeAreaView style={styles.content}>
-        <View style={styles.containerUpperView}>
-          <TouchableOpacity
-            onPress={async () => {
-              const img = await launchImageProfilePicture();
-              setImage(img.path);
-              setImageChanged(true);
-              setCondition(1);
-            }}>
-            <Image
-              style={{
-                width: 140,
-                height: 140,
-                borderWidth: 0.5,
-                borderColor: '#3c824d',
-                borderRadius: 90,
-                marginRight: 20,
-                alignSelf: 'center',
-              }}
-              source={{uri: image}}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.containerBottomView}>
-          <Text style={styles.text}>Username</Text>
-          <TextInput
-            style={
-              focus === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
-            }
-            editable={true}
-            onFocus={() => {
-              setFocus(1);
-            }}
-            onBlur={() => {
-              setFocus(0);
-            }}
-            onChangeText={username => {
-              setName(username);
-            }}>
-            {username}
-          </TextInput>
-
-          <Text style={styles.text}>Phone Number</Text>
-          <TextInput style={styles.textInputStyleDisabled} editable={false}>
-            {getPhoneNumber()}
-          </TextInput>
-
-          <Text style={styles.text}>Email</Text>
-          <TextInput
-            style={
-              press === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
-            }
-            editable={true}
-            onFocus={() => {
-              setPress(1);
-            }}
-            onBlur={() => {
-              setPress(0);
-            }}
-            onChangeText={email => {
-              setEmail(email);
-            }}>
-            {email}
-          </TextInput>
-          <Text style={styles.text}>Total Amount</Text>
-          <TextInput style={styles.textInputStyleDisabled} editable={false}>
-            {curr + ' ' + amount}
-          </TextInput>
-          <TouchableOpacity
-            style={styles.appButtonContainer}
-            onPress={async () => {
-              console.log(email);
-              update_doc(getUserID(), 'name', username);
-              update_doc(getUserID(), 'email', email);
-              if (isImageChanged === true) addToStorage(getUserID(), image);
-              navigation.navigate('Feed');
-            }}>
-            <Text
-              style={{
-                color: '#FFFFFF',
-                fontSize: 12,
-                fontFamily: 'fantasy',
-                alignSelf: 'center',
+        <ScrollView style={{flex: 1}}>
+          <View style={styles.containerUpperView}>
+            <TouchableOpacity
+              onPress={async () => {
+                const img = await launchImageProfilePicture();
+                setImage(img.path);
+                setImageChanged(true);
+                setCondition(1);
               }}>
-              SAVE
-            </Text>
-          </TouchableOpacity>
-        </View>
+              <Image
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderWidth: 0.5,
+                  borderColor: '#3c824d',
+                  borderRadius: 90,
+                  marginRight: 20,
+                  alignSelf: 'center',
+                }}
+                source={{uri: image}}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.containerBottomView}>
+            <Text style={styles.text}>Username</Text>
+            <TextInput
+              style={
+                focus === 0
+                  ? styles.textInputStyle
+                  : styles.textInputStyleonFocus
+              }
+              editable={true}
+              onFocus={() => {
+                setFocus(1);
+              }}
+              onBlur={() => {
+                setFocus(0);
+              }}
+              onChangeText={username => {
+                setName(username);
+              }}>
+              {username}
+            </TextInput>
+
+            <Text style={styles.text}>Phone Number</Text>
+            <TextInput style={styles.textInputStyleDisabled} editable={false}>
+              {getPhoneNumber()}
+            </TextInput>
+
+            <Text style={styles.text}>Email</Text>
+            <TextInput
+              style={
+                press === 0
+                  ? styles.textInputStyle
+                  : styles.textInputStyleonFocus
+              }
+              editable={true}
+              onFocus={() => {
+                setPress(1);
+              }}
+              onBlur={() => {
+                setPress(0);
+              }}
+              onChangeText={email => {
+                setEmail(email);
+              }}>
+              {email}
+            </TextInput>
+            <Text style={styles.text}>Total Amount</Text>
+            <TextInput style={styles.textInputStyleDisabled} editable={false}>
+              {curr + ' ' + amount}
+            </TextInput>
+            <TouchableOpacity
+              style={styles.appButtonContainer}
+              onPress={async () => {
+                console.log(email);
+                update_doc(getUserID(), 'name', username);
+                update_doc(getUserID(), 'email', email);
+                if (isImageChanged === true) addToStorage(getUserID(), image);
+                navigation.navigate('Feed');
+              }}>
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontSize: 12,
+                  fontFamily: 'fantasy',
+                  alignSelf: 'center',
+                }}>
+                SAVE
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }

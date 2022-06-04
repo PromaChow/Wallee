@@ -40,36 +40,7 @@ import SideBar from './src/components/Sidebar';
 import Test from './src/screens/Test';
 import NavCatalogue from './src/components/Catalogue';
 import {AutoPilot} from './src/screens/AutoPilot';
-
-export const windowWidth = Dimensions.get('window').width;
-export const windowHeight = Dimensions.get('window').height;
-export const colorNames = [
-  'secondary',
-  'danger',
-  'info',
-  'rose',
-  'teal',
-  'emerald',
-  'cyan',
-];
-
-const colorValues = [600, 800];
-export const bgColors = [];
-export const fgColors = [];
-
-colorValues.forEach(number => {
-  colorNames.forEach(name => {
-    bgColors.push(`${name}.${number}`);
-    fgColors.push(`${name}.${number + 100}`);
-  });
-});
-
-export const getRandomColor = () =>
-  Math.floor(Math.random() * colorNames.length);
-
-export const journalKeyMemo = {};
-listOfJournals['Dummy'] = new ExpenseJournal('Dummy', 40);
-journalKeyMemo['Dummy'] = getRandomColor();
+import {useIsFocused} from '@react-navigation/native';
 
 import {
   getUserID,
@@ -101,32 +72,38 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const Section = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+export const windowWidth = Dimensions.get('window').width;
+export const windowHeight = Dimensions.get('window').height;
+export const colorNames = [
+  'secondary',
+  'danger',
+  'info',
+  'rose',
+  'teal',
+  'emerald',
+  'cyan',
+];
+
+const colorValues = [600, 800];
+export const bgColors = [];
+export const fgColors = [];
+
+colorValues.forEach(number => {
+  colorNames.forEach(name => {
+    bgColors.push(`${name}.${number}`);
+    fgColors.push(`${name}.${number + 100}`);
+  });
+});
+
+export const getRandomColor = () =>
+  Math.floor(Math.random() * colorNames.length);
+
+export const journalKeyMemo = {};
+listOfJournals['Dummy'] = new ExpenseJournal('Dummy', 40);
+journalKeyMemo['Dummy'] = getRandomColor();
+
 const Drawer = createDrawerNavigator();
+
 const App = () => {
   useEffect(() => {
     return notifee.onForegroundEvent(({type, detail}) => {

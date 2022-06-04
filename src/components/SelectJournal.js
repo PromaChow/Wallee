@@ -13,6 +13,7 @@ import listOfJournals, {listOfBudgets} from '../userSpace';
 import {journalKeyMemo, getRandomColor} from '../../App';
 import {Budget} from '../budget';
 import Transaction from '../transaction';
+import {useEffect} from 'react';
 
 const SelectJournals = ({showModal, setShowModal}) => {
   const [journalName, setJournalName] = useState(

@@ -1,7 +1,6 @@
 export default class Transaction {
   amount;
   creator;
-  paymentMethod;
   timeOfCreation;
   dateOfCreation;
   lastAccessTime;

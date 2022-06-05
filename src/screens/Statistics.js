@@ -10,9 +10,9 @@ import {
   Center,
   ScrollView,
 } from 'native-base';
-import {PieChart, LineChart} from 'react-native-chart-kit';
+import {PieChart, BarChart, LineChart} from 'react-native-chart-kit';
 import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
-import listOfJournals from '../userSpace';
+import listOfJournals, {listOfBudgets} from '../userSpace';
 import {journalKeyMemo, getRandomColor} from '../../App';
 import {useRefresh} from '../../App';
 import NavBar from '../components/NavBar';
@@ -22,11 +22,11 @@ import {Dimensions} from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
 const chartConfig = {
-  backgroundGradientFrom: '#1E2923',
+  backgroundGradientFrom: '#333333',
   backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: '#08130D',
+  backgroundGradientTo: '#222222',
   backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+  color: (opacity = 1) => `rgba(68, 75, 87, ${opacity})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
@@ -38,7 +38,18 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
   //   const dateMin = new Date('June 04, 2022 05:24:00');
   //   const dateMax = new Date();
   const data = [];
-  const colors = ['#cd3132', '#007add'];
+  const colors = [
+    '#cd3132',
+    '#007add',
+    '#11A8CD',
+    '#2472C8',
+    '#0DBC79',
+    '#E5E510',
+    '#555753',
+    '#23D18B',
+    '#D670D6',
+  ];
+
   let colorIndex = 0;
 
   // Populating data
@@ -71,9 +82,6 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
         width="full"
         shadow="7"
         marginBottom="5px">
-        <Text fontSize={'sm'} fontWeight="semibold" color="muted.500">
-          YOUR JOURNALS AT A GLANCE
-        </Text>
         <PieChart
           data={data}
           width={screenWidth}
@@ -86,34 +94,39 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
           absolute
         />
       </Center>
-      {/* <LineChart
-        data={{
-          labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-          datasets: [
-            {
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
-            },
-          ],
+
+      <Center
+        marginTop={'10px'}
+        padding="20px"
+        _text={{
+          fontSize: 'xl',
+          color: 'light.600',
         }}
-        width={screenWidth} // from react-native
-        height={220}
-        yAxisLabel="$"
-        yAxisSuffix="k"
-        yAxisInterval={1} // optional, defaults to 1
-        chartConfig={chartConfig}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      /> */}
+        bg="white"
+        borderRadius="lg"
+        width="full"
+        shadow="7"
+        marginBottom="5px">
+        <Text fontSize={'sm'} fontWeight="semibold" color="muted.500">
+          YOUR BUDGET SIZES AT A GLANCE
+        </Text>
+
+        <BarChart
+          data={{
+            labels: Object.keys(listOfBudgets),
+            datasets: [
+              {
+                data: Object.values(listOfBudgets).map(budget => budget.amount),
+              },
+            ],
+          }}
+          width={screenWidth} // from react-native
+          height={220}
+          yAxisLabel="$"
+          yAxisInterval={1} // optional, defaults to 1
+          chartConfig={chartConfig}
+        />
+      </Center>
     </Box>
   );
 };

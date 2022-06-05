@@ -61,7 +61,7 @@ const CreateJournalView = ({showModal, setShowModal}) => {
               <Button
                 onPress={() => {
                   const key = `${journalName}`;
-                  if (!(key in journalKeyMemo)) {
+                  if (!(key in journalKeyMemo) && key !== '') {
                     listOfJournals[key] =
                       journalType === 'income'
                         ? new IncomeJournal(journalName, 0)

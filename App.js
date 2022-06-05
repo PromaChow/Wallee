@@ -33,6 +33,7 @@ import SideBar from './src/components/Sidebar';
 import Test from './src/screens/Test';
 import NavCatalogue from './src/components/Catalogue';
 import {AutoPilot} from './src/screens/AutoPilot';
+import Statistics from './src/screens/Statistics';
 import {useIsFocused} from '@react-navigation/native';
 
 import {
@@ -41,7 +42,7 @@ import {
   add_User,
   retrieve_data,
   update_doc,
-} from './FireStoreHelperFunctions';
+} from './src/FireStoreHelperFunctions';
 
 import {
   SafeAreaView,
@@ -76,6 +77,7 @@ export const colorNames = [
   'cyan',
 ];
 
+export let keyGen = 0;
 const colorValues = [600, 800];
 export const bgColors = [];
 export const fgColors = [];
@@ -100,6 +102,10 @@ export const useRefresh = () => {
   const isFocused = useIsFocused();
   useEffect(() => {
     setRefresh(!refresh);
+
+    // for (const [key, value] of Object.entries(listOfJournals)) {
+    //   update_doc(getUserID(), key, value);
+    // }
   }, [isFocused]);
 };
 
@@ -131,8 +137,9 @@ const App = () => {
           <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
           <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
           <Drawer.Screen name="AutoPilot" component={AutoPilot} />
-          <Drawer.Screen name="Test" component={Test} />
+          <Drawer.Screen name="Test" component={HomePage} />
           <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />
+          <Drawer.Screen name="Statistics" component={Statistics} />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

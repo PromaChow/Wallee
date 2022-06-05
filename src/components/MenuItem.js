@@ -26,6 +26,7 @@ const MenuItem = ({active, componentName, navigation}) => {
           as={Feather}
           opacity={0.7}
           name={buttonInfo[componentName].iconName}
+          color={active ? 'light.200' : 'light.800'}
         />
       }
       _text={{

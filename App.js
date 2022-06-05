@@ -39,6 +39,7 @@ import Calculator from './src/components/Calculator';
 import SideBar from './src/components/Sidebar';
 import NavCatalogue from './src/components/Catalogue';
 import AutoPilot from './src/screens/AutoPilot';
+import {useIsFocused} from '@react-navigation/native';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
@@ -100,6 +101,14 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+export const useRefresh = () => {
+  const [refresh, setRefresh] = useState(false);
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    setRefresh(!refresh);
+  }, [isFocused]);
+};
+
 const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -126,6 +135,7 @@ const Section = ({children, title}) => {
   );
 };
 const Drawer = createDrawerNavigator();
+
 const App = () => {
   useEffect(() => {
     return notifee.onForegroundEvent(({type, detail}) => {

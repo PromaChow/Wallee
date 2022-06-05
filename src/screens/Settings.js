@@ -23,7 +23,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {PreferredCurrencytwo} from './PreferredCurrencytwo';
 import {PreferredCurrencyList} from './PreferredCurrencyList';
 const Stack = createNativeStackNavigator();
-const Options = ({navigation}) => {
+export const Options = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerView}>

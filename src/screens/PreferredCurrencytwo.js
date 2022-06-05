@@ -17,7 +17,7 @@ import {
   getPreferredCurrency,
 } from '../preferredCurrencyService';
 import Icon from 'react-native-vector-icons/Feather';
-import Settings from './Settings';
+import Options from './Settings';
 import {
   getNotification,
   insertNotif,
@@ -85,7 +85,7 @@ export const PreferredCurrencytwo = ({navigation}) => {
             onPress={() => {
               update_doc(getUserID(), 'preferredCurrency', currencyMode);
               setPrefferedCurrencyMode(currencyMode);
-              navigation.navigate('Settings');
+              navigation.navigate('Options');
             }}>
             <Text style={styles.appButtonText}>Save</Text>
           </TouchableOpacity>

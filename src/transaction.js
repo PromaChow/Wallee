@@ -5,12 +5,21 @@ export default class Transaction {
   timeOfCreation;
   dateOfCreation;
   lastAccessTime;
+  remarks;
+  type;
 
   constructor(amount, creator = 'User') {
     this.amount = amount;
     this.creator = creator;
     this.timeOfCreation = new Date();
     this.lastAccessTime = this.timeOfCreation;
+  }
+  setRemarks(remarks) {
+    this.remarks = remarks;
+  }
+
+  setType(type) {
+    this.type = type;
   }
 
   getCreationTimeSliced(startIndex, endIndex) {

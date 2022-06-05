@@ -46,7 +46,7 @@ function checkTime(journal) {
   );
 }
 export const filterJournals = () => {
-  GetJournal();
+  if (journals.length == 0) GetJournal();
   console.log(journals);
   console.log(min_Date, max_Date);
   let filteredJournals = journals.filter(checkTime);

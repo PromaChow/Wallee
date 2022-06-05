@@ -158,6 +158,7 @@ export const Profile_two = ({navigation}) => {
                   update_doc(uid, 'lastAccessedDate', 1041404266000);
                   update_doc(uid, 'ID', addrs);
                   update_doc(uid, 'preferredCurrency', '');
+                  update_doc(uid, 'transactions', '');
                   navigation.navigate('Feed');
                 }}>
                 <Text

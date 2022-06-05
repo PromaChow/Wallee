@@ -38,4 +38,5 @@ const ifExists = addr => {
 export const deleteIdentifier = index => {
   console.log(addrs[index]);
   addrs.splice(index, 1);
+  update_doc(getUserID(), 'ID', addrs);
 };

@@ -8,7 +8,8 @@ import PhoneInput from 'react-native-phone-number-input';
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-date-picker';
-import {setDates, filterJournals} from '../dummyJournal';
+import {setDates, filterJournals, GetJournal} from '../dummyJournal';
+
 import {
   Card,
   CardTitle,
@@ -30,7 +31,40 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import {PieChart} from 'react-native-svg-charts';
+
+import {Dimensions} from 'react-native';
+const screenWidth = Dimensions.get('window').width;
+
+export const getPieChartData = data => {
+  return data.map((item, index) => {
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
+    return {
+      key: index,
+      value: item,
+      svg: {fill: randomColor},
+    };
+  });
+};
+
 export const HomePage = () => {
+  const data10 = [40, 83, 60, 30, 75, 90, 27, 52];
+  const pieChartData = getPieChartData(data10);
+
+  const chartConfig = {
+    backgroundGradientFrom: '#1E2923',
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: '#08130D',
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    strokeWidth: 2, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+  };
+  useEffect(() => {
+    // GetJournal();
+  });
   const [dateMin, setDateMin] = useState(new Date());
   const [openMin, setOpenMin] = useState(false);
   const [dateMax, setDateMax] = useState(new Date());
@@ -40,9 +74,30 @@ export const HomePage = () => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
+  const getData = (min_Date, max_Date) => {
+    var journals = filterJournals(min_Date, max_Date);
+    console.log(journals[0].title, journals[0].contribution);
+    var data = [];
+    for (let journal of journals) {
+      var r = () => (Math.random() * 256) >> 0;
+      var color = `rgb(${r()}, ${r()}, ${r()})`;
+
+      data.splice(data.length, 0, {
+        name: journal.title,
+        contribution: journal.contribution,
+        color: color,
+        legendFontColor: '#7F7F7F',
+        legendFontSize: 15,
+      });
+    }
+
+    console.log(data);
+    return data;
+  };
   console.log(dateMin, dateMax);
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <Modal
         transparent={true}
         isVisible={isModalVisible}
@@ -160,15 +215,20 @@ export const HomePage = () => {
           </View>
         </View>
       </Modal>
-      <ScrollView>
-        <Card style={{marginTop: 40}}>
+      <ScrollView style={{flex: 1}}>
+        <Card
+          style={{
+            marginTop: 20,
+            marginHorizontal: 15,
+            borderRadius: 10,
+          }}>
           <CardTitle
             title="Summary"
             titleStyle={{color: '#b5ccab'}}
             subtitle="This is a summary of your journals"
           />
           <View>
-            <Text style={{color: 'black'}}>Hi</Text>
+            <PieChart style={{width: 200, height: 200}} data={pieChartData} />
           </View>
           <CardAction separator={true} inColumn={false}>
             <CardButton
@@ -181,8 +241,17 @@ export const HomePage = () => {
 
             <CardButton
               onPress={() => {
-                setDates(dateMin, dateMax);
-                console.log(filterJournals());
+                // setDates(dateMin, dateMax);
+                // console.log(filterJournals());
+                var date = new Date();
+                var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+                var lastDay = new Date(
+                  date.getFullYear(),
+                  date.getMonth() + 1,
+                  0,
+                );
+                setDates(firstDay, lastDay);
+                getData(firstDay, lastDay);
               }}
               title="Select Style"
               color="#b5ccab"

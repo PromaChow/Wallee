@@ -15,6 +15,13 @@ import {fillAddress} from '../IdentifierService';
 import {GetJournal} from '../dummyJournal';
 import {setPrefferedCurrencyMode} from '../userSpace';
 import {getRate} from '../userSpace';
+import {retrieveTransactions} from '../autoPilotTrasactions';
+import {
+  get_transactions,
+  add_sms_transactions,
+  add_receipt_transactions,
+  save_transactions,
+} from '../autoPilotTrasactions';
 import {
   getNotification,
   insertNotif,
@@ -93,6 +100,80 @@ async function BudgetNotification() {
   });
 }
 
+export const getSMSOnce = async address => {
+  var json = [];
+  var addrs = [];
+  addrs[0] = address;
+  console.log(addrs.length);
+
+  min_date = 1054742370000;
+
+  console.log('min_date' + min_date);
+  const granted = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.READ_SMS,
+    {
+      title: 'App SMS Permission',
+      message:
+        'App needs access to read your sms for adding automatic transactions ',
+      buttonNeutral: 'Ask Me Later',
+      buttonNegative: 'Cancel',
+      buttonPositive: 'OK',
+    },
+  );
+
+  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    for (let addr of addrs) {
+      console.log('addr' + addr);
+      var filter = {
+        box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
+
+        minDate: min_date, // timestamp (in milliseconds since UNIX epoch)
+        maxDate: Date.now(), // timestamp (in milliseconds since UNIX epoch)
+
+        address: addr,
+      };
+      SmsAndroid.list(
+        JSON.stringify(filter),
+        fail => {
+          console.log('Failed with this error: ' + fail);
+        },
+        async (count, smsList) => {
+          // console.log('Count: ', count);
+          //console.log('List: ', smsList);
+          var arr = JSON.parse(smsList);
+          var count = 0;
+          arr.forEach(async object => {
+            count++;
+            // console.log('Object: ' + object);
+            // console.log('-->' + object.date);
+            // console.log('-->' + object.body);
+            console.log('sent');
+
+            const sms = object.body;
+            json['type'] = '';
+            json['sms'] = object.body;
+            await post_sms(object.body).then(fetchData => {
+              add_sms_transactions(
+                fetchData['Amount'],
+                fetchData['Balance'],
+                fetchData['Date'],
+                fetchData['Type'],
+              );
+              console.log(fetchData);
+            });
+
+            //console.log('\n\njson' + json['sms'] + '\n\n');
+          });
+          if (count > 0) await SMSNotification();
+        },
+      );
+    }
+    console.log('SMS permission given');
+  } else {
+    console.log('SMS permission denied');
+  }
+};
+
 const getSMS = async () => {
   var json = [];
   var data_1 = await retrieve_data(getUserID());
@@ -100,6 +181,7 @@ const getSMS = async () => {
   console.log(addrs.length);
   const data = await retrieve_data(getUserID());
   min_date = data['lastAccessedDate'];
+  //min_date = 1054742370000;
 
   console.log('min_date' + min_date);
   const granted = await PermissionsAndroid.request(
@@ -147,7 +229,14 @@ const getSMS = async () => {
             json['type'] = '';
             json['sms'] = object.body;
             let fetchData = await post_sms(object.body);
+            add_sms_transactions(
+              fetchData['Amount'],
+              fetchData['Balance'],
+              fetchData['Date'],
+              fetchData['Type'],
+            );
             console.log(fetchData);
+
             //console.log('\n\njson' + json['sms'] + '\n\n');
           });
           if (count > 0) await SMSNotification();
@@ -283,6 +372,12 @@ export const Feed = () => {
           let fetchData = await post_image(uri);
           console.log('fetch');
           console.log(fetchData['address']);
+          add_receipt_transactions(
+            fetchData['total'],
+            fetchData['company'],
+            fetchData['date'],
+            fetchData['address'],
+          );
           // addToStorage(user.uid, uri);
         }}></Button>
 
@@ -364,8 +459,8 @@ export const Feed = () => {
 
       <Button
         title="preffered Currency"
-        onPress={() => {
-          console.log(getRates());
+        onPress={async () => {
+          get_transactions();
         }}></Button>
     </SafeAreaView>
   );

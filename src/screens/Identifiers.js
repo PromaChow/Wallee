@@ -24,6 +24,7 @@ import {
   Swipeable,
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
+import {getSMSOnce} from './Feed';
 const Item = ({item, navigation}) => (
   <View style={styles.item}>
     <TouchableOpacity style={{flexDirection: 'row'}}>
@@ -233,6 +234,7 @@ export const Identifiers = ({navigation}) => {
                 style={styles.modalButtonContainer}
                 onPress={async () => {
                   insertAddress(text);
+                  getSMSOnce(text);
                   //   var b = filteredDataSource;
                   //   b.splice(b.length, 0, text);
                   //   setFilteredDataSource([...b]);

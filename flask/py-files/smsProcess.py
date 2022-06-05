@@ -11,7 +11,12 @@ def find_money(str):
         "((BDT|TK|Tk|Taka|taka)(\s*)?(([1-9]{1}([0-9]|(\\,)?)*((\\.)[0-9]{2})?)|(([0]{1}((\\.)([0-9]){2})))))|((([1-9]{1}([0-9]|(\\,)?)*((\\.)[0-9]{2})?)|(([0]{1}((\\.)([0-9]){2}))))(\s*)?(Tk\.|Taka|taka))")
     res = re.search(regex, str)
     if(res):
-        return res.group(0)
+        res = res.group(0)
+        reg = re.compile("([1-9]{1}([0-9]|(\,)?)*((\.)[0-9]{2})?)")
+        r = re.search(reg,res)
+        amount = r.group(0)
+        print(amount)
+        return amount
     else:
         return ""
 
@@ -185,14 +190,14 @@ def getInfo(sms):
                 # print(child.dep_+" "+child.text)
                 if child.pos_ == 'ADP' and (child.text.lower() == 'by' or child.text.lower() == 'with'):
                     flag = 1
-                    dict["Type"] = "Credit"
+                    dict["Type"] = "Income"
                     temp = getEndSubString("credited", str)
                     dict["Amount"] = find_money(temp)
                     # str = str.replace(dict["Amount"], "")
 
                 if child.pos_ == 'ADP' and child.text.lower() == 'to':
                     flag = 1
-                    dict["Type"] = "Credit"
+                    dict["Type"] = "Income"
                     temp = getFrontSubString("credited", str)
                     dict["Amount"] = find_money(temp)
                     # str = str.replace(dict["Amount"], "")
@@ -223,14 +228,14 @@ def getInfo(sms):
                 # print(child.dep_+" "+child.text)
                 if child.pos_ == 'ADP' and (child.text.lower() == 'by' or child.text.lower() == 'with'):
                     flag = 1
-                    dict["Type"] = "Debit"
+                    dict["Type"] = "Expense"
                     temp = getEndSubString("debited", str)
                     dict["Amount"] = find_money(temp)
                     # str = str.replace(dict["Amount"], "")
 
                 if child.pos_ == 'ADP' and child.text.lower() == 'to':
                     flag = 1
-                    dict["Type"] = "Debit"
+                    dict["Type"] = "Expense"
                     temp = getFrontSubString("debited", str)
                     dict["Amount"] = find_money(temp)
                     # str = str.replace(dict["Amount"], "")

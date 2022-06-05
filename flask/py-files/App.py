@@ -45,6 +45,7 @@ def getAmount(str):
         res_in = re.search(regex, str)
         if(res_in):
             amount = res_in.group(0)
+            
     return ret,amount
 
 @app.route("/image", methods=['GET', 'POST'])
@@ -97,6 +98,7 @@ def bye_world():
         sms = request.get_json()
         sms = sms['sms']
     dic = smsProcess.getInfo(sms)
+    amount = dic['Amount']
     print(jsonify(dic))
     return jsonify(dic)
 

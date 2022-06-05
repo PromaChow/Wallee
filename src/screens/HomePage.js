@@ -31,29 +31,67 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {PieChart} from 'react-native-svg-charts';
+import {BarChart, LineChart, PieChart} from 'react-native-gifted-charts';
 
 import {Dimensions} from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
-export const getPieChartData = data => {
-  return data.map((item, index) => {
-    //  const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+// export const getPieChartData = data => {
+//   return data.map((item, index) => {
+//     //  const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+//     var r = () => (Math.random() * 256) >> 0;
+//     var color = `rgb(${r()}, ${r()}, ${r()})`;
+
+//     return {
+//       key: index,
+//       value: item,
+//       svg: {fill: color},
+//     };
+//   });
+// };
+const getData = (min_Date, max_Date) => {
+  GetJournal();
+  setDates(min_Date, max_Date);
+  var journals = filterJournals(min_Date, max_Date);
+  console.log(journals);
+
+  //console.log(journals[0].title, journals[0].contribution);
+  var data = [];
+  for (let journal of journals) {
     var r = () => (Math.random() * 256) >> 0;
     var color = `rgb(${r()}, ${r()}, ${r()})`;
-
-    return {
-      key: index,
-      value: item,
-      svg: {fill: color},
-    };
-  });
+    data.splice(data.length, 0, {
+      value: journal.contribution,
+      text: journal.title,
+      color: color,
+    });
+  }
+  console.log(data);
+  return data;
 };
 
-export const HomePage = () => {
-  const data10 = [40, 83, 60, 30, 75, 90, 27, 52];
-  const pieChartData = getPieChartData(data10);
+const renderLegend = (text, color) => {
+  return (
+    <View style={{flexDirection: 'row', marginBottom: 12}}>
+      <View
+        style={{
+          height: 18,
 
+          width: 18,
+
+          marginRight: 10,
+
+          borderRadius: 4,
+
+          backgroundColor: color || 'white',
+        }}
+      />
+
+      <Text style={{color: 'white', fontSize: 16}}>{text || ''}</Text>
+    </View>
+  );
+};
+export const HomePage = () => {
   const chartConfig = {
     backgroundGradientFrom: '#1E2923',
     backgroundGradientFromOpacity: 0,
@@ -77,27 +115,12 @@ export const HomePage = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const getData = (min_Date, max_Date) => {
-    var journals = filterJournals(min_Date, max_Date);
-    console.log(journals[0].title, journals[0].contribution);
-    var data = [];
-    for (let journal of journals) {
-      var r = () => (Math.random() * 256) >> 0;
-      var color = `rgb(${r()}, ${r()}, ${r()})`;
-
-      data.splice(data.length, 0, {
-        name: journal.title,
-        contribution: journal.contribution,
-        color: color,
-        legendFontColor: '#7F7F7F',
-        legendFontSize: 15,
-      });
-    }
-
-    console.log(data);
-    return data;
-  };
   console.log(dateMin, dateMax);
+  var date = new Date();
+  var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  console.log(firstDay, lastDay);
+  const data = getData(firstDay, lastDay);
   return (
     <SafeAreaView style={{flex: 1}}>
       <Modal
@@ -223,22 +246,58 @@ export const HomePage = () => {
             marginTop: 20,
             marginHorizontal: 15,
             borderRadius: 10,
+            alignItems: 'center',
           }}>
           <CardTitle
             title="Summary"
             titleStyle={{color: '#b5ccab'}}
             subtitle="This is a summary of your journals"
           />
-          <View>
-            {/* <PieChart
-              style={{width: 300, height: 300}}
-              data={pieChartDataRounded}
-              innerRadius={35}
-              outerRadius={70}
-              labelRadius={120}
-              sort={(a, b) => b.key - a.key}>
-              <Labels />
-            </PieChart> */}
+
+          <PieChart
+            strokeColor="white"
+            strokeWidth={4}
+            donut
+            data={data}
+            innerCircleColor="#414141"
+            innerCircleBorderWidth={4}
+            innerCircleBorderColor={'white'}
+            textSize={18}
+          />
+
+          <View
+            style={{
+              width: '100%',
+
+              flexDirection: 'row',
+
+              justifyContent: 'space-evenly',
+
+              marginTop: 20,
+            }}>
+            {data.map(d => {
+              return (
+                <View style={{flexDirection: 'row', marginBottom: 12}}>
+                  <View
+                    style={{
+                      height: 18,
+
+                      width: 18,
+
+                      marginRight: 10,
+
+                      borderRadius: 4,
+
+                      backgroundColor: d.color || 'white',
+                    }}
+                  />
+
+                  <Text style={{color: 'white', fontSize: 16}}>
+                    {d.title || ''}
+                  </Text>
+                </View>
+              );
+            })}
           </View>
           <CardAction separator={true} inColumn={false}>
             <CardButton

@@ -8,7 +8,7 @@ const MenuButton = ({navigation}) => (
     position="absolute"
     marginTop="6px"
     marginX="8px"
-    size="md"
+    size="lg"
     variant="ghost"
     _icon={{
       as: Feather,

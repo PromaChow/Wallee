@@ -197,7 +197,7 @@ const Calculator = ({navigation, route}) => {
               name: 'save',
               variant: 'outline',
               color: 'white',
-              size: 'md',
+              size: 'lg',
             }}
             onPress={() => {
               transaction.amount = parseInt(currentExpression);

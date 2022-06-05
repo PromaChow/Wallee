@@ -41,7 +41,7 @@ const TransactionListView = ({
                 marginX="10px"
                 as={Feather}
                 name="dollar-sign"
-                size="sm"
+                size="md"
                 color="success.400"
               />
               Amount
@@ -73,7 +73,7 @@ const TransactionListView = ({
                 marginX="10px"
                 as={Feather}
                 name="clock"
-                size="sm"
+                size="md"
                 color="warning.400"
               />
               Created

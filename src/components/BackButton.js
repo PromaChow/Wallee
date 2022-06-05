@@ -7,7 +7,7 @@ const BackButton = ({navigation}) => (
     position="absolute"
     marginTop="5px"
     marginX="8px"
-    size="md"
+    size="lg"
     variant="ghost"
     _icon={{
       as: Feather,

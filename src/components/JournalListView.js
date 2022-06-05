@@ -37,7 +37,7 @@ const JournalListView = ({journal, colorIndex = 2, navigation}) => {
           flexDirection="row"
           justifyContent="space-between">
           <Center marginX={'10px'} flex="1">
-            <Icon as={Feather} name="book" size="md" color="light.600" />
+            <Icon as={Feather} name="book" size="lg" color="light.600" />
           </Center>
           <Box marginLeft={'5px'} flex="4" alignItems="flex-start">
             <Text fontSize={'xl'} fontWeight="semibold" color="muted.700">
@@ -66,7 +66,7 @@ const JournalListView = ({journal, colorIndex = 2, navigation}) => {
                   ? 'arrow-up-circle'
                   : 'arrow-down-circle'
               }
-              size="md"
+              size="lg"
               color={journal instanceof IncomeJournal ? 'info.500' : 'red.400'}
             />
           </Center>

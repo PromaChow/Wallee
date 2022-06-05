@@ -201,7 +201,7 @@ const Calculator = ({navigation, route}) => {
             }}
             onPress={() => {
               transaction.amount = parseInt(currentExpression);
-              journal.addTransaction(transaction);
+              if (journal !== undefined) journal.addTransaction(transaction);
               navigation.goBack();
             }}
           />

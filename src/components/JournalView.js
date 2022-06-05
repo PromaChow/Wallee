@@ -38,14 +38,8 @@ export const ListOfTransactions = ({
   listOfTransactions,
   colorIndex,
   navigation,
-  handlePress, // Pass to Child
   handleDelete, // Use Own -> Passed from Parent
-  route,
 }) => {
-  if (listOfJournals === undefined) {
-    listOfJournals = route.params.listOfJournals;
-  }
-
   return (
     <ScrollView flex="1">
       <VStack space={3} width="full" alignItems="center">
@@ -62,6 +56,12 @@ export const ListOfTransactions = ({
                 <TransactionListView
                   colorIndex={colorIndex}
                   initialTransaction={transaction}
+                  navigation={navigation}
+                  handlePress={() => {
+                    navigation.navigate('Calculator', {
+                      transaction: transaction,
+                    });
+                  }}
                 />
               </Box>
               <Box flex="1">
@@ -272,6 +272,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
         <ListOfTransactions
           listOfTransactions={listOfTransactions}
           colorIndex={colorIndex}
+          navigation={navigation}
         />
       </ScrollView>
       <SortMenu

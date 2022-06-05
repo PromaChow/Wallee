@@ -10,6 +10,7 @@ const TransactionListView = ({
   colorIndex = 2,
   initialTransaction,
   handlePress,
+  navigation,
 }) => {
   const [transaction, setTransaction] = useState(initialTransaction);
   const [showModal, setShowModal] = useState(false);

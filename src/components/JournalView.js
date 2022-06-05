@@ -51,6 +51,8 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
     });
   };
 
+  const handleDeleteTransaction = () => {};
+
   return (
     <Box bg={bgColors[colorIndex]} flex="1">
       <BackButton navigation={navigation} />
@@ -132,6 +134,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
           listOfTransactions={listOfTransactions}
           colorIndex={colorIndex}
           navigation={navigation}
+          setListOfTransactions={setListOfTransactions}
         />
       </ScrollView>
       <SortMenu

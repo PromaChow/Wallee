@@ -20,9 +20,10 @@ import {
 
 const ListOfTransactions = ({
   listOfTransactions,
-  colorIndex,
+  colorIndex = 2,
   navigation,
-  handleDelete, // Use Own -> Passed from Parent
+  handleDelete,
+  handlePress,
 }) => {
   return (
     <ScrollView flex="1">
@@ -41,11 +42,14 @@ const ListOfTransactions = ({
                   colorIndex={colorIndex}
                   initialTransaction={transaction}
                   navigation={navigation}
-                  handlePress={() => {
-                    navigation.navigate('Calculator', {
-                      transaction: transaction,
-                    });
-                  }}
+                  handlePress={
+                    handlePress === undefined
+                      ? () =>
+                          navigation.navigate('Calculator', {
+                            transaction: transaction,
+                          })
+                      : handlePress
+                  }
                 />
               </Box>
               <Box flex="1">
@@ -65,7 +69,8 @@ const ListOfTransactions = ({
                   _text={{
                     fontSize: 'md',
                     fontWeight: 'light',
-                  }}></Button>
+                  }}
+                  onPress={() => {}}></Button>
               </Box>
             </Box>
           );

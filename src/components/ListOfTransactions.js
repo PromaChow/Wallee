@@ -36,7 +36,11 @@ const ListOfTransactions = ({
               marginY="2px"
               shadow="7"
               flexDirection="row"
-              key={transaction.timeOfCreation.getTime()}>
+              key={
+                transaction.creator === 'User'
+                  ? transaction.timeOfCreation.getTime()
+                  : transaction.timeOfCreation
+              }>
               <Box flex="4">
                 <TransactionListView
                   colorIndex={colorIndex}

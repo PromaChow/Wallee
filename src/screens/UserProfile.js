@@ -37,11 +37,16 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Feed} from './Feed';
 
 const window = Dimensions.get('window');
 const screen = Dimensions.get('screen');
 
-export const UserProfile = ({navigation}) => {
+const Stack = createNativeStackNavigator();
+
+const UserProfile = ({navigation}) => {
   const [username, setName] = React.useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState(require('../data/pfp.jpg'));
@@ -70,6 +75,7 @@ export const UserProfile = ({navigation}) => {
     }
     const username = doc['name'];
     setName(username);
+
     const currency = doc['currency'];
     //console.log(currency['currency']['code']);
     setCurrency(currency['currency']['code']);
@@ -80,6 +86,7 @@ export const UserProfile = ({navigation}) => {
     const email = doc['email'];
     setEmail(email);
   };
+
   useEffect(() => {
     setData();
   }, []);
@@ -87,98 +94,92 @@ export const UserProfile = ({navigation}) => {
   if (condition === 0) {
     return (
       <SafeAreaView style={styles.content}>
-        <ScrollView style={{flex: 1}}>
-          <View style={styles.containerUpperView}>
-            <TouchableOpacity
-              onPress={async () => {
-                const img = await launchImageProfilePicture();
-                setImage(img.path);
-                setImageChanged(true);
-                setCondition(1);
-              }}>
-              <Image
-                style={{
-                  width: 140,
-                  height: 140,
-                  borderWidth: 0.5,
-                  borderColor: '#3c824d',
-                  borderRadius: 90,
-                  marginRight: 20,
-                  alignSelf: 'center',
-                }}
-                source={require('../data/pfp.jpg')}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.containerBottomView}>
-            <Text style={styles.text}>Username</Text>
-            <TextInput
-              style={
-                focus === 0
-                  ? styles.textInputStyle
-                  : styles.textInputStyleonFocus
-              }
-              editable={true}
-              onFocus={() => {
-                setFocus(1);
+        <View style={styles.containerUpperView}>
+          <TouchableOpacity
+            onPress={async () => {
+              const img = await launchImageProfilePicture();
+              setImage(img.path);
+              setImageChanged(true);
+              setCondition(1);
+            }}>
+            <Image
+              style={{
+                width: 140,
+                height: 140,
+                borderWidth: 0.5,
+                borderColor: '#3c824d',
+                borderRadius: 90,
+                marginRight: 20,
+                alignSelf: 'center',
               }}
-              onBlur={() => {
-                setFocus(0);
-              }}
-              onChangeText={username => {
-                setName(username);
-              }}>
-              {username}
-            </TextInput>
+              source={require('../data/pfp.jpg')}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.containerBottomView}>
+          <Text style={styles.text}>Username</Text>
+          <TextInput
+            style={
+              focus === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
+            }
+            editable={true}
+            onFocus={() => {
+              setFocus(1);
+            }}
+            onBlur={() => {
+              setFocus(0);
+            }}
+            onChangeText={username => {
+              setName(username);
+            }}>
+            {username}
+          </TextInput>
 
-            <Text style={styles.text}>Phone Number</Text>
-            <TextInput style={styles.textInputStyleDisabled} editable={false}>
-              {getPhoneNumber()}
-            </TextInput>
+          <Text style={styles.text}>Phone Number</Text>
+          <TextInput style={styles.textInputStyleDisabled} editable={false}>
+            {getPhoneNumber()}
+          </TextInput>
 
-            <Text style={styles.text}>Email</Text>
-            <TextInput
-              style={
-                press === 0
-                  ? styles.textInputStyle
-                  : styles.textInputStyleonFocus
-              }
-              editable={true}
-              onFocus={() => {
-                setPress(1);
-              }}
-              onBlur={() => {
-                setPress(0);
-              }}
-              onChangeText={email => {
-                setEmail(email);
-              }}>
-              {email}
-            </TextInput>
+          <Text style={styles.text}>Email</Text>
+          <TextInput
+            style={
+              press === 0 ? styles.textInputStyle : styles.textInputStyleonFocus
+            }
+            editable={true}
+            onFocus={() => {
+              setPress(1);
+            }}
+            onBlur={() => {
+              setPress(0);
+            }}
+            onChangeText={email => {
+              setEmail(email);
+            }}>
+            {email}
+          </TextInput>
 
-            <Text style={styles.text}>Total Amount</Text>
-            <TextInput style={styles.textInputStyleDisabled} editable={false}>
-              {curr + ' ' + amount}
-            </TextInput>
-            <TouchableOpacity
-              style={styles.appButtonContainer}
-              onPress={async () => {
-                update_doc(getUserID(), 'name', username);
-                update_doc(getUserID(), 'email', email);
-                navigation.navigate('Feed');
+          <Text style={styles.text}>Total Amount</Text>
+          <TextInput style={styles.textInputStyleDisabled} editable={false}>
+            {curr + ' ' + amount}
+          </TextInput>
+          <TouchableOpacity
+            style={styles.appButtonContainer}
+            onPress={async () => {
+              update_doc(getUserID(), 'name', username);
+              update_doc(getUserID(), 'email', email);
+              navigation.navigate('Feed');
+            }}>
+            <Text
+              style={{
+                color: '#FFFFFF',
+                fontSize: 12,
+                fontFamily: 'fantasy',
+                alignSelf: 'center',
               }}>
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: 12,
-                  fontFamily: 'fantasy',
-                  alignSelf: 'center',
-                }}>
-                SAVE
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+              SAVE
+            </Text>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   }
@@ -277,6 +278,17 @@ export const UserProfile = ({navigation}) => {
     );
   }
 };
+
+export default ProfileWithFeed = () => (
+  <Stack.Navigator
+    initialRouteName="UserProfile"
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen name="Profile" component={UserProfile} />
+    <Stack.Screen name="Feed" component={Feed} />
+  </Stack.Navigator>
+);
 
 const styles = StyleSheet.create({
   content: {

@@ -15,8 +15,14 @@ import {
 import {array} from '../../data/currency';
 import {setCurrency} from '../CurrencyService';
 import Icon from 'react-native-vector-icons/Feather';
-
-export const Setting = ({navigation}) => {
+import {Identifiers} from './Identifiers';
+import {ChangePhoneNumberOuter} from './ChangePhoneNumberOuter';
+import {ChangePhoneNumber} from './ChangePhoneNumber';
+import {PrefferedCurrencyOuter} from './PrefferedCurrencyOuter';
+import {Stack} from 'native-base';
+import {PreferredCurrencytwo} from './PreferredCurrencytwo';
+import {PreferredCurrencyList} from './PreferredCurrencyList';
+var Setting = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerView}>
@@ -97,6 +103,33 @@ export const Setting = ({navigation}) => {
     </View>
   );
 };
+
+export default Settings = () => (
+  <Stack.Navigator
+    initialRouteName="Setting"
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen name="Identifiers" component={Identifiers} />
+    <Stack.Screen
+      name="ChangePhoneNumberOuter"
+      component={ChangePhoneNumberOuter}
+    />
+    <Stack.Screen name="ChangePhoneNumber" component={ChangePhoneNumber} />
+    <Stack.Screen
+      name="PrefferedCurrencyOuter"
+      component={PrefferedCurrencyOuter}
+    />
+    <Stack.Screen
+      name="PreferredCurrencytwo"
+      component={PreferredCurrencytwo}
+    />
+    <Stack.Screen
+      name="PreferredCurrencyList"
+      component={PreferredCurrencyList}
+    />
+  </Stack.Navigator>
+);
 
 const styles = StyleSheet.create({
   container: {

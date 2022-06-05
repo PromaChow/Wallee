@@ -49,5 +49,17 @@ export const retrieveTransactions = async () => {
   const data = await retrieve_data(getUserID());
   let temp = data['transactions'];
 
-  if (temp !== '') transactions = temp;
+  if (temp !== '') processTransactions(temp);
+};
+
+const processTransactions = temp => {
+  for (t of temp) {
+    var transaction = new Transaction(t['amount'], t['creator']);
+    transaction.setRemarks(t['remarks']);
+    transaction.lastAccessTime = new Date(t['lastAccessTime']['nanoseconds']);
+    transaction.timeOfCreation = new Date(t['timeOfCreation']['nanoseconds']);
+    transaction.setType(t['type']);
+
+    transactions.splice(transactions.length, 0, transaction);
+  }
 };

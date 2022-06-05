@@ -87,7 +87,9 @@ const TransactionListView = ({
                 fontWeight: 'bold',
               }}
               flex="1">
-              {transaction.getCreationTimeSliced(0, 5)}
+              {transaction.creator === 'User'
+                ? transaction.getCreationTimeSliced(0, 5)
+                : transaction.timeOfCreation}
             </Box>
           </Center>
         </Center>

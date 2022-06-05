@@ -181,7 +181,7 @@ const getSMS = async () => {
   console.log(addrs.length);
   const data = await retrieve_data(getUserID());
   min_date = data['lastAccessedDate'];
-  // min_date = 1054742370000;
+  //min_date = 1054742370000;
 
   console.log('min_date' + min_date);
   const granted = await PermissionsAndroid.request(
@@ -236,7 +236,9 @@ const getSMS = async () => {
               fetchData['Type'],
             );
             console.log(fetchData);
-            console.log(get_transactions());
+
+            save_transactions();
+            //console.log(get_transactions());
 
             //console.log('\n\njson' + json['sms'] + '\n\n');
           });
@@ -298,19 +300,24 @@ const post_image = async uri => {
   return fetchData;
 };
 
+const sendData = async () => {
+  const data = await retrieve_data(getUserID());
+  retrieveTransactions(data);
+  fillAddress(data);
+};
+
 // var tesseract = require('../tesseract');
 // console.log(tesseract);
 export const Feed = () => {
   const [aState, setAppState] = useState(AppState.currentState);
   const [image, setImage] = useState();
+
   useEffect(() => {
-    retrieveTransactions();
-    fillAddress();
+    sendData();
     getSMS();
     const appStateListener = AppState.addEventListener(
       'change',
       nextAppState => {
-        retrieveTransactions();
         console.log('Next AppState is: ', nextAppState);
         if (nextAppState === 'background') {
           getSMS();
@@ -443,21 +450,9 @@ export const Feed = () => {
         }}></Button>
 
       <Button
-        title="retrieve"
-        onPress={async () => {
-          const data = await retrieve_data(getUserID());
-          const arr = data['ID'];
-          console.log(typeof arr);
-          for (let addr of arr) {
-            console.log(addr);
-            console.log(typeof addr);
-          }
-        }}></Button>
-
-      <Button
         title="homePage"
         onPress={() => {
-          navigation.navigate('HomePage');
+          navigation.navigate('TrackTransactions');
         }}></Button>
 
       <Button

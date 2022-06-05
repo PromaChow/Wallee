@@ -1,7 +1,9 @@
 from gensim.parsing.preprocessing import remove_stopwords
 import spacy
 from spacy import displacy
-
+from sentence_transformers import SentenceTransformer
+import numpy as np
+import pandas as pd
 
 import re
 
@@ -15,7 +17,7 @@ def find_money(str):
         reg = re.compile("([1-9]{1}([0-9]|(\,)?)*((\.)[0-9]{2})?)")
         r = re.search(reg,res)
         amount = r.group(0)
-        print(amount)
+        #print(amount)
         return amount
     else:
         return ""
@@ -103,7 +105,7 @@ def getInfo(sms):
     # print(str+"\n\n")
     str.replace("-", " ")
     str = preProcess(str)
-    print(str)
+    #print(str)
     textTemp = NER(str)
     displacy.render(textTemp, jupyter=True)
 
@@ -250,36 +252,142 @@ def getInfo(sms):
             dict["Amount"] = find_money(temp)
             # str = str.replace(dict["Amount"], "")
             dict["Type"] = "Expense"
+            
+            
+    if(dict['Amount'] == 'undefined' and dict['Type']!='undefined'):       
+        nlp_ner = spacy.load("/home/proma/Desktop/model-best")
+        doc = nlp_ner(sms)
+        dic = {}
+        for ent in doc.ents:
+            if ent.label_.capitalize() == 'Amount':
+                if(dict['Amount'] =='undefined'):
+                    #print("hello")
+                    dict['Amount'] = find_money(ent.text)
+                
+            if ent.label_.capitalize() == 'Balance':
+                if(dict['Balance']=='undefined'):
+                    #print("hello")
+                    dict['Balance'] = find_money(ent.text)
+                
+            if ent.label_.capitalize() == 'Date':   
+                if(dict['Date']=='undefined'):
+                    #print("hello")
+                    dict['Date'] = ent.text
+            
+      
+  
+    # if(dict['Type'] == 'undefined'):
+    #     model = SentenceTransformer('distilbert-base-nli-mean-tokens')
+    #     expense_sms = []
+    #     income_sms = []
+    #     income_sms.insert(len(income_sms), "Cash In Tk 15,300.00 from 01851557738 successful. Fee Tk 0.00. Balance Tk 15,323.64. TrxID 9EB806B056 at 11/05/2022 13:47. Download App: https://bKa.sh/8app")
+    #     expense_sms.insert(len(expense_sms), "You have withdrawn an amount of Tk 15,300 from Account ****7890")
+    #     income_sms.insert(len(income_sms), "Cash In Tk 15,300.00 from 01851557738 successful. Fee Tk 0.00. Balance Tk 15,323.64. TrxID 9EB806B056 at 11/05/2022 13:47. Download App: https://bKa.sh/8app")
+    #     income_sms.insert(len(income_sms), "You have received a deposit of BDT 600")
+    #     expense_sms.insert(len(expense_sms), "Bill Payment to DPDC is successful.Amount: BDT 2322.00. Biller Account: 19254909. Fee:0.00 TxnId: 711O3YRZ 11/01/2022 13:36")
+    #     expense_sms.insert(len(expense_sms), "Dear Card Member,your monthly bill against card no 452989*2604 is BDT 560.00 dr. for Sep 21. Min due: $500.00. Last Pmt date Oct-4-2021. Call: 16735")
+    #     income_sms.insert(len(income_sms), "We have received your payment of BDT 500 ")
+    #     income_sms.insert(len(income_sms), "You have received a deposit of BDT 600")
+    #     expense_sms.insert(len(expense_sms), "Payment of BDT 13.20 is made at Infinity Malls ")
+    #     income_sms.insert(len(income_sms), "Dear Card Member, BDT 636.00 has been credited to your MGBL Credit Card 452989*2604 on 27.07.21. Thank you ")
+    #     expense_sms.insert(len(expense_sms), "Dear Sir, your A/C ***7591 debited (Nexus Debit Card Renewal Fee) by Tk460.00 on 08-03-2022 10:54:28 PM C/B Tk19,358.47. NexusPay")
+    #     income_sms.insert(len(income_sms), "Cash In Tk 15,300.00 from 01851557738 successful. Fee Tk 0.00. Balance Tk 15,323.64. TrxID 9EB806B056 at 11/05/2022 13:47. Download App: https://bKa.sh/8app")
+    #     expense_sms.insert(len(expense_sms), "Tk30.00 debited to recharge mobile 01515272739, Your A/C Balance:Tk24.00 TxnId: 2925691685 Date:27-APR-22 07:06:28 pm. Pls download https://bit.ly/nexuspay")
+    #     expense_sms.insert(len(expense_sms), "Your Janata Bank account A/C ***7591 has been debited BDT 10,000 at 11/05/2022 13:47. Current balance is BDT 15,000. Thanks")
+    #     income_sms.insert(len(income_sms), "Congratulations! You have received Cashback Tk 10. Balance Tk 100. TrxID ***123 at 11/05/2022 13:47")
+    #     expense_sms.insert(
+    #         len(expense_sms), "Payment Tk 500 to 01456789012 is successful. Balance Tk 10,000.")
 
+    #     expense_sms.insert(
+    #         len(expense_sms), "Payment Tk 500 to 01456789012 is successful. Balance Tk 10,000.")
+
+    #     expense_sms.insert(len(sms), '''Your payment for iPayBRTA Tran-No:2103040849330/BDT 23,293.00 is successful. Please print e-Money Receipt from www.ipaybrta.cnsbd.com
+    #     #  Thank you.''')
+
+    #     expense_sms.insert(len(expense_sms), "Tk3,000.00 transferred to A/C:017916155391 Fee:Tk.00, Your A/C Balance: Tk1,054.00 TxnId:2890470643 Date:11-APR-22 03:26:20 pm. Download https://bit.ly/nexuspay")
+    #     income_sms.insert(len(income_sms), "Cash-In from A/C: 019025556564 Tk4,030.00 Fee: Tk.00, Your A/C Balance: Tk4,074.00.TxnId:2868070895 Date:01-APR-22 05:24:25 pm. Download https://bit.ly/nexuspay")
+    #     income_sms.insert(len(income_sms), "Dear Card Member, BDT 50000.00 has been credited to your MGBL Credit Card 452989*2604 on 23.05.21. Thank you")
+
+
+    #     test_income = []
+    #     test_income.insert(len(test_income),"You have received a deposit of BDT 600")
+    #     test_income.insert(len(test_income),"Cash In Tk 15,300.00 from 01851557738 successful. Fee Tk 0.00. Balance Tk 15,323.64. TrxID 9EB806B056 at 11/05/2022 13:47. Download App: https://bKa.sh/8app")
+    #     test_income.insert(len(test_income), "Cash-In from A/C: 019025556564 Tk4,030.00 Fee: Tk.00, Your A/C Balance: Tk4,074.00.TxnId:2868070895 Date:01-APR-22 05:24:25 pm. Download https://bit.ly/nexuspay")
+    #     test_income.insert(len(test_income), "Amount has increased")
+
+
+    #     test_expense = []
+    #     test_expense.insert(len(test_expense),"Tk3,000.00 transferred to A/C:017916155391 Fee:Tk.00, Your A/C Balance: Tk1,054.00 TxnId:2890470643 Date:11-APR-22 03:26:20 pm. Download https://bit.ly/nexuspay")
+    #     test_expense.insert(len(test_expense),"Your Janata Bank account A/C ***7591 has been debited BDT 10,000 at 11/05/2022 13:47. Current balance is BDT 15,000. Thanks")
+    #     test_expense.insert(len(test_expense), '''Your payment for iPayBRTA Tran-No:2103040849330/BDT 23,293.00 is successful. Please print e-Money Receipt from www.ipaybrta.cnsbd.com
+    #     #  Thank you.''')
+
+
+    #     sentence = "You have received a deposit of BDT 600"
+    #     # sentences = [
+    #     #     'the person wear red T-shirt',
+    #     #     'this person is walking',
+    #     #     'the boy wear red T-shirt'
+    #     #     ]
+    #     income_sentence_embeddings = model.encode(income_sms)
+    #     expense_sentence_embeddings = model.encode(expense_sms)
+    #     test_sentence_embedding = model.encode(sms)
+
+    #     # for sentence, embedding in zip(sms, sentence_embeddings):
+    #     #     print("Sentence:", sentence)
+    #     #     print("Embedding:", embedding)
+    #     #     print("")
+    #     income_total = 0.0
+    #     expense_total = 0.0
+
+    #     from scipy.spatial import distance
+
+
+    #     for i in range(len(income_sms)) :
+    #         income_total+=(1 - distance.cosine(test_sentence_embedding, income_sentence_embeddings[i]))
+
+    #     for i in range(len(expense_sms)) :
+    #         expense_total+=(1 - distance.cosine(test_sentence_embedding, expense_sentence_embeddings[i]))
+
+        
+    #     if(income_total > expense_total):
+    #         dict['Type'] = 'Income'
+    #     else : dict['Type'] = 'Expense'
+    
+    #     dict['Amount']=find_money(dict['Amount'])
+    #     dict['Balance'] = find_money(dict['Balance'])
+    
     return dict
 
 
-sms = []
-sms.insert(len(sms), "Cash In Tk 15,300.00 from 01851557738 successful. Fee Tk 0.00. Balance Tk 15,323.64. TrxID 9EB806B056 at 11/05/2022 13:47. Download App: https://bKa.sh/8app")
-sms.insert(len(sms), "You have received a deposit of BDT 600")
-sms.insert(len(sms), "Bill Payment to DPDC is successful.Amount: BDT 2322.00. Biller Account: 19254909. Fee:0.00 TxnId: 711O3YRZ 11/01/2022 13:36")
-sms.insert(len(sms), "Dear Card Member,your monthly bill against card no 452989*2604 is BDT 560.00 dr. for Sep 21. Min due: $500.00. Last Pmt date Oct-4-2021. Call: 16735")
-sms.insert(len(sms), "We have received your payment of BDT 500 ")
-sms.insert(len(sms), "You have received a deposit of BDT 600")
-sms.insert(len(sms), "Payment of BDT 13.20 is made at Infinity Malls ")
-sms.insert(len(sms), "Dear Card Member, BDT 636.00 has been credited to your MGBL Credit Card 452989*2604 on 27.07.21. Thank you ")
-sms.insert(len(sms), "Dear Sir, your A/C ***7591 debited (Nexus Debit Card Renewal Fee) by Tk460.00 on 08-03-2022 10:54:28 PM C/B Tk19,358.47. NexusPay")
-sms.insert(len(sms), "Cash In Tk 15,300.00 from 01851557738 successful. Fee Tk 0.00. Balance Tk 15,323.64. TrxID 9EB806B056 at 11/05/2022 13:47. Download App: https://bKa.sh/8app")
-sms.insert(len(sms), "Tk30.00 debited to recharge mobile 01515272739, Your A/C Balance:Tk24.00 TxnId: 2925691685 Date:27-APR-22 07:06:28 pm. Pls download https://bit.ly/nexuspay")
-sms.insert(len(sms), "Your Janata Bank account A/C ***7591 has been debited BDT 10,000 at 11/05/2022 13:47. Current balance is BDT 15,000. Thanks")
-sms.insert(len(sms), "Congratulations! You have received Cashback Tk 10. Balance Tk 100. TrxID ***123 at 11/05/2022 13:47")
-sms.insert(
-    len(sms), "Payment Tk 500 to 01456789012 is successful. Balance Tk 10,000.")
+# sms = []
+# sms.insert(len(sms), "Cash In Tk 15,300.00 from 01851557738 successful. Fee Tk 0.00. Balance Tk 15,323.64. TrxID 9EB806B056 at 11/05/2022 13:47. Download App: https://bKa.sh/8app")
+# sms.insert(len(sms), "You have received a deposit of BDT 600")
+# sms.insert(len(sms), "Bill Payment to DPDC is successful.Amount: BDT 2322.00. Biller Account: 19254909. Fee:0.00 TxnId: 711O3YRZ 11/01/2022 13:36")
+# sms.insert(len(sms), "Dear Card Member,your monthly bill against card no 452989*2604 is BDT 560.00 dr. for Sep 21. Min due: $500.00. Last Pmt date Oct-4-2021. Call: 16735")
+# sms.insert(len(sms), "We have received your payment of BDT 500 ")
+# sms.insert(len(sms), "You have received a deposit of BDT 600")
+# sms.insert(len(sms), "Payment of BDT 13.20 is made at Infinity Malls ")
+# sms.insert(len(sms), "Dear Card Member, BDT 636.00 has been credited to your MGBL Credit Card 452989*2604 on 27.07.21. Thank you ")
+# sms.insert(len(sms), "Dear Sir, your A/C ***7591 debited (Nexus Debit Card Renewal Fee) by Tk460.00 on 08-03-2022 10:54:28 PM C/B Tk19,358.47. NexusPay")
+# sms.insert(len(sms), "Cash In Tk 15,300.00 from 01851557738 successful. Fee Tk 0.00. Balance Tk 15,323.64. TrxID 9EB806B056 at 11/05/2022 13:47. Download App: https://bKa.sh/8app")
+# sms.insert(len(sms), "Tk30.00 debited to recharge mobile 01515272739, Your A/C Balance:Tk24.00 TxnId: 2925691685 Date:27-APR-22 07:06:28 pm. Pls download https://bit.ly/nexuspay")
+# sms.insert(len(sms), "Your Janata Bank account A/C ***7591 has been debited BDT 10,000 at 11/05/2022 13:47. Current balance is BDT 15,000. Thanks")
+# sms.insert(len(sms), "Congratulations! You have received Cashback Tk 10. Balance Tk 100. TrxID ***123 at 11/05/2022 13:47")
+# sms.insert(
+#     len(sms), "Payment Tk 500 to 01456789012 is successful. Balance Tk 10,000.")
 
-sms.insert(
-    len(sms), "Payment Tk 500 to 01456789012 is successful. Balance Tk 10,000.")
+# sms.insert(
+#     len(sms), "Payment Tk 500 to 01456789012 is successful. Balance Tk 10,000.")
 
-sms.insert(len(sms), '''Your payment for iPayBRTA Tran-No:2103040849330/BDT 23,293.00 is successful. Please print e-Money Receipt from www.ipaybrta.cnsbd.com
- Thank you.''')
+# sms.insert(len(sms), '''Your payment for iPayBRTA Tran-No:2103040849330/BDT 23,293.00 is successful. Please print e-Money Receipt from www.ipaybrta.cnsbd.com
+#  Thank you.''')
 
-sms.insert(len(sms), "Tk3,000.00 transferred to A/C:017916155391 Fee:Tk.00, Your A/C Balance: Tk1,054.00 TxnId:2890470643 Date:11-APR-22 03:26:20 pm. Download https://bit.ly/nexuspay")
-sms.insert(len(sms), "Cash-In from A/C: 019025556564 Tk4,030.00 Fee: Tk.00, Your A/C Balance: Tk4,074.00.TxnId:2868070895 Date:01-APR-22 05:24:25 pm. Download https://bit.ly/nexuspay")
-sms.insert(len(sms), "Dear Card Member, BDT 50000.00 has been credited to your MGBL Credit Card 452989*2604 on 23.05.21. Thank you")
+# sms.insert(len(sms), "Tk3,000.00 transferred to A/C:017916155391 Fee:Tk.00, Your A/C Balance: Tk1,054.00 TxnId:2890470643 Date:11-APR-22 03:26:20 pm. Download https://bit.ly/nexuspay")
+# sms.insert(len(sms), "Cash-In from A/C: 019025556564 Tk4,030.00 Fee: Tk.00, Your A/C Balance: Tk4,074.00.TxnId:2868070895 Date:01-APR-22 05:24:25 pm. Download https://bit.ly/nexuspay")
+# sms.insert(len(sms), "Dear Card Member, BDT 50000.00 has been credited to your MGBL Credit Card 452989*2604 on 23.05.21. Thank you")
+
+
 # for res in sms:
 #     print("\n\n"+res+"\n\n")
 #    # res = preProcess(res)
@@ -288,4 +396,5 @@ sms.insert(len(sms), "Dear Card Member, BDT 50000.00 has been credited to your M
 #     print(getInfo(res))
 
 
-# print(getInfo(sms[0]))
+#print(getInfo('Thank you for using our card at Infinity Malls. Your spent amount is BDT 100.00'))
+

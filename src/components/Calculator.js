@@ -9,12 +9,13 @@ import {
   Center,
   Icon,
   Stack,
+  IconButton,
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {windowHeight, windowWidth} from '../../App';
 import Transaction from '../transaction';
 import BackButton from './BackButton';
-import {ListOfTransactions} from './JournalView.js';
+import {ListOfTransactions} from './JournalView';
 
 const NumButton = ({renderSymbol, appendSymbol}) => {
   return (
@@ -147,7 +148,7 @@ const KeyPad = React.memo(({setExpression, evaluationCallback}) => (
 ));
 
 const Calculator = ({navigation, route}) => {
-  const {transaction} = route.params;
+  const {transaction, journal} = route.params;
 
   const evaluationCallback = useCallback(expression => {
     if (expression === '') return '0';
@@ -165,12 +166,6 @@ const Calculator = ({navigation, route}) => {
   const [currentExpression, setExpression] = useState(transaction.amount);
   const [keypadOpen, setKeyPadOpen] = useState(false);
 
-  // useEffect(() => {
-  //   return () => {
-  //     transaction.amount = currentExpression;
-  //   };
-  // }, []);
-
   return (
     <>
       <Center flex="1" bg="light.200" maxH={windowHeight * 0.6}>
@@ -186,6 +181,7 @@ const Calculator = ({navigation, route}) => {
             alignItems="center"
             justifyContent="center"
             flex="2"
+            mr="-12"
             _text={{
               py: '1',
               pr: '5',
@@ -195,6 +191,20 @@ const Calculator = ({navigation, route}) => {
             }}>
             {keypadOpen ? 'Editing Entry' : 'Entry Details'}
           </Box>
+          <IconButton
+            _icon={{
+              as: Feather,
+              name: 'save',
+              variant: 'outline',
+              color: 'white',
+              size: 'lg',
+            }}
+            onPress={() => {
+              transaction.amount = parseInt(currentExpression);
+              if (journal !== undefined) journal.addTransaction(transaction);
+              navigation.goBack();
+            }}
+          />
         </Box>
         <Center
           padding="20px"
@@ -224,15 +234,12 @@ const Calculator = ({navigation, route}) => {
           <Divider thickness="2px" marginTop="5px" />
           <Center padding="5px" marginTop="5px" marginBottom="15px">
             <Button
-              variant="unstyled"
+              variant="outline"
               height="auto"
               onPress={() => {
                 transaction.lastAccessTime = new Date();
                 setExpression(evaluationCallback(currentExpression));
                 setKeyPadOpen(!keypadOpen);
-
-                // Delegate this to "Save Button"
-                // transaction.amount = parseInt(currentExpression);
               }}
               _text={{
                 fontSize: 'lg',
@@ -263,9 +270,9 @@ const Calculator = ({navigation, route}) => {
           shadow="7"
           marginBottom="5px">
           Created By:&nbsp;{transaction.creator}
-          On
-          {transaction.getCreationTimeSliced(0, 9) +
-            transaction.getCreationDateSliced()}
+          Last Edit On:
+          {transaction.getLastAccessTimeSliced(0, 9) +
+            transaction.getLastAccessDateSliced()}
         </Center>
       </Center>
       <Box flex="1" bg="light.200">

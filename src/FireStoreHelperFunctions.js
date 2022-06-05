@@ -44,6 +44,9 @@ const getPhoneNumber = () => {
 };
 
 const update_doc = async (uid, key, value) => {
+  firebase.firestore().settings({
+    ignoreUndefinedProperties: true,
+  });
   firestore()
     .collection('Users')
     .doc(uid)

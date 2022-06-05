@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {retrieve_data, getUserID} from '../FireStoreHelperFunctions';
 import {
   ScrollView,
   Divider,
@@ -9,7 +8,10 @@ import {
   Icon,
   Avatar,
 } from 'native-base';
+
 import MenuItem from './MenuItem';
+
+import {retrieve_data, getUserID} from '../FireStoreHelperFunctions';
 
 export const buttonInfo = {
   Test: {iconName: 'alert-triangle', displayName: 'Test'},
@@ -45,8 +47,9 @@ export const buttonInfo = {
     iconName: 'settings',
     displayName: 'Settings',
   },
+
   Feed: {
-    iconName: 'activity',
+    iconName: 'settings',
     displayName: 'Feed',
   },
 };
@@ -100,7 +103,7 @@ const SideBar = ({state, navigation}) => {
             fontSize: '3xl',
             fontWeight: 'semibold',
           }}>
-          User Name
+          {username}
         </Box>
       </Box>
       <ScrollView flex="1">

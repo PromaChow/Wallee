@@ -16,6 +16,7 @@ target 'FinanceApp' do
 
   pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
+
   target 'FinanceAppTests' do
     inherit! :complete
     # Pods for testing

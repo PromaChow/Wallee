@@ -9,9 +9,11 @@ import BudgetListView from '../components/BudgetListView';
 import {Budget} from '../budget';
 import {listOfBudgets} from '../userSpace';
 import CreateBudget from '../components/CreateBudget';
+import {useRefresh} from '../../App';
 
 const BudgetScreen = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
+  useRefresh();
 
   return (
     <>

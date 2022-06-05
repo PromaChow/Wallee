@@ -4,6 +4,7 @@ import {bgColors, fgColors, journalKeyMemo, useRefresh} from '../../App';
 import listOfJournals from '../userSpace';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Feather from 'react-native-vector-icons/Feather';
+let keygen = 0;
 import {
   Modal,
   FormControl,
@@ -36,11 +37,7 @@ const ListOfTransactions = ({
               marginY="2px"
               shadow="7"
               flexDirection="row"
-              key={
-                transaction.creator === 'User'
-                  ? transaction.timeOfCreation.getTime()
-                  : transaction.timeOfCreation
-              }>
+              key={++keygen}>
               <Box flex="4">
                 <TransactionListView
                   colorIndex={colorIndex}

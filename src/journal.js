@@ -8,6 +8,7 @@ export class Journal {
   timeOfCreation;
   dateOfCreation;
   lastAccessTime;
+  type;
 
   constructor(title, contribution = 0, creator = 'User') {
     this.title = title;
@@ -46,6 +47,7 @@ export class Journal {
 }
 
 export class IncomeJournal extends Journal {
+  type = 'income';
   constructor(title, creator = 'User') {
     super(title, creator);
   }
@@ -56,6 +58,7 @@ export class IncomeJournal extends Journal {
 }
 
 export class ExpenseJournal extends Journal {
+  type = 'expense';
   constructor(title, creator = 'User') {
     super(title, creator);
   }

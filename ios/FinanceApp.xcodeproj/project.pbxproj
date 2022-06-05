@@ -109,6 +109,7 @@
 				00E356EF1AD99517003FC87E /* FinanceAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				25568510023D4BB086D2A45A /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -123,6 +124,14 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		25568510023D4BB086D2A45A /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 

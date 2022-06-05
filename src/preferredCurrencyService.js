@@ -21,9 +21,11 @@ export const retrievePreferredCurrency = async () => {
   else preferredCurrency = temp;
 };
 
-export const getRates = () => {
+export const getRates = async () => {
   // preferredCurrency = await retrievePreferredCurrency();
   console.log(rates[0]['usd']);
+  const data = await retrieve_data(getUserID());
+  preferredCurrency = data['preferredCurrency'];
   console.log(preferredCurrency.currency.code);
   let currencyName = rates[0][preferredCurrency.currency.code.toLowerCase()];
 

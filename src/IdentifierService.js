@@ -13,8 +13,7 @@ var addrs = [
   '+8801767895677',
   '1234',
 ];
-export const fillAddress = async () => {
-  const data = await retrieve_data(getUserID());
+export const fillAddress = async data => {
   addrs = data['ID'];
 };
 export const getAddress = () => {

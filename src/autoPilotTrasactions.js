@@ -3,8 +3,11 @@ import Transaction from './transaction';
 import {update_doc, retrieve_data, getUserID} from './FireStoreHelperFunctions';
 
 export var transactions = [];
+var transaction = new Transaction(3000, 'Autopilot');
+transaction.setRemarks('Demo Transaction');
+transactions[0] = transaction;
 
-export const add_sms_transactions = (amount = '', balance, date, type) => {
+export const add_sms_transactions = (amount, balance, date, type) => {
   console.log('hello');
   amount = amount.replace(',', '');
   var remarks = '';
@@ -12,11 +15,15 @@ export const add_sms_transactions = (amount = '', balance, date, type) => {
   if (balance !== 'undefined') {
     remarks += 'Balance ' + balance;
   }
-  if (amount !== 'undefined') {
+  if (amount !== 'undefined' && amount !== '') {
+    console.log(amount);
+    console.log(parseFloat(amount));
     var transaction = new Transaction(parseFloat(amount), 'AutoPilot');
     transaction.setRemarks(remarks);
     transaction.setType(type);
     transactions.splice(transactions.length, 0, transaction);
+    console.log(transactions[0]);
+    //update_doc(getUserID(), 'transactions', transactions);
   }
 };
 
@@ -27,6 +34,7 @@ export const add_receipt_transactions = (
   address,
 ) => {
   amount = amount.replace(',', '');
+
   var remarks = '';
   var remarks =
     'Date ' + date + ' ' + 'Address ' + address + 'Company ' + company;
@@ -41,12 +49,12 @@ export const save_transactions = () => {
 };
 
 export const get_transactions = () => {
+  //console.log(transactions);
   return transactions;
-  console.log(transactions);
 };
 
-export const retrieveTransactions = async () => {
-  const data = await retrieve_data(getUserID());
+export const retrieveTransactions = data => {
+  //update_doc(getUserID(), 'transactions', transactions);
   let temp = data['transactions'];
 
   if (temp !== '') processTransactions(temp);

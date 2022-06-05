@@ -32,7 +32,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BackButton from './BackButton';
 import {useIsFocused} from '@react-navigation/native';
 import SortMenu from './SortMenu';
-import ListOfTransactions from './ListOfTransactions.js';
+import ListOfTransactions from './ListOfTransactions';
 
 const JournalView = ({colorIndex = 5, navigation, route}) => {
   const [showSortingModal, setShowSortingModal] = useState(false);

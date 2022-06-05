@@ -35,15 +35,13 @@ const Test = ({navigation}) => {
   const handlePress = () => {
     setShowModal(true);
   };
-  useEffect(async () => {
-    retrieveTransactions(getUserID());
-
+  useEffect(() => {
     //test = get_transactions();
   });
   test = get_transactions();
   console.log('test');
   console.log(test);
-  
+
   return (
     <>
       <NavBar title={'Test'} navigation={navigation}></NavBar>

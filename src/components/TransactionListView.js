@@ -10,11 +10,10 @@ const TransactionListView = ({
   colorIndex = 2,
   initialTransaction,
   handlePress,
+  navigation,
 }) => {
   const [transaction, setTransaction] = useState(initialTransaction);
   const [showModal, setShowModal] = useState(false);
-  var date = new Date(transaction['timeOfCreation']['nanoseconds']);
-
   return (
     <Box alignItems={'center'}>
       <Pressable onPress={handlePress}>
@@ -42,7 +41,7 @@ const TransactionListView = ({
                 marginX="10px"
                 as={Feather}
                 name="dollar-sign"
-                size="sm"
+                size="md"
                 color="success.400"
               />
               Amount
@@ -74,7 +73,7 @@ const TransactionListView = ({
                 marginX="10px"
                 as={Feather}
                 name="clock"
-                size="sm"
+                size="md"
                 color="warning.400"
               />
               Created
@@ -89,7 +88,7 @@ const TransactionListView = ({
               flex="1">
               {transaction.creator === 'User'
                 ? transaction.getCreationTimeSliced(0, 5)
-                : transaction.timeOfCreation}
+                : ''}
             </Box>
           </Center>
         </Center>

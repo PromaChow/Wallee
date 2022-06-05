@@ -32,5 +32,4 @@ export async function updatePreferredCurrency() {
   console.log(preferredCurrency);
 }
 
-
 export default {listOfJournals};

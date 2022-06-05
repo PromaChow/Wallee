@@ -68,7 +68,7 @@ const SelectJournals = ({showModal, setShowModal}) => {
 
                   setShowModal(false);
                 }}>
-                Send
+                Insert to Journal
               </Button>
             </Button.Group>
           </Modal.Footer>

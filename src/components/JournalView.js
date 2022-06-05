@@ -234,6 +234,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
             />
             <Box>
               <Button
+                py="5"
                 onPress={() => setShowSortingModal(true)}
                 leftIcon={
                   <Icon
@@ -247,12 +248,13 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
                 variant="unstyled"
                 bg={fgColors[colorIndex]}
                 _text={{
-                  fontSize: 'md',
-                  fontWeight: 'light',
+                  fontSize: 'lg',
+                  fontWeight: 'normal',
+                  color: 'light.200',
                 }}>
                 Sort Entries
               </Button>
-              <Button
+              {/* <Button
                 leftIcon={
                   <Icon size="md" as={Feather} name="filter" color="pink.300" />
                 }
@@ -263,7 +265,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
                   fontWeight: 'light',
                 }}>
                 Filter Entries
-              </Button>
+              </Button> */}
             </Box>
           </Flex>
         </Box>

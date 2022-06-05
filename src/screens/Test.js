@@ -40,14 +40,4 @@ const Test = ({navigation}) => {
   );
 };
 
-const NavPilot = () => (
-  <Stack.Navigator
-    initialRouteName="ListOfTransactions"
-    screenOptions={{
-      headerShown: false,
-    }}>
-    // ListOfAutoTransactions goes here
-  </Stack.Navigator>
-);
-
 export default Test;

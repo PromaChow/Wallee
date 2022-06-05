@@ -270,9 +270,9 @@ const Calculator = ({navigation, route}) => {
           shadow="7"
           marginBottom="5px">
           Created By:&nbsp;{transaction.creator}
-          On
-          {transaction.getCreationTimeSliced(0, 9) +
-            transaction.getCreationDateSliced()}
+          Last Edit On:
+          {transaction.getLastAccessTimeSliced(0, 9) +
+            transaction.getLastAccessDateSliced()}
         </Center>
       </Center>
       <Box flex="1" bg="light.200">

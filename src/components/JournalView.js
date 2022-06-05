@@ -1,8 +1,14 @@
 import {Journal, IncomeJournal, ExpenseJournal} from '../journal';
 import TransactionListView from './TransactionListView';
-import {windowHeight, bgColors, fgColors, journalKeyMemo} from '../../App';
+import {
+  windowHeight,
+  bgColors,
+  fgColors,
+  journalKeyMemo,
+  useRefresh,
+} from '../../App';
 import listOfJournals from '../userSpace';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import {
   Modal,
@@ -24,131 +30,9 @@ import Transaction from '../transaction';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BackButton from './BackButton';
-
-const Stack = createNativeStackNavigator();
-
-export const ListOfTransactions = ({
-  listOfTransactions,
-  colorIndex,
-  navigation,
-  handlePress, // Pass to Child
-  handleDelete, // Use Own -> Passed from Parent
-  route,
-}) => {
-  if (listOfJournals === undefined) {
-    listOfJournals = route.params.listOfJournals;
-  }
-
-  return (
-    <ScrollView flex="1">
-      <VStack space={3} width="full" alignItems="center">
-        {listOfTransactions.map(transaction => {
-          return (
-            <Box
-              height="95px"
-              marginX="5px"
-              marginY="2px"
-              shadow="7"
-              flexDirection="row"
-              key={transaction.timeOfCreation.getTime()}>
-              <Box flex="4">
-                <TransactionListView
-                  colorIndex={colorIndex}
-                  initialTransaction={transaction}
-                />
-              </Box>
-              <Box flex="1">
-                <Button
-                  height="full"
-                  marginLeft="5px"
-                  leftIcon={
-                    <Icon
-                      size="md"
-                      as={Feather}
-                      name="trash-2"
-                      color="red.500"
-                    />
-                  }
-                  variant="unstyled"
-                  bg={fgColors[colorIndex]}
-                  _text={{
-                    fontSize: 'md',
-                    fontWeight: 'light',
-                  }}></Button>
-              </Box>
-            </Box>
-          );
-        })}
-      </VStack>
-    </ScrollView>
-  );
-};
-
-const SortMenu = ({
-  listOfTransactions,
-  showSortingModal,
-  setShowSortingModal,
-}) => {
-  const [sortType, setSortType] = useState('mostAmount');
-
-  return (
-    <Center>
-      <Modal
-        isOpen={showSortingModal}
-        onClose={() => setShowSortingModal(false)}>
-        <Modal.Content maxWidth="400px">
-          <Modal.CloseButton />
-          <Modal.Header>Sort Entries</Modal.Header>
-          <Modal.Body>
-            <FormControl mt="3">
-              <FormControl.Label>Chose Sorting Type</FormControl.Label>
-              <Radio.Group
-                value={sortType}
-                onChange={nextValue => {
-                  setSortType(nextValue);
-                }}>
-                <Radio value="mostAmount" my={1}>
-                  By Most Amount
-                </Radio>
-                <Radio value="leastAmount" my={1}>
-                  By Least Amount
-                </Radio>
-                <Radio value="latest" my={1}>
-                  By Latest Entry
-                </Radio>
-                <Radio value="earliest" my={1}>
-                  By Earliest Entry
-                </Radio>
-              </Radio.Group>
-            </FormControl>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button.Group space={2}>
-              <Button
-                variant="ghost"
-                colorScheme="blueGray"
-                onPress={() => {
-                  setShowSortingModal(false);
-                }}>
-                Cancel
-              </Button>
-              <Button
-                onPress={() => {
-                  switch (sortType) {
-                    case 'mostAmount':
-                      listOfTransactions.sort((a, b) => b.amount - a.amount);
-                  }
-                  setShowSortingModal(false);
-                }}>
-                Sort
-              </Button>
-            </Button.Group>
-          </Modal.Footer>
-        </Modal.Content>
-      </Modal>
-    </Center>
-  );
-};
+import {useIsFocused} from '@react-navigation/native';
+import SortMenu from './SortMenu';
+import ListOfTransactions from './ListOfTransactions.js';
 
 const JournalView = ({colorIndex = 5, navigation, route}) => {
   const [showSortingModal, setShowSortingModal] = useState(false);
@@ -156,28 +40,18 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
   const [listOfTransactions, setListOfTransactions] = useState(
     journal.listOfTransactions,
   );
-
-  // const netBalance = useMemo(
-  //   () =>
-  //     listOfTransactions.reduce(
-  //       (partialSum, transaction) => partialSum + transaction.amount,
-  //       0,
-  //     ),
-  //   [netBalance],
-  // );
+  useRefresh();
 
   const handleAddTransaction = () => {
     const candidateTransaction = new Transaction(0);
+
     navigation.navigate('Calculator', {
       transaction: candidateTransaction,
+      journal: journal,
     });
-
-    // Delegate to Save Button
-    // journal.addTransaction(candidateTransaction);
-
-    // Delegate state update to Save button
-    // setListOfTransactions([...listOfTransactions, candidateTransaction]);
   };
+
+  const handleDeleteTransaction = () => {};
 
   return (
     <Box bg={bgColors[colorIndex]} flex="1">
@@ -189,7 +63,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
               marginX="10px"
               as={Feather}
               name="book-open"
-              size="sm"
+              size="md"
               color="light.300"
             />{' '}
             {journal.title}
@@ -205,7 +79,9 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
               Net Balance:&nbsp;&nbsp;
               <Text
                 fontWeight="bold"
-                color={'success.400'}>{`${journal.contribution}\n\n`}</Text>
+                color={
+                  'success.400'
+                }>{`${journal.calculateContribution()}\n\n`}</Text>
               # of Entries:&nbsp;&nbsp;
               <Text fontWeight="bold">{listOfTransactions.length}</Text>
             </Heading>
@@ -217,6 +93,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
             />
             <Box>
               <Button
+                py="5"
                 onPress={() => setShowSortingModal(true)}
                 leftIcon={
                   <Icon
@@ -230,12 +107,13 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
                 variant="unstyled"
                 bg={fgColors[colorIndex]}
                 _text={{
-                  fontSize: 'md',
-                  fontWeight: 'light',
+                  fontSize: 'lg',
+                  fontWeight: 'normal',
+                  color: 'light.200',
                 }}>
                 Sort Entries
               </Button>
-              <Button
+              {/* <Button
                 leftIcon={
                   <Icon size="md" as={Feather} name="filter" color="pink.300" />
                 }
@@ -246,7 +124,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
                   fontWeight: 'light',
                 }}>
                 Filter Entries
-              </Button>
+              </Button> */}
             </Box>
           </Flex>
         </Box>
@@ -255,6 +133,8 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
         <ListOfTransactions
           listOfTransactions={listOfTransactions}
           colorIndex={colorIndex}
+          navigation={navigation}
+          setListOfTransactions={setListOfTransactions}
         />
       </ScrollView>
       <SortMenu

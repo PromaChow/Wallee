@@ -14,7 +14,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {windowHeight, windowWidth} from '../../App';
 import Transaction from '../transaction';
 import BackButton from './BackButton';
-import {ListOfTransactions} from './JournalView';
+import {ListOfTransactions} from './JournalView.js';
 
 const NumButton = ({renderSymbol, appendSymbol}) => {
   return (

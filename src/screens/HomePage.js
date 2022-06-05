@@ -38,12 +38,14 @@ const screenWidth = Dimensions.get('window').width;
 
 export const getPieChartData = data => {
   return data.map((item, index) => {
-    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    //  const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    var r = () => (Math.random() * 256) >> 0;
+    var color = `rgb(${r()}, ${r()}, ${r()})`;
 
     return {
       key: index,
       value: item,
-      svg: {fill: randomColor},
+      svg: {fill: color},
     };
   });
 };
@@ -228,7 +230,15 @@ export const HomePage = () => {
             subtitle="This is a summary of your journals"
           />
           <View>
-            <PieChart style={{width: 200, height: 200}} data={pieChartData} />
+            {/* <PieChart
+              style={{width: 300, height: 300}}
+              data={pieChartDataRounded}
+              innerRadius={35}
+              outerRadius={70}
+              labelRadius={120}
+              sort={(a, b) => b.key - a.key}>
+              <Labels />
+            </PieChart> */}
           </View>
           <CardAction separator={true} inColumn={false}>
             <CardButton

@@ -44,6 +44,10 @@ export const buttonInfo = {
     iconName: 'settings',
     displayName: 'Settings',
   },
+  Feed: {
+    iconName: 'activity',
+    displayName: 'Feed',
+  },
 };
 
 const SideBar = ({state, navigation}) => {

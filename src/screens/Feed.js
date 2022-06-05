@@ -181,7 +181,7 @@ const getSMS = async () => {
   console.log(addrs.length);
   const data = await retrieve_data(getUserID());
   min_date = data['lastAccessedDate'];
-  //min_date = 1054742370000;
+  // min_date = 1054742370000;
 
   console.log('min_date' + min_date);
   const granted = await PermissionsAndroid.request(
@@ -236,6 +236,7 @@ const getSMS = async () => {
               fetchData['Type'],
             );
             console.log(fetchData);
+            console.log(get_transactions());
 
             //console.log('\n\njson' + json['sms'] + '\n\n');
           });
@@ -303,11 +304,13 @@ export const Feed = () => {
   const [aState, setAppState] = useState(AppState.currentState);
   const [image, setImage] = useState();
   useEffect(() => {
+    retrieveTransactions();
     fillAddress();
     getSMS();
     const appStateListener = AppState.addEventListener(
       'change',
       nextAppState => {
+        retrieveTransactions();
         console.log('Next AppState is: ', nextAppState);
         if (nextAppState === 'background') {
           getSMS();

@@ -13,6 +13,8 @@ const TransactionListView = ({
 }) => {
   const [transaction, setTransaction] = useState(initialTransaction);
   const [showModal, setShowModal] = useState(false);
+  var date = new Date(transaction['timeOfCreation']['nanoseconds']);
+
   return (
     <Box alignItems={'center'}>
       <Pressable onPress={handlePress}>

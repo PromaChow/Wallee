@@ -11,7 +11,7 @@ import listOfJournals from '../userSpace';
 import MenuButton from './MenuButton';
 import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import JournalView from './JournalView';
+import JournalView from './JournalView.js';
 
 const Stack = createNativeStackNavigator();
 

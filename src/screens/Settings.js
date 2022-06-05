@@ -19,10 +19,11 @@ import {Identifiers} from './Identifiers';
 import {ChangePhoneNumberOuter} from './ChangePhoneNumberOuter';
 import {ChangePhoneNumber} from './ChangePhoneNumber';
 import {PrefferedCurrencyOuter} from './PrefferedCurrencyOuter';
-import {Stack} from 'native-base';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {PreferredCurrencytwo} from './PreferredCurrencytwo';
 import {PreferredCurrencyList} from './PreferredCurrencyList';
-var Setting = ({navigation}) => {
+const Stack = createNativeStackNavigator();
+const Options = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerView}>
@@ -106,10 +107,11 @@ var Setting = ({navigation}) => {
 
 export default Settings = () => (
   <Stack.Navigator
-    initialRouteName="Setting"
+    initialRouteName="Options"
     screenOptions={{
       headerShown: false,
     }}>
+    <Stack.Screen name="Options" component={Options} />
     <Stack.Screen name="Identifiers" component={Identifiers} />
     <Stack.Screen
       name="ChangePhoneNumberOuter"

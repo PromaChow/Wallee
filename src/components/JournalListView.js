@@ -20,6 +20,8 @@ const JournalListView = ({journal, colorIndex = 2, navigation}) => {
         navigation.navigate('JournalView', {
           journal: journal,
         });
+
+        journal.lastAccessTime = new Date();
       }}>
       <Box
         paddingY="5px"

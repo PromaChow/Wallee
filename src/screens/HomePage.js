@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-date-picker';
 import {setDates, filterJournals} from '../dummyJournal';
+import Statistics from './Statistics';
 import {
   Card,
   CardTitle,
@@ -29,6 +30,8 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {useRefresh} from '../../App';
+import {Box} from 'native-base';
 
 export const HomePage = () => {
   const [dateMin, setDateMin] = useState(new Date());
@@ -36,13 +39,14 @@ export const HomePage = () => {
   const [dateMax, setDateMax] = useState(new Date());
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  useRefresh();
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-  console.log(dateMin, dateMax);
+  // console.log(dateMin, dateMax);
   return (
-    <SafeAreaView>
+    <Box flex="1">
       <Modal
         transparent={true}
         isVisible={isModalVisible}
@@ -58,7 +62,7 @@ export const HomePage = () => {
             style={{
               width: 300,
               height: 300,
-              backgroundColor: 'white',
+              backgroundColor: 'grey',
               opacity: 0.6,
 
               borderRadius: 5,
@@ -161,15 +165,13 @@ export const HomePage = () => {
         </View>
       </Modal>
       <ScrollView>
-        <Card style={{marginTop: 40}}>
+        <Card style={{marginTop: 10}}>
           <CardTitle
             title="Summary"
             titleStyle={{color: '#b5ccab'}}
-            subtitle="This is a summary of your journals"
+            // subtitle="This is a summary of your journals"
           />
-          <View>
-            <Text style={{color: 'black'}}>Hi</Text>
-          </View>
+          <View>{/* <Text style={{color: 'black'}}>Hi</Text> */}</View>
           <CardAction separator={true} inColumn={false}>
             <CardButton
               onPress={() => {
@@ -189,7 +191,8 @@ export const HomePage = () => {
             />
           </CardAction>
         </Card>
+        <Statistics dateMin={dateMin} dateMax={dateMax} />
       </ScrollView>
-    </SafeAreaView>
+    </Box>
   );
 };

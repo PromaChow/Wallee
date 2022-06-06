@@ -12,16 +12,20 @@ import MenuButton from './MenuButton';
 import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import JournalView from './JournalView';
+import CurrencyMode from './CurrencyMode';
 import {useRefresh} from '../../App';
 
+const rate = 88; // GET PROPER RATE
 const Stack = createNativeStackNavigator();
 
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
+  const [applyRate, setApplyRate] = useState(false);
   useRefresh();
 
   return (
     <>
+      <CurrencyMode applyRate={applyRate} setApplyRate={setApplyRate} />
       <Box bg="light.200" flex={1}>
         <NavBar title={'Catalogue'} navigation={navigation} />
         <ScrollView flex="1">
@@ -29,6 +33,8 @@ const Catalogue = ({navigation}) => {
             {Object.keys(journalKeyMemo).map(key => {
               return (
                 <JournalListView
+                  applyRate={applyRate}
+                  rate={rate} // PASS PROPER RATE HERE !
                   key={key}
                   journal={listOfJournals[key]}
                   colorIndex={journalKeyMemo[key]}

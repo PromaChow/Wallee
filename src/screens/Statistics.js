@@ -35,8 +35,6 @@ const chartConfig = {
 const Statistics = ({navigation, dateMin, dateMax}) => {
   //   useRefresh();
 
-  //   const dateMin = new Date('June 04, 2022 05:24:00');
-  //   const dateMax = new Date();
   const data = [];
   const colors = [
     '#cd3132',

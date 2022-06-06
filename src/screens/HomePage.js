@@ -169,7 +169,7 @@ export const HomePage = () => {
           <CardTitle
             title="Summary"
             titleStyle={{color: '#b5ccab'}}
-            subtitle="A Historic Summary of your journals"
+            subtitle="Transaction Volume Over a Time Period"
           />
           <View>{/* <Text style={{color: 'black'}}>Hi</Text> */}</View>
           <CardAction separator={true} inColumn={false}>

@@ -13,7 +13,13 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import {ExpenseJournal, IncomeJournal, Journal} from '../journal';
 
-const JournalListView = ({journal, colorIndex = 2, navigation}) => {
+const JournalListView = ({
+  rate,
+  applyRate,
+  journal,
+  colorIndex = 2,
+  navigation,
+}) => {
   return (
     <Pressable
       onPress={() => {
@@ -58,7 +64,7 @@ const JournalListView = ({journal, colorIndex = 2, navigation}) => {
             marginX="20px"
             flex="4"
             alignItems="flex-end">
-            {journal.contribution}
+            {journal.contribution * (applyRate ? rate : 1)}
           </Center>
           <Center marginRight={'4'} marginLeft={'5px'} flex="1">
             <Icon

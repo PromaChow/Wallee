@@ -93,9 +93,9 @@ export const getRandomColor = () =>
   Math.floor(Math.random() * colorNames.length);
 
 export const journalKeyMemo = {};
-listOfJournals['Food'] = new ExpenseJournal('Food', 0);
+listOfJournals['Food'] = new ExpenseJournal('Food', 1);
 journalKeyMemo['Food'] = getRandomColor();
-listOfJournals['Clothing'] = new ExpenseJournal('Clothing', 0);
+listOfJournals['Clothing'] = new ExpenseJournal('Clothing', 1);
 journalKeyMemo['Clothing'] = getRandomColor();
 
 // Custom Refresh Hook

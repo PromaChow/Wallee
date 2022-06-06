@@ -4,7 +4,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 const MenuButton = ({navigation}) => (
   <IconButton
-    zIndex={3}
+    zIndex={2}
     position="absolute"
     marginTop="3px"
     marginX="8px"

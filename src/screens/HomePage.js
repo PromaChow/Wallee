@@ -34,9 +34,9 @@ import {useRefresh} from '../../App';
 import {Box} from 'native-base';
 
 export const HomePage = () => {
-  const [dateMin, setDateMin] = useState(new Date());
+  const [dateMin, setDateMin] = useState(new Date('June 4, 2022 03:24:00'));
   const [openMin, setOpenMin] = useState(false);
-  const [dateMax, setDateMax] = useState(new Date());
+  const [dateMax, setDateMax] = useState(new Date('June 9, 2022 03:24:00'));
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   useRefresh();

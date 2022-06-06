@@ -7,7 +7,11 @@ const CurrencyMode = ({applyRate, setApplyRate}) => {
   const toast = useToast();
 
   return (
-    <Box zIndex={2} width="full" position="absolute" alignItems="flex-end">
+    <Box
+      zIndex={1}
+      alignSelf="flex-end"
+      position="absolute"
+      alignItems="flex-end">
       <IconButton
         marginRight="3px"
         marginTop="3px"

@@ -93,9 +93,9 @@ export const getRandomColor = () =>
   Math.floor(Math.random() * colorNames.length);
 
 export const journalKeyMemo = {};
-listOfJournals['Food'] = new ExpenseJournal('Food', 1);
+listOfJournals['Food'] = new ExpenseJournal('Food', 0);
 journalKeyMemo['Food'] = getRandomColor();
-listOfJournals['Clothing'] = new ExpenseJournal('Clothing', 1);
+listOfJournals['Clothing'] = new ExpenseJournal('Clothing', 0);
 journalKeyMemo['Clothing'] = getRandomColor();
 
 // Custom Refresh Hook
@@ -112,6 +112,8 @@ export const useRefresh = () => {
 };
 
 const Drawer = createDrawerNavigator();
+
+console.disableYelloBox = true;
 
 const App = () => {
   useEffect(() => {

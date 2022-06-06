@@ -118,147 +118,156 @@ export const TrackTransactions = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ScrollView style={{flex: 1}}>
-        <Modal
-          transparent={true}
-          isVisible={isModalVisible}
-          onBackdropPress={() => setModalVisible(false)}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+      <View style={styles.container}>
+        <ScrollView
+          style={{
+            flex: 1,
+            backgroundColor: '#FFFFFF',
+            borderRadius: 30,
+            marginTop: 30,
+          }}>
+          <Modal
+            transparent={true}
+            isVisible={isModalVisible}
+            onBackdropPress={() => setModalVisible(false)}>
             <View
               style={{
-                width: 300,
-                height: 300,
-                backgroundColor: '#FFFFFF',
-                opacity: 0.9,
+                flex: 1,
+                flexDirection: 'column',
                 justifyContent: 'center',
-                borderRadius: 15,
+                alignItems: 'center',
               }}>
-              <Text
-                style={{
-                  color: 'black',
-                  alignSelf: 'center',
-                  marginTop: 10,
-                  fontFamily: 'fantasy',
-                  fontSize: 17,
-                }}>
-                Select Journal Type
-              </Text>
-
               <View
                 style={{
-                  color: 'black',
-                  flexDirection: 'row',
-                  marginLeft: 70,
-                  marginTop: 40,
-                }}>
-                <RadioButton
-                  value="Income"
-                  status={checked === 'Income' ? 'checked' : 'unchecked'}
-                  onPress={() => setChecked('Income')}
-                  color="black"
-                />
-                <Text style={{color: 'black', marginTop: 3}}>Income</Text>
-              </View>
-              <View
-                style={{color: 'black', flexDirection: 'row', marginLeft: 70}}>
-                <RadioButton
-                  value="Expense"
-                  status={checked === 'Expense' ? 'checked' : 'unchecked'}
-                  onPress={() => setChecked('Expense')}
-                  color="black"
-                />
-                <Text style={{color: 'black', marginTop: 3}}>Expense</Text>
-              </View>
-              <TextInput
-                style={{
-                  alignSelf: 'center',
-                  borderBottomWidth: 0.5,
-                  borderBottomColor: 'black',
-                  paddingHorizontal: 50,
-                  color: '#a6ada7',
-                  marginTop: 10,
-                }}
-                editable={true}
-                onChangeText={text => {
-                  setName(text);
-                }}>
-                Insert Title of the Journal
-              </TextInput>
-
-              <TouchableOpacity
-                style={styles.modalButtonContainer}
-                onPress={async () => {
-                  // console.log(k);
-                  //insertAddress(text);
-                  //getSMSOnce(text);
-                  //   var b = filteredDataSource;
-                  //   b.splice(b.length, 0, text);
-                  //   setFilteredDataSource([...b]);
-                  console.log(checked);
-                  if (checked === 'Expense') {
-                    var title = name === '' ? name : 'AutopilotExpense';
-                    console.log(title);
-
-                    if (!(title in listOfJournals) && title !== '') {
-                      var newJournal = new ExpenseJournal(title, 0);
-                      newJournal.addTransaction(transactions[transactionId]);
-                      listOfJournals[title] = newJournal;
-                    } else {
-                      var newJournal = listOfJournals[title];
-                      newJournal.addTransaction(transactions[transactionId]);
-                    }
-                  } else if (checked === 'Income') {
-                    var title = name === '' ? name : 'AutopilotIncome';
-
-                    if (!(title in listOfJournals) && title !== '') {
-                      console.log(transactions[transactionId].amount);
-                      var newJournal = new IncomeJournal(title, 0);
-                      newJournal.addTransaction(transactions[transactionId]);
-
-                      listOfJournals[title] = newJournal;
-                    } else {
-                      console.log(transactions[transactionId].amount);
-                      var newJournal = listOfJournals[title];
-                      newJournal.addTransaction(transactions[transactionId]);
-                    }
-                  }
-                  delTransaction();
-                  console.log(listOfJournals);
-                  updateJournals();
-                  //arrayOfSaveStates[transactionId] = false;
-                  //setSave(arrayOfSaveStates);
-                  setModalVisible(false);
+                  width: 300,
+                  height: 300,
+                  backgroundColor: '#FFFFFF',
+                  opacity: 0.9,
+                  justifyContent: 'center',
+                  borderRadius: 15,
                 }}>
                 <Text
                   style={{
-                    color: '#FFFFFF',
-                    fontSize: 12,
-                    fontFamily: 'fantasy',
+                    color: 'black',
                     alignSelf: 'center',
+                    marginTop: 10,
+                    fontFamily: 'fantasy',
+                    fontSize: 17,
                   }}>
-                  ADD
+                  Select Journal Type
                 </Text>
-              </TouchableOpacity>
+
+                <View
+                  style={{
+                    color: 'black',
+                    flexDirection: 'row',
+                    marginLeft: 70,
+                    marginTop: 40,
+                  }}>
+                  <RadioButton
+                    value="Income"
+                    status={checked === 'Income' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked('Income')}
+                    color="black"
+                  />
+                  <Text style={{color: 'black', marginTop: 3}}>Income</Text>
+                </View>
+                <View
+                  style={{
+                    color: 'black',
+                    flexDirection: 'row',
+                    marginLeft: 70,
+                  }}>
+                  <RadioButton
+                    value="Expense"
+                    status={checked === 'Expense' ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked('Expense')}
+                    color="black"
+                  />
+                  <Text style={{color: 'black', marginTop: 3}}>Expense</Text>
+                </View>
+                <TextInput
+                  style={{
+                    alignSelf: 'center',
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: 'black',
+                    paddingHorizontal: 50,
+                    color: '#a6ada7',
+                    marginTop: 10,
+                  }}
+                  editable={true}
+                  onChangeText={text => {
+                    setName(text);
+                  }}>
+                  Insert Title of the Journal
+                </TextInput>
+
+                <TouchableOpacity
+                  style={styles.modalButtonContainer}
+                  onPress={async () => {
+                    // console.log(k);
+                    //insertAddress(text);
+                    //getSMSOnce(text);
+                    //   var b = filteredDataSource;
+                    //   b.splice(b.length, 0, text);
+                    //   setFilteredDataSource([...b]);
+                    console.log(checked);
+                    if (checked === 'Expense') {
+                      var title = name === '' ? name : 'AutopilotExpense';
+                      console.log(title);
+
+                      if (!(title in listOfJournals) && title !== '') {
+                        var newJournal = new ExpenseJournal(title, 0);
+                        newJournal.addTransaction(transactions[transactionId]);
+                        listOfJournals[title] = newJournal;
+                      } else {
+                        var newJournal = listOfJournals[title];
+                        newJournal.addTransaction(transactions[transactionId]);
+                      }
+                    } else if (checked === 'Income') {
+                      var title = name === '' ? name : 'AutopilotIncome';
+
+                      if (!(title in listOfJournals) && title !== '') {
+                        console.log(transactions[transactionId].amount);
+                        var newJournal = new IncomeJournal(title, 0);
+                        newJournal.addTransaction(transactions[transactionId]);
+
+                        listOfJournals[title] = newJournal;
+                      } else {
+                        console.log(transactions[transactionId].amount);
+                        var newJournal = listOfJournals[title];
+                        newJournal.addTransaction(transactions[transactionId]);
+                      }
+                    }
+                    delTransaction();
+                    console.log(listOfJournals);
+                    updateJournals();
+                    //arrayOfSaveStates[transactionId] = false;
+                    //setSave(arrayOfSaveStates);
+                    setModalVisible(false);
+                  }}>
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: 12,
+                      fontFamily: 'fantasy',
+                      alignSelf: 'center',
+                    }}>
+                    ADD
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </Modal>
-        <View>{render(transactions.length, transactions)}</View>
-      </ScrollView>
+          </Modal>
+
+          <View style>{render(transactions.length, transactions)}</View>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
   item: {
     backgroundColor: '#FFFFFF',
     padding: 10,
@@ -266,9 +275,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    color: '#000000',
+    color: 'black',
     marginLeft: 40,
-    marginTop: 10,
+    marginTop: 70,
+    backgroundColor: 'black',
   },
 
   textInputStyle: {
@@ -294,5 +304,29 @@ const styles = StyleSheet.create({
     borderColor: '#115e59',
     marginTop: 20,
     marginHorizontal: 50,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: '#a1a6d4',
+  },
+
+  nocontainerView: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    borderTopEndRadius: 40,
+    borderTopStartRadius: 40,
+  },
+  containerView: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    marginTop: 20,
+    marginBottom: 10,
+    borderTopEndRadius: 40,
+    borderTopStartRadius: 40,
   },
 });

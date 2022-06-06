@@ -14,7 +14,6 @@ import SmsListener from 'react-native-android-sms-listener';
 import {fillAddress} from '../IdentifierService';
 import {GetJournal} from '../dummyJournal';
 import {setPrefferedCurrencyMode} from '../userSpace';
-import {getRate} from '../userSpace';
 import {retrieveTransactions} from '../autoPilotTrasactions';
 import {
   get_transactions,
@@ -304,6 +303,7 @@ const sendData = async () => {
   const data = await retrieve_data(getUserID());
   console.log('retrieved');
   retrieveTransactions(data);
+  retrievePreferredCurrency(data);
   fillAddress(data);
 };
 
@@ -466,6 +466,12 @@ export const Feed = () => {
         title="Receipt Scanner"
         onPress={async () => {
           navigation.navigate('ReceiptScanner');
+        }}></Button>
+
+      <Button
+        title="Get Rates"
+        onPress={async () => {
+          console.log(getRates());
         }}></Button>
     </SafeAreaView>
   );

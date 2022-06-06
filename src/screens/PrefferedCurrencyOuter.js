@@ -22,9 +22,7 @@ import {
 } from '../NotificationService';
 
 export const PrefferedCurrencyOuter = ({navigation}) => {
-  useEffect(() => {
-    retrievePreferredCurrency();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <SafeAreaView style={styles.container}>

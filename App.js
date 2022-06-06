@@ -112,6 +112,14 @@ import {
 //   }, [isFocused]);
 // };
 
+export const useRefresh = () => {
+  const [refresh, setRefresh] = useState(false);
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    setRefresh(!refresh);
+  }, [isFocused]);
+};
+
 const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -155,101 +163,102 @@ const App = () => {
   }, []);
   let str = 'pr';
   return (
-    // <NativeBaseProvider>
-    //   <NavigationContainer>
-    //     <Drawer.Navigator
-    //       initialRouteName="Feed"
-    //       screenOptions={{
-    //         headerShown: false,
-    //       }}
-    //       drawerContent={props => <SideBar {...props} />}>
-    //       <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
-    //       <Drawer.Screen name="Feed" component={Feed} />
-    //       <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
-    //       <Drawer.Screen name="AutoPilot" component={AutoPilot} />
-    //       <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />
-    //       <Drawer.Screen name="Settings" component={Settings} />
-    //     </Drawer.Navigator>
-    //   </NavigationContainer>
-    // </NativeBaseProvider>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <Drawer.Navigator
+          initialRouteName="Feed"
+          screenOptions={{
+            headerShown: false,
+          }}
+          drawerContent={props => <SideBar {...props} />}>
+          <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
+          <Drawer.Screen name="Feed" component={Feed} />
+          <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
+          <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />
+          <Drawer.Screen name="Settings" component={Settings} />
+          <Drawer.Screen name="AutoPilot" component={TrackTransactions} />
+          <Drawer.Screen name="ReceiptScanner" component={ReceiptScanner} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
 
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{title: 'Welcome'}}
-        />
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{title: 'Welcome'}}
-        />
-        <Stack.Screen
-          name="Feed"
-          component={Feed}
-          options={{title: 'Welcome'}}
-        />
+    // <NavigationContainer>
+    //   <Stack.Navigator>
+    //     <Stack.Screen
+    //       name="Home"
+    //       component={HomeScreen}
+    //       options={{title: 'Welcome'}}
+    //     />
+    //     <Stack.Screen
+    //       name="Profile"
+    //       component={Profile}
+    //       options={{title: 'Welcome'}}
+    //     />
+    //     <Stack.Screen
+    //       name="Feed"
+    //       component={Feed}
+    //       options={{title: 'Welcome'}}
+    //     />
 
-        <Stack.Screen name="OTP" component={OTP} options={{title: 'Welcome'}} />
+    //     <Stack.Screen name="OTP" component={OTP} options={{title: 'Welcome'}} />
 
-        <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{title: 'Welcome'}}
-        />
+    //     <Stack.Screen
+    //       name="SignUp"
+    //       component={SignUp}
+    //       options={{title: 'Welcome'}}
+    //     />
 
-        <Stack.Screen
-          name="ChangePhoneNumber"
-          component={ChangePhoneNumber}
-          options={{headerShown: true, title: 'Change Number'}}
-        />
-        {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
-        <Stack.Screen name="Profile_two" component={Profile_two} />
-        <Stack.Screen name="CurrenyList" component={CurrencyList} />
-        <Stack.Screen
-          name="Notification"
-          component={Notification}
-          options={{headerShown: false, title: 'Welcome'}}
-        />
+    //     <Stack.Screen
+    //       name="ChangePhoneNumber"
+    //       component={ChangePhoneNumber}
+    //       options={{headerShown: true, title: 'Change Number'}}
+    //     />
+    //     {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+    //     <Stack.Screen name="Profile_two" component={Profile_two} />
+    //     <Stack.Screen name="CurrenyList" component={CurrencyList} />
+    //     <Stack.Screen
+    //       name="Notification"
+    //       component={Notification}
+    //       options={{headerShown: false, title: 'Welcome'}}
+    //     />
 
-        <Stack.Screen
-          name="ChangePhoneNumberOuter"
-          component={ChangePhoneNumberOuter}
-          options={{headerShown: false, title: 'Welcome'}}
-        />
+    //     <Stack.Screen
+    //       name="ChangePhoneNumberOuter"
+    //       component={ChangePhoneNumberOuter}
+    //       options={{headerShown: false, title: 'Welcome'}}
+    //     />
 
-        <Stack.Screen
-          name="OTPScreenChange"
-          component={OTPScreenChange}
-          options={{headerShown: false, title: 'Welcome'}}
-        />
+    //     <Stack.Screen
+    //       name="OTPScreenChange"
+    //       component={OTPScreenChange}
+    //       options={{headerShown: false, title: 'Welcome'}}
+    //     />
 
-        <Stack.Screen
-          name="Identifiers"
-          component={Identifiers}
-          options={{headerShown: false, title: 'Welcome'}}
-        />
+    //     <Stack.Screen
+    //       name="Identifiers"
+    //       component={Identifiers}
+    //       options={{headerShown: false, title: 'Welcome'}}
+    //     />
 
-        <Stack.Screen
-          name="HomePage"
-          component={HomePage}
-          options={{headerShown: false, title: 'Welcome'}}
-        />
+    //     <Stack.Screen
+    //       name="HomePage"
+    //       component={HomePage}
+    //       options={{headerShown: false, title: 'Welcome'}}
+    //     />
 
-        <Stack.Screen
-          name="TrackTransactions"
-          component={TrackTransactions}
-          options={{headerShown: false, title: 'Welcome'}}
-        />
+    //     <Stack.Screen
+    //       name="TrackTransactions"
+    //       component={TrackTransactions}
+    //       options={{headerShown: false, title: 'Welcome'}}
+    //     />
 
-        <Stack.Screen
-          name="ReceiptScanner"
-          component={ReceiptScanner}
-          options={{headerShown: false, title: 'Welcome'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    //     <Stack.Screen
+    //       name="ReceiptScanner"
+    //       component={ReceiptScanner}
+    //       options={{headerShown: false, title: 'Welcome'}}
+    //     />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
     // <NavigationContainer>
     //   <Stack.Navigator>
     //     <Stack.Screen name="UserProfile" component={UserProfile} />

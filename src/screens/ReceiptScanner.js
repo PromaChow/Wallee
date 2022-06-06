@@ -31,10 +31,24 @@ import {
   get_transactions,
 } from '../autoPilotTrasactions';
 
+// function handleBackButtonClick(navigation) {
+//   navigation.goBack();
+//   return true;
+// }
+
 export const ReceiptScanner = ({navigation}) => {
-  //   useEffect(() => {
-  //     retrievePreferredCurrency();
-  //   }, []);
+  // useEffect(() => {
+  //   BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     handleBackButtonClick(navigation),
+  //   );
+  //   return () => {
+  //     BackHandler.removeEventListener(
+  //       'hardwareBackPress',
+  //       handleBackButtonClick(navigation),
+  //     );
+  //   };
+  // }, []);
   const [isProgressModalVisible, setProgressModalVisible] = useState(false);
   const [isSuccessModalVisible, setSuccessModalVisible] = useState(false);
   const [remarks, setRemarks] = useState();

@@ -52,6 +52,8 @@ export const buttonInfo = {
     iconName: 'settings',
     displayName: 'Feed',
   },
+
+ 
 };
 
 const SideBar = ({state, navigation}) => {

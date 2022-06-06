@@ -40,7 +40,7 @@ const GoalListView = ({goal, colorIndex = 2, navigation}) => {
           justifyContent="space-between"
           flex="5">
           <Center marginX={'12px'} flex="1">
-            <Icon as={Feather} name="trending-up" size="md" color="light.600" />
+            <Icon as={Feather} name="trending-up" size="lg" color="light.600" />
           </Center>
           <Box marginLeft={'5px'} flex="4" alignItems="flex-start">
             <Text fontSize={'xl'} fontWeight="semibold" color="muted.700">

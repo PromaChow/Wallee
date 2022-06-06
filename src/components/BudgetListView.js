@@ -14,17 +14,20 @@ import {
 import {Budget} from '../budget';
 import Feather from 'react-native-vector-icons/Feather';
 import {ExpenseJournal, IncomeJournal, Journal} from '../journal';
+import DatePicker from 'react-native-date-picker';
 
 const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
   const proportion =
     (budget.referenceJournal.contribution / budget.amount) * 100;
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
 
   return (
-    <Pressable>
+    <Pressable
+      onPress={() => {
+        setOpen(true);
+      }}>
       <Box
-        onPress={() => {
-          console.log('pressed');
-        }}
         paddingY="5px"
         alignItems={'space-between'}
         bg="white"
@@ -44,7 +47,7 @@ const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
             <Icon
               as={Feather}
               name="trending-down"
-              size="md"
+              size="xl"
               color="light.600"
             />
           </Center>
@@ -54,6 +57,11 @@ const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
             </Text>
             <Text fontSize={'lg'} fontWeight="semibold" color="muted.500">
               {`${proportion}% spent`}
+            </Text>
+
+            <Text fontSize={'lg'} fontWeight="semibold" color="muted.500">
+              {budget.expiryDate ? 'expires:' : null}{' '}
+              {budget.expiryDate.toDateString().slice(4, 11)}
             </Text>
           </Box>
 
@@ -86,6 +94,22 @@ const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
             value={proportion}
           />
         </Box>
+        <DatePicker
+          modal
+          title="Select Budget Deadline"
+          mode="date"
+          open={open}
+          date={date}
+          onConfirm={date => {
+            budget.expiryDate = date;
+            console.log(budget.expiryDate.getTime());
+            setOpen(false);
+            setDate(date);
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
+        />
       </Box>
     </Pressable>
   );

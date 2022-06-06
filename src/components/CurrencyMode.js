@@ -1,10 +1,18 @@
 import {Fab, Box, Icon, Modal, IconButton, Center} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useToast} from 'native-base';
+import {getRates} from '../preferredCurrencyService';
 
 const CurrencyMode = ({applyRate, setApplyRate}) => {
   const toast = useToast();
+
+  useEffect(() => {
+    const fetch = async () => {
+      console.log(await getRates(), 'aaaaaaaa');
+    };
+    fetch();
+  }, []);
 
   return (
     <Box

@@ -28,7 +28,7 @@ export const getRates = async () => {
 
   temp = data['preferredCurrency'];
 
-  if (temp === '') return 1;
+  if (temp === '' || temp === 'BDT') return 1;
   else preferredCurrency = temp;
 
   console.log(preferredCurrency.currency.code);

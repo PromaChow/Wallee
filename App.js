@@ -106,12 +106,12 @@ export const useRefresh = () => {
   const isFocused = useIsFocused();
   useEffect(() => {
     setRefresh(!refresh);
-
-    // for (const [key, value] of Object.entries(listOfJournals)) {
-    //   update_doc(getUserID(), key, value);
-    // }
   }, [isFocused]);
 };
+
+// for (const [key, value] of Object.entries(listOfJournals)) {
+//   update_doc(getUserID(), key, value);
+// }
 
 const Drawer = createDrawerNavigator();
 
@@ -134,7 +134,7 @@ const App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="Home"
+          initialRouteName="BudgetScreen"
           screenOptions={{
             headerShown: false,
           }}

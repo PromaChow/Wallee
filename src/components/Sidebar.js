@@ -23,6 +23,10 @@ export const buttonInfo = {
     iconName: 'trending-down',
     displayName: 'Budgets',
   },
+  GoalScreen: {
+    iconName: 'target',
+    displayName: 'Goals',
+  },
   // Statistics: {
   //   iconName: 'pie-chart',
   //   displayName: 'Statistics',

@@ -35,6 +35,7 @@ import NavCatalogue from './src/components/Catalogue';
 import {AutoPilot} from './src/screens/AutoPilot';
 import Statistics from './src/screens/Statistics';
 import {useIsFocused} from '@react-navigation/native';
+import GoalScreen from './src/screens/GoalScreen';
 import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']);
 
@@ -140,6 +141,7 @@ const App = () => {
           drawerContent={props => <SideBar {...props} />}>
           <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
           <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
+          <Drawer.Screen name="GoalScreen" component={GoalScreen} />
           <Drawer.Screen name="AutoPilot" component={AutoPilot} />
           <Drawer.Screen name="Home" component={HomePage} />
           <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />

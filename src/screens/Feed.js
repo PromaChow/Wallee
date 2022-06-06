@@ -236,7 +236,7 @@ const getSMS = async () => {
               fetchData['Type'],
             );
             console.log(fetchData);
-
+            console.log('culprit');
             save_transactions();
             //console.log(get_transactions());
 
@@ -302,6 +302,7 @@ const post_image = async uri => {
 
 const sendData = async () => {
   const data = await retrieve_data(getUserID());
+  console.log('retrieved');
   retrieveTransactions(data);
   fillAddress(data);
 };
@@ -459,6 +460,12 @@ export const Feed = () => {
         title="preffered Currency"
         onPress={async () => {
           get_transactions();
+        }}></Button>
+
+      <Button
+        title="Receipt Scanner"
+        onPress={async () => {
+          navigation.navigate('ReceiptScanner');
         }}></Button>
     </SafeAreaView>
   );

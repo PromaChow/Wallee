@@ -9,8 +9,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-date-picker';
 import {setDates, filterJournals, GetJournal} from '../dummyJournal';
-import {get_transactions} from '../autoPilotTrasactions';
-import {listOfJournals} from '../userSpace';
+import {get_transactions, remove_transactions} from '../autoPilotTrasactions';
+import listOfJournals, {updateJournals} from '../userSpace';
 import {
   Card,
   CardTitle,
@@ -39,23 +39,8 @@ import {Dimensions} from 'react-native';
 import Transaction from '../transaction';
 import {Row} from 'native-base';
 import {ExpenseJournal} from '../journal';
+import {IncomeJournal} from '../journal';
 const screenWidth = Dimensions.get('window').width;
-
-// export const getPieChartData = data => {
-//   return data.map((item, index) => {
-//     //  const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-//     var r = () => (Math.random() * 256) >> 0;
-//     var color = `rgb(${r()}, ${r()}, ${r()})`;
-
-//     return {
-//       key: index,
-//       value: item,
-//       svg: {fill: color},
-//     };
-//   });
-// };
-var payments = [];
-var j = 0;
 
 export const TrackTransactions = () => {
   const [transactions, setTransaction] = useState(get_transactions());
@@ -63,24 +48,14 @@ export const TrackTransactions = () => {
   const [checked, setChecked] = useState();
   const [transactionId, setTransactionId] = useState(0);
   const [name, setName] = useState(0);
-  var k = 0;
-  //setTransaction(get_transactions());
-  console.log('transaction');
+  //const [save, setSave] = useState([]);
+
   //console.log(get_transactions());
 
-  useEffect(() => {
-    // GetJournal();
-  }, []);
-  if (transactions.length > 5)
-    // console.log(transactions.length);
-    console.log(transactions[5] instanceof Transaction);
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
   const render = (len, transactions) => {
+    var j = 0;
+    var payments = [];
+    // console.log('length' + len);
     for (let i = 0; i < len; i++) {
       payments.push(
         <Card
@@ -95,10 +70,12 @@ export const TrackTransactions = () => {
             subtitle={transactions[i].creator}
           />
           <CardContent text={transactions[i].remarks} />
-          <CardContent text={i} />
+          <CardContent text={j} />
           <CardAction separator={true} inColumn={false}>
             <CardButton
               onPress={() => {
+                // console.log(i + save[i]);
+
                 setTransactionId(i);
                 if (transactions[i].type === 'Expense') setChecked('Expense');
                 else setChecked('Income');
@@ -112,6 +89,31 @@ export const TrackTransactions = () => {
       );
     }
     return payments;
+  };
+
+  useEffect(() => {
+    console.log('hello');
+    const ac = new AbortController();
+    setTransaction(get_transactions());
+    // setSave(arrayOfSaveStates);
+    console.log('len' + transactions.length);
+    ac.abort();
+    // GetJournal();
+  }, []);
+  if (transactions.length > 5)
+    // console.log(transactions.length);
+    console.log(transactions[5] instanceof Transaction);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const delTransaction = () => {
+    remove_transactions(transactionId);
+    var a = transactions;
+    a.splice(transactionId, 1);
+    setTransaction([...a]);
   };
 
   return (
@@ -198,12 +200,39 @@ export const TrackTransactions = () => {
                   //   var b = filteredDataSource;
                   //   b.splice(b.length, 0, text);
                   //   setFilteredDataSource([...b]);
-                  console.log(transactionId);
-                  if (transactions[transactionId] === 'Expense') {
-                    title = name === '' ? 'AutopilotExpense' : name;
+                  console.log(checked);
+                  if (checked === 'Expense') {
+                    var title = name === '' ? name : 'AutopilotExpense';
+                    console.log(title);
 
-                    //cjournal = new ExpenseJournal(title,transa);
+                    if (!(title in listOfJournals) && title !== '') {
+                      var newJournal = new ExpenseJournal(title, 0);
+                      newJournal.addTransaction(transactions[transactionId]);
+                      listOfJournals[title] = newJournal;
+                    } else {
+                      var newJournal = listOfJournals[title];
+                      newJournal.addTransaction(transactions[transactionId]);
+                    }
+                  } else if (checked === 'Income') {
+                    var title = name === '' ? name : 'AutopilotIncome';
+
+                    if (!(title in listOfJournals) && title !== '') {
+                      console.log(transactions[transactionId].amount);
+                      var newJournal = new IncomeJournal(title, 0);
+                      newJournal.addTransaction(transactions[transactionId]);
+
+                      listOfJournals[title] = newJournal;
+                    } else {
+                      console.log(transactions[transactionId].amount);
+                      var newJournal = listOfJournals[title];
+                      newJournal.addTransaction(transactions[transactionId]);
+                    }
                   }
+                  delTransaction();
+                  console.log(listOfJournals);
+                  updateJournals();
+                  //arrayOfSaveStates[transactionId] = false;
+                  //setSave(arrayOfSaveStates);
                   setModalVisible(false);
                 }}>
                 <Text
@@ -219,7 +248,7 @@ export const TrackTransactions = () => {
             </View>
           </View>
         </Modal>
-        {render(transactions.length, transactions)}
+        <View>{render(transactions.length, transactions)}</View>
       </ScrollView>
     </SafeAreaView>
   );

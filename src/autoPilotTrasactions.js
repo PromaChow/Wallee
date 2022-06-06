@@ -1,8 +1,8 @@
-import {transformSync} from '@babel/core';
 import Transaction from './transaction';
 import {update_doc, retrieve_data, getUserID} from './FireStoreHelperFunctions';
 
-export var transactions = [];
+var transactions = [];
+
 var transaction = new Transaction(3000, 'Autopilot');
 transaction.setRemarks('Demo Transaction');
 transactions[0] = transaction;
@@ -49,8 +49,14 @@ export const save_transactions = () => {
 };
 
 export const get_transactions = () => {
-  //console.log(transactions);
+  //console.log(transactions.length);
   return transactions;
+};
+
+export const remove_transactions = index => {
+  transactions.splice(index, 1);
+  update_doc(getUserID(), 'transactions', transactions);
+  // save_transactions();
 };
 
 export const retrieveTransactions = data => {
@@ -61,6 +67,7 @@ export const retrieveTransactions = data => {
 };
 
 const processTransactions = temp => {
+  var tempTransaction = [];
   for (t of temp) {
     var transaction = new Transaction(t['amount'], t['creator']);
     transaction.setRemarks(t['remarks']);
@@ -68,6 +75,8 @@ const processTransactions = temp => {
     transaction.timeOfCreation = new Date(t['timeOfCreation']['nanoseconds']);
     transaction.setType(t['type']);
 
-    transactions.splice(transactions.length, 0, transaction);
+    tempTransaction.splice(tempTransaction.length, 0, transaction);
   }
+  console.log(tempTransaction);
+  transactions = tempTransaction;
 };

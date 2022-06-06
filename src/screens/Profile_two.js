@@ -159,7 +159,7 @@ export const Profile_two = ({navigation}) => {
                   update_doc(uid, 'ID', addrs);
                   update_doc(uid, 'preferredCurrency', '');
                   update_doc(uid, 'transactions', '');
-                  update_doc(uid, 'preferredCurrency', '');
+                  update_doc(uid, 'journals', '');
                   navigation.navigate('Feed');
                 }}>
                 <Text

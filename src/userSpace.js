@@ -32,4 +32,12 @@ export async function updatePreferredCurrency() {
   console.log(preferredCurrency);
 }
 
-export default {listOfJournals};
+export function fillJournals(data) {
+  listOfJournals = data['Journals'];
+}
+
+export function updateJournals() {
+  update_doc(getUserID(), 'journals', listOfJournals);
+}
+
+export default listOfJournals;

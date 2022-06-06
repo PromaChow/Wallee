@@ -35,6 +35,11 @@ export const GetJournal = () => {
 
   return journals;
 };
+
+export const insertJournal = journal => {
+  journals.splice(journals.length, 0, journal);
+};
+
 export const setDates = (min, max) => {
   min_Date = min;
   max_Date = max;

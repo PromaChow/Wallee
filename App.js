@@ -41,7 +41,7 @@ import NavCatalogue from './src/components/Catalogue';
 import AutoPilot from './src/screens/AutoPilot';
 import {useIsFocused} from '@react-navigation/native';
 import {TrackTransactions} from './src/screens/TrackTransactions';
-
+import {ReceiptScanner} from './src/screens/ReceiptScanner';
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
 export const colorNames = [
@@ -240,6 +240,12 @@ const App = () => {
         <Stack.Screen
           name="TrackTransactions"
           component={TrackTransactions}
+          options={{headerShown: false, title: 'Welcome'}}
+        />
+
+        <Stack.Screen
+          name="ReceiptScanner"
+          component={ReceiptScanner}
           options={{headerShown: false, title: 'Welcome'}}
         />
       </Stack.Navigator>

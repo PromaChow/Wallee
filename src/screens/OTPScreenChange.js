@@ -41,11 +41,6 @@ export const OTPScreenChange = ({route, navigation}) => {
     setModalVisible(!isModalVisible);
   };
 
-  const closeModal = () => {
-    toggleSuccessModal();
-    setTimeout(() => toggleSuccessModal(), 3);
-  };
-
   const toggleSuccessModal = () => {
     setProgressModalVisible(false);
     setSuccessModalVisible(!isSuccessModalVisible);

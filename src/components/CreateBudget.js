@@ -35,7 +35,9 @@ const CreateBudget = ({showModal, setShowModal}) => {
               />
             </FormControl>
             <FormControl mt="3">
-              <FormControl.Label>Chose Target Journal</FormControl.Label>
+              <FormControl.Label>
+                Chose Target Expense Journal
+              </FormControl.Label>
               <Radio.Group
                 value={journalName}
                 onChange={nextValue => {

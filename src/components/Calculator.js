@@ -209,7 +209,7 @@ const Calculator = ({navigation, route}) => {
               }
 
               toast.show({
-                description: 'Transaction Saved',
+                description: 'Entry Saved',
               });
 
               navigation.goBack();

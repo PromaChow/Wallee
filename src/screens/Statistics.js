@@ -46,6 +46,19 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
     '#555753',
     '#23D18B',
     '#D670D6',
+    '#FF3333',
+    '#6666FF',
+    '#cd3132',
+    '#007add',
+    '#11A8CD',
+    '#2472C8',
+    '#0DBC79',
+    '#E5E510',
+    '#555753',
+    '#23D18B',
+    '#D670D6',
+    '#FF3333',
+    '#6666FF',
   ];
 
   let colorIndex = 0;
@@ -69,6 +82,14 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
     <Box flex="1" mt="3" alignItems={'center'}>
       {/* <NavBar title={'Statistics'} navigation={navigation} /> */}
 
+      <Text
+        alignSelf="center"
+        marginBottom="1"
+        fontSize={'sm'}
+        fontWeight="semibold"
+        color="muted.500">
+        TRANSACTION VOLUMES OVER A TIME PERIOD
+      </Text>
       <Center
         padding="20px"
         _text={{
@@ -93,6 +114,14 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
         />
       </Center>
 
+      <Text
+        marginBottom="0"
+        marginTop="5"
+        fontSize={'sm'}
+        fontWeight="semibold"
+        color="muted.500">
+        YOUR BUDGET SIZES AT A GLANCE
+      </Text>
       <Center
         marginTop={'10px'}
         padding="20px"
@@ -105,10 +134,6 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
         width="full"
         shadow="7"
         marginBottom="5px">
-        <Text fontSize={'sm'} fontWeight="semibold" color="muted.500">
-          YOUR BUDGET SIZES AT A GLANCE
-        </Text>
-
         <BarChart
           data={{
             labels: Object.keys(listOfBudgets),

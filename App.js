@@ -37,7 +37,6 @@ import Statistics from './src/screens/Statistics';
 import {useIsFocused} from '@react-navigation/native';
 import GoalScreen from './src/screens/GoalScreen';
 import {LogBox} from 'react-native';
-// LogBox.ignoreLogs(['Warning: ...']);
 
 import {
   getUserID,
@@ -117,6 +116,7 @@ export const useRefresh = () => {
 const Drawer = createDrawerNavigator();
 
 const App = () => {
+  LogBox.ignoreLogs(['Non-Serializable...']);
   useEffect(() => {
     return notifee.onForegroundEvent(({type, detail}) => {
       switch (type) {

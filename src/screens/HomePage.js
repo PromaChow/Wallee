@@ -23,7 +23,6 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
   Button,
@@ -31,9 +30,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useRefresh} from '../../App';
-import {Box} from 'native-base';
+import NavBar from '../components/NavBar';
+import {Box, Text} from 'native-base';
 
-export const HomePage = () => {
+export const HomePage = ({navigation}) => {
   const [dateMin, setDateMin] = useState(new Date('June 4, 2022 03:24:00'));
   const [openMin, setOpenMin] = useState(false);
   const [dateMax, setDateMax] = useState(new Date('June 9, 2022 03:24:00'));
@@ -47,6 +47,7 @@ export const HomePage = () => {
   // console.log(dateMin, dateMax);
   return (
     <Box flex="1">
+      <NavBar title={'Summary'} navigation={navigation} />
       <Modal
         transparent={true}
         isVisible={isModalVisible}
@@ -166,11 +167,11 @@ export const HomePage = () => {
       </Modal>
       <ScrollView>
         <Card style={{marginTop: 10}}>
-          <CardTitle
+          {/* <CardTitle
             title="Summary"
             titleStyle={{color: '#b5ccab'}}
             subtitle="Transaction Volume Over a Time Period"
-          />
+          /> */}
           <View>{/* <Text style={{color: 'black'}}>Hi</Text> */}</View>
           <CardAction separator={true} inColumn={false}>
             <CardButton
@@ -191,6 +192,7 @@ export const HomePage = () => {
             />
           </CardAction>
         </Card>
+
         <Statistics dateMin={dateMin} dateMax={dateMax} />
       </ScrollView>
     </Box>

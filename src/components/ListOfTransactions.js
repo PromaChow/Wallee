@@ -11,6 +11,7 @@ import {
   Box,
   Fab,
   Icon,
+  useToast,
   Center,
   Radio,
   VStack,
@@ -27,6 +28,8 @@ const ListOfTransactions = ({
   handleDelete,
   handlePress,
 }) => {
+  const toast = useToast();
+
   return (
     <ScrollView flex="1">
       <VStack space={3} width="full" alignItems="center">
@@ -78,6 +81,9 @@ const ListOfTransactions = ({
 
                     journal.listOfTransactions = filteredList;
                     setListOfTransactions(filteredList);
+                    toast.show({
+                      description: 'Entry Deleted',
+                    });
                   }}
                 />
               </Box>

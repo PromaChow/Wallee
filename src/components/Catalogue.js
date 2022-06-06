@@ -14,8 +14,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import JournalView from './JournalView';
 import CurrencyMode from './CurrencyMode';
 import {useRefresh} from '../../App';
+import {getPreferredCurrency, getRates} from '../preferredCurrencyService';
 
-const rate = 88; // GET PROPER RATE
+const rate = getRates(); // GET PROPER RATE
+console.log(getPreferredCurrency()); // get currency code
 const Stack = createNativeStackNavigator();
 
 const Catalogue = ({navigation}) => {

@@ -29,6 +29,6 @@ export default class Transaction {
   }
 
   setCreationTime(date) {
-    this.creationTime = date;
+    this.timeOfCreation = date;
   }
 }

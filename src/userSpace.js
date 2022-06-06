@@ -16,8 +16,6 @@ const listOfJournals = {};
 export const listOfBudgets = {};
 export const listOfGoals = {};
 export const listOfAutoTransactions = [new Transaction(21, 'AutoPilot')];
-export var preferredCurrency = 'BDT';
-export let rate = '';
 
 const uid = 'fiOgc2ghJOTWt0klUDmDHguM5c22';
 

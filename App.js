@@ -38,35 +38,6 @@ import {useIsFocused} from '@react-navigation/native';
 import GoalScreen from './src/screens/GoalScreen';
 import {LogBox} from 'react-native';
 
-import {
-  getUserID,
-  ifExist,
-  add_User,
-  retrieve_data,
-  update_doc,
-} from './src/FireStoreHelperFunctions';
-
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Button,
-  TextInput,
-  AppState,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
 export const colorNames = [
@@ -109,14 +80,14 @@ export const useRefresh = () => {
   }, [isFocused]);
 };
 
-// for (const [key, value] of Object.entries(listOfJournals)) {
-//   update_doc(getUserID(), key, value);
-// }
-
 const Drawer = createDrawerNavigator();
 
 const App = () => {
   LogBox.ignoreLogs(['Non-Serializable...']);
+
+  const [signOut, setSignOut] = useState(false);
+  console.log('Status', signOut);
+
   useEffect(() => {
     return notifee.onForegroundEvent(({type, detail}) => {
       switch (type) {
@@ -138,7 +109,9 @@ const App = () => {
           screenOptions={{
             headerShown: false,
           }}
-          drawerContent={props => <SideBar {...props} />}>
+          drawerContent={props => (
+            <SideBar {...props} setSignOut={setSignOut} />
+          )}>
           <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
           <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
           <Drawer.Screen name="GoalScreen" component={GoalScreen} />
@@ -149,31 +122,7 @@ const App = () => {
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    //     <Stack.Screen name="UserProfile" component={UserProfile} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

@@ -27,10 +27,6 @@ export const buttonInfo = {
     iconName: 'target',
     displayName: 'Goals',
   },
-  // Statistics: {
-  //   iconName: 'pie-chart',
-  //   displayName: 'Statistics',
-  // },
   AutoPilot: {
     iconName: 'cpu',
     displayName: 'Auto Pilot',
@@ -53,7 +49,7 @@ export const buttonInfo = {
   },
 };
 
-const SideBar = ({state, navigation}) => {
+const SideBar = ({state, navigation, setSignOut}) => {
   const currentRoute = state.routeNames[state.index];
   const [image, setImage] = useState();
   const [username, setName] = useState();
@@ -108,6 +104,7 @@ const SideBar = ({state, navigation}) => {
         <VStack alignItems={'flex-start'} space="2">
           {Object.keys(buttonInfo).map(componentName => (
             <MenuItem
+              setSignOut={setSignOut}
               key={componentName}
               active={currentRoute == componentName}
               componentName={componentName}

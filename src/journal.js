@@ -48,7 +48,7 @@ export class Journal {
   }
 
   setCreationTime(date) {
-    this.creationTime = date;
+    this.timeOfCreation = date;
   }
 
   getContributionInRange(dateMin, dateMax) {

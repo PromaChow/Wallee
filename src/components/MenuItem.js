@@ -1,12 +1,23 @@
 import React, {useCallback} from 'react';
 import {Button, Icon, Box, Menu} from 'native-base';
+import auth from '@react-native-firebase/auth';
 import Feather from 'react-native-vector-icons/Feather';
 import {buttonInfo} from './Sidebar';
 
-const MenuItem = ({active, componentName, navigation}) => {
-  const handleClick = useCallback(() => {
-    navigation.navigate(componentName);
-  }, [navigation]);
+const MenuItem = ({active, componentName, navigation, setSignOut}) => {
+  const handleClick =
+    componentName === 'LogOut'
+      ? async () => {
+          await auth()
+            .signOut()
+            .then(() => {
+              // console.log('User signed out!');
+              setSignOut(signOut => !signOut);
+            });
+        }
+      : useCallback(() => {
+          navigation.navigate(componentName);
+        }, [navigation]);
 
   return (
     <Button

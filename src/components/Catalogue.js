@@ -15,6 +15,8 @@ import JournalView from './JournalView';
 import CurrencyMode from './CurrencyMode';
 import {useRefresh} from '../../App';
 import {getPreferredCurrency, getRates} from '../preferredCurrencyService';
+import {useIsFocused} from '@react-navigation/native';
+import {update_doc, getUserID} from '../FireStoreHelperFunctions';
 
 const rate = getRates(); // GET PROPER RATE
 console.log(getPreferredCurrency()); // get currency code
@@ -23,7 +25,13 @@ const Stack = createNativeStackNavigator();
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
   const [applyRate, setApplyRate] = useState(false);
-  useRefresh();
+  const [refresh, setRefresh] = useState(false);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    setRefresh(!refresh);
+    update_doc(getUserID(), 'journals', listOfJournals);
+  }, [isFocused]);
 
   return (
     <>

@@ -16,19 +16,21 @@ import {
   VStack,
   ScrollView,
   Divider,
+  IconButton,
 } from 'native-base';
 
 const ListOfTransactions = ({
-  listOfTransactions,
+  journal,
   colorIndex = 2,
   navigation,
+  setListOfTransactions,
   handleDelete,
   handlePress,
 }) => {
   return (
     <ScrollView flex="1">
       <VStack space={3} width="full" alignItems="center">
-        {listOfTransactions.map(transaction => {
+        {journal.listOfTransactions.map(transaction => {
           return (
             <Box
               height="95px"
@@ -52,11 +54,10 @@ const ListOfTransactions = ({
                   }
                 />
               </Box>
-              <Box flex="1">
-                <Button
-                  height="full"
-                  marginLeft="5px"
-                  leftIcon={
+              <Box flex="1" marginLeft={'3'}>
+                <IconButton
+                  flex={1}
+                  icon={
                     <Icon
                       size="lg"
                       as={Feather}
@@ -66,11 +67,19 @@ const ListOfTransactions = ({
                   }
                   variant="unstyled"
                   bg={fgColors[colorIndex]}
-                  _text={{
-                    fontSize: 'md',
-                    fontWeight: 'light',
+                  _pressed={{
+                    bg: 'teal.800',
                   }}
-                  onPress={() => {}}></Button>
+                  onPress={() => {
+                    const filteredList = journal.listOfTransactions.filter(
+                      target =>
+                        target.timeOfCreation !== transaction.timeOfCreation,
+                    );
+
+                    journal.listOfTransactions = filteredList;
+                    setListOfTransactions(filteredList);
+                  }}
+                />
               </Box>
             </Box>
           );

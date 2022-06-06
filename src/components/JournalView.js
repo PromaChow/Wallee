@@ -134,7 +134,7 @@ const JournalView = ({colorIndex = 4, navigation, route}) => {
       </Center>
       <ScrollView width="full" paddingTop="30px">
         <ListOfTransactions
-          listOfTransactions={listOfTransactions}
+          journal={journal}
           colorIndex={colorIndex}
           navigation={navigation}
           setListOfTransactions={setListOfTransactions}

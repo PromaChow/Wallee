@@ -14,7 +14,7 @@ import MenuItem from './MenuItem';
 import {retrieve_data, getUserID} from '../FireStoreHelperFunctions';
 
 export const buttonInfo = {
-  Test: {iconName: 'alert-triangle', displayName: 'Test'},
+  Home: {iconName: 'home', displayName: 'Home'},
   NavCatalogue: {
     iconName: 'book',
     displayName: 'Catalogue',
@@ -66,7 +66,6 @@ const SideBar = ({state, navigation}) => {
   };
 
   useEffect(() => {
-    console.log('Ren render');
     setData();
   }, []);
 

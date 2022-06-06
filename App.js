@@ -17,7 +17,7 @@ import notifee, {EventType} from '@notifee/react-native';
 import {Notification} from './src/screens/Notification';
 import {ChangePhoneNumberOuter} from './src/screens/ChangePhoneNumberOuter';
 import {OTPScreenChange} from './src/screens/OTPScreenChange';
-import {Setting} from './src/screens/Setting.js';
+import Settings, {Setting} from './src/screens/Settings.js';
 import {Identifiers} from './src/screens/Identifiers';
 import {HomePage} from './src/screens/HomePage';
 import {NativeBaseProvider} from 'native-base';
@@ -93,9 +93,9 @@ export const getRandomColor = () =>
   Math.floor(Math.random() * colorNames.length);
 
 export const journalKeyMemo = {};
-listOfJournals['Food'] = new ExpenseJournal('Food', 40);
+listOfJournals['Food'] = new ExpenseJournal('Food', 0);
 journalKeyMemo['Food'] = getRandomColor();
-listOfJournals['Clothing'] = new ExpenseJournal('Clothing', 60);
+listOfJournals['Clothing'] = new ExpenseJournal('Clothing', 0);
 journalKeyMemo['Clothing'] = getRandomColor();
 
 // Custom Refresh Hook
@@ -131,7 +131,7 @@ const App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="Test"
+          initialRouteName="Home"
           screenOptions={{
             headerShown: false,
           }}
@@ -139,9 +139,10 @@ const App = () => {
           <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
           <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
           <Drawer.Screen name="AutoPilot" component={AutoPilot} />
-          <Drawer.Screen name="Test" component={HomePage} />
+          <Drawer.Screen name="Home" component={HomePage} />
           <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />
           <Drawer.Screen name="Statistics" component={Statistics} />
+          <Drawer.Screen name="Settings" component={Settings} />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

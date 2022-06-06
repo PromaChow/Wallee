@@ -15,8 +15,15 @@ import {
 import {array} from '../../data/currency';
 import {setCurrency} from '../CurrencyService';
 import Icon from 'react-native-vector-icons/Feather';
-
-export const Setting = ({navigation}) => {
+import {Identifiers} from './Identifiers';
+import {ChangePhoneNumberOuter} from './ChangePhoneNumberOuter';
+import {ChangePhoneNumber} from './ChangePhoneNumber';
+import {PrefferedCurrencyOuter} from './PrefferedCurrencyOuter';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {PreferredCurrencytwo} from './PreferredCurrencytwo';
+import {PreferredCurrencyList} from './PreferredCurrencyList';
+const Stack = createNativeStackNavigator();
+export const Options = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerView}>
@@ -82,6 +89,9 @@ export const Setting = ({navigation}) => {
             borderBottomWidth: 0.5,
             marginTop: 20,
             marginHorizontal: 20,
+          }}
+          onPress={() => {
+            navigation.navigate('PrefferedCurrencyOuter');
           }}>
           <Icon
             name="dollar-sign"
@@ -94,6 +104,34 @@ export const Setting = ({navigation}) => {
     </View>
   );
 };
+
+export default Settings = () => (
+  <Stack.Navigator
+    initialRouteName="Options"
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Stack.Screen name="Options" component={Options} />
+    <Stack.Screen name="Identifiers" component={Identifiers} />
+    <Stack.Screen
+      name="ChangePhoneNumberOuter"
+      component={ChangePhoneNumberOuter}
+    />
+    <Stack.Screen name="ChangePhoneNumber" component={ChangePhoneNumber} />
+    <Stack.Screen
+      name="PrefferedCurrencyOuter"
+      component={PrefferedCurrencyOuter}
+    />
+    <Stack.Screen
+      name="PreferredCurrencytwo"
+      component={PreferredCurrencytwo}
+    />
+    <Stack.Screen
+      name="PreferredCurrencyList"
+      component={PreferredCurrencyList}
+    />
+  </Stack.Navigator>
+);
 
 const styles = StyleSheet.create({
   container: {

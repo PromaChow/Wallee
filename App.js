@@ -45,6 +45,7 @@ import GoalScreen from './src/screens/GoalScreen';
 import {ReceiptScanner} from './src/screens/ReceiptScanner';
 import firebase from '@react-native-firebase/app';
 import {Authentication} from './src/screens/Authentication';
+import MenuButton from './src/components/MenuButton';
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
 
@@ -151,8 +152,10 @@ const Section = ({children, title}) => {
 };
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
-const user = firebase.auth().currentUser;
+
 const App = () => {
+  const [signOut, setSignOut] = useState(false);
+  const user = firebase.auth().currentUser;
   useEffect(() => {
     return notifee.onForegroundEvent(({type, detail}) => {
       switch (type) {
@@ -179,7 +182,9 @@ const App = () => {
               screenOptions={{
                 headerShown: false,
               }}
-              drawerContent={props => <SideBar {...props} />}>
+              drawerContent={props => (
+                <SideBar {...props} setSignOut={setSignOut} />
+              )}>
               <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
               <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
               <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />
@@ -188,6 +193,7 @@ const App = () => {
               <Drawer.Screen name="ReceiptScanner" component={ReceiptScanner} />
               <Drawer.Screen name="GoalScreen" component={GoalScreen} />
               <Drawer.Screen name="Home" component={HomePage} />
+              <Drawer.Screen name="Menu" component={MenuButton} />
             </Drawer.Navigator>
           </NavigationContainer>
         </>

@@ -42,7 +42,8 @@ const CreateBudget = ({showModal, setShowModal}) => {
                   setJournalName(nextValue);
                 }}>
                 {Object.keys(journalKeyMemo).map(key =>
-                  key in listOfBudgets ? null : (
+                  key in listOfBudgets ||
+                  listOfJournals[key] instanceof IncomeJournal ? null : (
                     <Radio key={key} value={key} my="1">
                       {key}
                     </Radio>

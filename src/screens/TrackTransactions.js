@@ -40,6 +40,7 @@ import Transaction from '../transaction';
 import {Row} from 'native-base';
 import {ExpenseJournal} from '../journal';
 import {IncomeJournal} from '../journal';
+import {journalKeyMemo} from '../../App';
 const screenWidth = Dimensions.get('window').width;
 
 export const TrackTransactions = () => {
@@ -230,12 +231,14 @@ export const TrackTransactions = () => {
                       if (!(title in listOfJournals) && title !== '') {
                         console.log(transactions[transactionId].amount);
                         var newJournal = new IncomeJournal(title, 0);
+                        newJournal.creator = 'Autopilot';
                         newJournal.addTransaction(transactions[transactionId]);
 
                         listOfJournals[title] = newJournal;
                       } else {
                         console.log(transactions[transactionId].amount);
                         var newJournal = listOfJournals[title];
+                        newJournal.creator = 'Autopilot';
                         newJournal.addTransaction(transactions[transactionId]);
                       }
                     }

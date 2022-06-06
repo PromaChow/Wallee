@@ -13,11 +13,16 @@ import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import JournalView from './JournalView';
 import {useRefresh} from '../../App';
-
+import {getJournals} from '../userSpace';
 const Stack = createNativeStackNavigator();
 
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
+  const [journals, setJournals] = useState(getJournals());
+  useEffect(() => {
+    console.log(journals);
+  });
+
   useRefresh();
 
   return (
@@ -26,12 +31,12 @@ const Catalogue = ({navigation}) => {
         <NavBar title={'Catalogue'} navigation={navigation} />
         <ScrollView flex="1">
           <Box alignItems="center" bg="light.200">
-            {Object.keys(journalKeyMemo).map(key => {
+            {Object.keys(journals).map(key => {
               return (
                 <JournalListView
                   key={key}
-                  journal={listOfJournals[key]}
-                  colorIndex={journalKeyMemo[key]}
+                  journal={journals[key]}
+                  colorIndex={journals[key]}
                   navigation={navigation}
                 />
               );

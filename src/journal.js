@@ -14,7 +14,7 @@ export class Journal {
     this.title = title;
     this.contribution = contribution;
     this.creator = creator;
-    this.timeOfCreation = new Date();
+    this.timeOfCreation = Date.now();
     this.lastAccessTime = this.timeOfCreation;
   }
 

@@ -12,7 +12,7 @@ import {
 import {setCurrency} from './CurrencyService';
 import {rates} from './data/rates';
 
-const listOfJournals = {};
+var listOfJournals = {};
 export const listOfBudgets = {};
 export const listOfAutoTransactions = [new Transaction(21, 'AutoPilot')];
 export var preferredCurrency = 'BDT';
@@ -20,21 +20,76 @@ export let rate = '';
 
 const uid = 'fiOgc2ghJOTWt0klUDmDHguM5c22';
 
-export function setPrefferedCurrencyMode(curr) {
-  preferredCurrency = curr.currency.code;
-  console.log(preferredCurrency);
-}
+export const getJournals = () => {
+  return listOfJournals;
+};
+export const fillJournals = data => {
+  //update_doc(getUserID(), 'transactions', transactions);
+  let temp = data['journals'];
 
-export async function updatePreferredCurrency() {
-  const data = await retrieve_data(getUserID());
-  let currency = data['preferredCurrency'];
-  setPrefferedCurrencyMode(currency);
-  console.log(preferredCurrency);
-}
+  if (temp !== '') processJournals(temp);
+};
+const createTransactionList = transactionList => {
+  console.log('hello');
+  var tempTransaction = [];
+  for (let t of transactionList) {
+    //console.log(trans);
+    var transaction = new Transaction(t['amount'], t['creator']);
+    transaction.setRemarks(t['remarks']);
+    transaction.lastAccessTime = new Date(t['lastAccessTime']['nanoseconds']);
+    transaction.timeOfCreation = new Date(t['timeOfCreation']['nanoseconds']);
+    transaction.setType(t['type']);
 
-export function fillJournals(data) {
-  listOfJournals = data['Journals'];
-}
+    tempTransaction.splice(tempTransaction.length, 0, transaction);
+  }
+  return tempTransaction;
+  // for (let trans of Object.keys(transactionList)) {
+  //   console.log(trans);
+  // }
+};
+const processJournals = temp => {
+  var journalList = [];
+  console.log('temp');
+  for (let t of Object.keys(temp)) {
+    //console.log(t + temp[t]['listOfTransactions']);
+    var transactionList = createTransactionList(temp[t]['listOfTransactions']);
+    //console.log(transactionList);
+
+    var title = temp[t]['title'];
+    //console.log(title);
+
+    if (temp[t]['type'] === 'expense') {
+      var journal = new ExpenseJournal(title);
+    }
+
+    if (temp[t]['type'] === 'income') {
+      var journal = new IncomeJournal(title);
+    }
+
+    journal.listOfTransactions = transactionList;
+    journal.creator = temp[t]['creator'];
+    journal.timeOfCreation = new Date(temp[t]['timeOfCreation']['nanoseconds']);
+    journal.lastAccessTime = new Date(temp[t]['lastAccessTime']['nanoseconds']);
+    journal.contribution = parseFloat(temp[t]['contribution']);
+    journalList.splice(journalList.length, 0, journal);
+    // var journal = new Journal(title, 0, 'Autopilot');
+  }
+  // console.log(journalList[0] instanceof ExpenseJournal);
+  listOfJournals = journalList;
+
+  // var tempJournal = [];
+  // for (t of temp) {
+  //   var journal = new Transaction(t['amount'], t['creator']);
+  //   transaction.setRemarks(t['remarks']);
+  //   transaction.lastAccessTime = new Date(t['lastAccessTime']['nanoseconds']);
+  //   transaction.timeOfCreation = new Date(t['timeOfCreation']['nanoseconds']);
+  //   transaction.setType(t['type']);
+
+  //   tempTransaction.splice(tempTransaction.length, 0, transaction);
+  // }
+  // console.log(tempTransaction);
+  // transactions = tempTransaction;
+};
 
 export function updateJournals() {
   update_doc(getUserID(), 'journals', listOfJournals);

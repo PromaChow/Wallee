@@ -15,6 +15,7 @@ import {fillAddress} from '../IdentifierService';
 import {GetJournal} from '../dummyJournal';
 import {setPrefferedCurrencyMode} from '../userSpace';
 import {retrieveTransactions} from '../autoPilotTrasactions';
+import {fillJournals} from '../userSpace';
 import {
   get_transactions,
   add_sms_transactions,
@@ -305,6 +306,7 @@ const sendData = async () => {
   retrieveTransactions(data);
   retrievePreferredCurrency(data);
   fillAddress(data);
+  fillJournals(data);
 };
 
 // var tesseract = require('../tesseract');

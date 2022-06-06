@@ -35,6 +35,8 @@ import NavCatalogue from './src/components/Catalogue';
 import {AutoPilot} from './src/screens/AutoPilot';
 import Statistics from './src/screens/Statistics';
 import {useIsFocused} from '@react-navigation/native';
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
 
 import {
   getUserID,
@@ -112,8 +114,6 @@ export const useRefresh = () => {
 };
 
 const Drawer = createDrawerNavigator();
-
-console.disableYelloBox = true;
 
 const App = () => {
   useEffect(() => {

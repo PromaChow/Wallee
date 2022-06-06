@@ -9,11 +9,11 @@ import {
   Center,
 } from 'native-base';
 import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
-import listOfJournals, {listOfBudgets} from '../userSpace';
+import listOfJournals, {listOfBudgets, listOfGoals} from '../userSpace';
 import {journalKeyMemo, getRandomColor} from '../../App';
-import {Budget} from '../budget';
+import {Goal} from '../budget';
 
-const CreateBudget = ({showModal, setShowModal}) => {
+const CreateGoal = ({showModal, setShowModal}) => {
   const [amount, setAmount] = useState('0');
   const [journalName, setJournalName] = useState(
     Object.keys(listOfJournals)[0],
@@ -24,10 +24,10 @@ const CreateBudget = ({showModal, setShowModal}) => {
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">
           <Modal.CloseButton />
-          <Modal.Header>Create Budget</Modal.Header>
+          <Modal.Header>Create Goal</Modal.Header>
           <Modal.Body>
             <FormControl>
-              <FormControl.Label>Enter Budget Amount</FormControl.Label>
+              <FormControl.Label>Enter Goal Amount</FormControl.Label>
               <Input
                 value={amount}
                 w="100%"
@@ -35,17 +35,15 @@ const CreateBudget = ({showModal, setShowModal}) => {
               />
             </FormControl>
             <FormControl mt="3">
-              <FormControl.Label>
-                Chose Target Expense Journal
-              </FormControl.Label>
+              <FormControl.Label>Chose Target Journal</FormControl.Label>
               <Radio.Group
                 value={journalName}
                 onChange={nextValue => {
                   setJournalName(nextValue);
                 }}>
                 {Object.keys(journalKeyMemo).map(key =>
-                  key in listOfBudgets ||
-                  listOfJournals[key] instanceof IncomeJournal ? null : (
+                  key in listOfGoals ||
+                  listOfJournals[key] instanceof ExpenseJournal ? null : (
                     <Radio key={key} value={key} my="1">
                       {key}
                     </Radio>
@@ -66,7 +64,7 @@ const CreateBudget = ({showModal, setShowModal}) => {
               </Button>
               <Button
                 onPress={() => {
-                  listOfBudgets[journalName] = new Budget(
+                  listOfGoals[journalName] = new Goal(
                     listOfJournals[journalName],
                     amount,
                   );
@@ -83,4 +81,4 @@ const CreateBudget = ({showModal, setShowModal}) => {
   );
 };
 
-export default CreateBudget;
+export default CreateGoal;

@@ -3,13 +3,16 @@ import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {signInWithPhoneNumber} from '../../Authentication';
-import PhoneInput from 'react-native-phone-number-input';
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-date-picker';
 import {setDates, filterJournals} from '../dummyJournal';
 import Statistics from './Statistics';
+import {fillAddress} from '../IdentifierService';
+import {retrieveTransactions} from '../autoPilotTrasactions';
+import {fillJournals} from '../userSpace';
+import {useRefresh} from '../../App';
+import {retrievePreferredCurrency} from '../preferredCurrencyService';
 import {
   Card,
   CardTitle,
@@ -28,18 +31,62 @@ import {
   Button,
   TextInput,
   TouchableOpacity,
+  AppState,
 } from 'react-native';
-import {useRefresh} from '../../App';
+
+import {
+  get_transactions,
+  add_sms_transactions,
+  save_transactions,
+} from '../autoPilotTrasactions';
+
+import {getSMS} from '../SMSProcess';
+
+import {
+  getUserID,
+  retrieve_data,
+  update_doc,
+  addToStorage,
+} from '../FireStoreHelperFunctions';
+
 import NavBar from '../components/NavBar';
 import {Box, Text} from 'native-base';
 
+const sendData = async () => {
+  const data = await retrieve_data(getUserID());
+  console.log('retrieved');
+  retrieveTransactions(data);
+  retrievePreferredCurrency(data);
+  fillAddress(data);
+  fillJournals(data);
+};
+
 export const HomePage = ({navigation}) => {
+  const [aState, setAppState] = useState(AppState.currentState);
   const [dateMin, setDateMin] = useState(new Date('June 4, 2022 03:24:00'));
   const [openMin, setOpenMin] = useState(false);
   const [dateMax, setDateMax] = useState(new Date('June 9, 2022 03:24:00'));
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   useRefresh();
+  useEffect(() => {
+    sendData();
+    console.log('feed refreshed');
+    getSMS();
+    const appStateListener = AppState.addEventListener(
+      'change',
+      nextAppState => {
+        console.log('Next AppState is: ', nextAppState);
+        if (nextAppState === 'background') {
+          getSMS();
+        }
+        setAppState(nextAppState);
+      },
+    );
+    return () => {
+      appStateListener?.remove();
+    };
+  });
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);

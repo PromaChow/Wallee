@@ -12,7 +12,7 @@ import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Feather';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
-
+import {HomePage} from './HomePage';
 import {
   SafeAreaView,
   ScrollView,
@@ -40,7 +40,7 @@ export const OTP = ({route, navigation}) => {
             if (!exists) {
               add_User(user.uid);
               navigation.navigate('Profile');
-            } else navigation.navigate('Feed');
+            } else navigation.navigate('Home');
           });
       }
     });
@@ -162,7 +162,7 @@ export const OTP = ({route, navigation}) => {
                   if (!exists) {
                     add_User(user.uid);
                     navigation.navigate('Profile');
-                  } else navigation.navigate('Feed');
+                  } else navigation.navigate('Home');
                 });
             });
           }}>

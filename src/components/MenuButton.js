@@ -6,7 +6,7 @@ const MenuButton = ({navigation}) => (
   <IconButton
     zIndex={2}
     position="absolute"
-    marginTop="6px"
+    marginTop="3px"
     marginX="8px"
     size="lg"
     variant="ghost"

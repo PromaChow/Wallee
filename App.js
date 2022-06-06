@@ -41,9 +41,13 @@ import NavCatalogue from './src/components/Catalogue';
 import AutoPilot from './src/screens/AutoPilot';
 import {useIsFocused} from '@react-navigation/native';
 import {TrackTransactions} from './src/screens/TrackTransactions';
+import GoalScreen from './src/screens/GoalScreen';
 import {ReceiptScanner} from './src/screens/ReceiptScanner';
+import firebase from '@react-native-firebase/app';
+import {Authentication} from './src/screens/Authentication';
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
+
 export const colorNames = [
   'secondary',
   'danger',
@@ -69,7 +73,7 @@ export const getRandomColor = () =>
   Math.floor(Math.random() * colorNames.length);
 
 export const journalKeyMemo = {};
-listOfJournals['Dummy'] = new ExpenseJournal('Dummy', 40);
+listOfJournals['Dummy'] = new ExpenseJournal('Dummy', 0);
 journalKeyMemo['Dummy'] = getRandomColor();
 
 import {
@@ -147,7 +151,7 @@ const Section = ({children, title}) => {
 };
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
-
+const user = firebase.auth().currentUser;
 const App = () => {
   useEffect(() => {
     return notifee.onForegroundEvent(({type, detail}) => {
@@ -162,24 +166,32 @@ const App = () => {
     });
   }, []);
   let str = 'pr';
+
   return (
     <NativeBaseProvider>
-      <NavigationContainer>
-        <Drawer.Navigator
-          initialRouteName="Feed"
-          screenOptions={{
-            headerShown: false,
-          }}
-          drawerContent={props => <SideBar {...props} />}>
-          <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
-          <Drawer.Screen name="Feed" component={Feed} />
-          <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
-          <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />
-          <Drawer.Screen name="Settings" component={Settings} />
-          <Drawer.Screen name="AutoPilot" component={TrackTransactions} />
-          <Drawer.Screen name="ReceiptScanner" component={ReceiptScanner} />
-        </Drawer.Navigator>
-      </NavigationContainer>
+      {!user ? (
+        <Authentication />
+      ) : (
+        <>
+          <NavigationContainer>
+            <Drawer.Navigator
+              initialRouteName="Home"
+              screenOptions={{
+                headerShown: false,
+              }}
+              drawerContent={props => <SideBar {...props} />}>
+              <Drawer.Screen name="NavCatalogue" component={NavCatalogue} />
+              <Drawer.Screen name="BudgetScreen" component={BudgetScreen} />
+              <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />
+              <Drawer.Screen name="Settings" component={Settings} />
+              <Drawer.Screen name="AutoPilot" component={TrackTransactions} />
+              <Drawer.Screen name="ReceiptScanner" component={ReceiptScanner} />
+              <Drawer.Screen name="GoalScreen" component={GoalScreen} />
+              <Drawer.Screen name="Home" component={HomePage} />
+            </Drawer.Navigator>
+          </NavigationContainer>
+        </>
+      )}
     </NativeBaseProvider>
 
     // <NavigationContainer>
@@ -257,11 +269,6 @@ const App = () => {
     //       component={ReceiptScanner}
     //       options={{headerShown: false, title: 'Welcome'}}
     //     />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    //     <Stack.Screen name="UserProfile" component={UserProfile} />
     //   </Stack.Navigator>
     // </NavigationContainer>
   );

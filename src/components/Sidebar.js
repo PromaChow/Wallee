@@ -23,6 +23,10 @@ export const buttonInfo = {
     iconName: 'trending-down',
     displayName: 'Budgets',
   },
+  GoalScreen: {
+    iconName: 'target',
+    displayName: 'Goals',
+  },
   AutoPilot: {
     iconName: 'cpu',
     displayName: 'Auto Pilot',
@@ -43,11 +47,6 @@ export const buttonInfo = {
     iconName: 'settings',
     displayName: 'Settings',
   },
-
-  Feed: {
-    iconName: 'settings',
-    displayName: 'Feed',
-  },
 };
 
 const SideBar = ({state, navigation}) => {
@@ -67,7 +66,6 @@ const SideBar = ({state, navigation}) => {
   };
 
   useEffect(() => {
-    console.log('Ren render');
     setData();
   }, []);
 

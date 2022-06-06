@@ -34,7 +34,7 @@ import {useIsFocused} from '@react-navigation/native';
 import SortMenu from './SortMenu';
 import ListOfTransactions from './ListOfTransactions';
 
-const JournalView = ({colorIndex = 5, navigation, route}) => {
+const JournalView = ({colorIndex = 4, navigation, route}) => {
   const [showSortingModal, setShowSortingModal] = useState(false);
   const {journal} = route.params;
   const [listOfTransactions, setListOfTransactions] = useState(
@@ -104,6 +104,9 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
                   />
                 }
                 marginBottom="3"
+                _pressed={{
+                  bg: 'teal.800',
+                }}
                 variant="unstyled"
                 bg={fgColors[colorIndex]}
                 _text={{
@@ -131,7 +134,7 @@ const JournalView = ({colorIndex = 5, navigation, route}) => {
       </Center>
       <ScrollView width="full" paddingTop="30px">
         <ListOfTransactions
-          listOfTransactions={listOfTransactions}
+          journal={journal}
           colorIndex={colorIndex}
           navigation={navigation}
           setListOfTransactions={setListOfTransactions}

@@ -22,6 +22,7 @@ import {PrefferedCurrencyOuter} from './PrefferedCurrencyOuter';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {PreferredCurrencytwo} from './PreferredCurrencytwo';
 import {PreferredCurrencyList} from './PreferredCurrencyList';
+import {HomePage} from './HomePage';
 const Stack = createNativeStackNavigator();
 export const Options = ({navigation}) => {
   return (
@@ -34,7 +35,7 @@ export const Options = ({navigation}) => {
             borderBottomWidth: 0.5,
           }}
           onPress={() => {
-            navigation.navigate('Feed');
+            navigation.navigate('Home');
           }}>
           <Icon
             name="chevron-left"

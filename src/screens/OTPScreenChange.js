@@ -14,6 +14,7 @@ import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {changePhoneNumber} from '../Authentication';
 import * as Progress from 'react-native-progress';
+import { HomePage } from './HomePage';
 
 import {
   SafeAreaView,
@@ -180,7 +181,7 @@ export const OTPScreenChange = ({route, navigation}) => {
               style={styles.modalButtonContainer2}
               onPress={async () => {
                 setSuccessModalVisible(false);
-                navigation.navigate('Feed');
+                navigation.navigate('Home');
               }}>
               <Text
                 style={{

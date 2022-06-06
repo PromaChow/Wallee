@@ -12,39 +12,42 @@ import MenuButton from './MenuButton';
 import {IncomeJournal, ExpenseJournal, Journal} from '../journal';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import JournalView from './JournalView';
+import CurrencyMode from './CurrencyMode';
 import {useRefresh} from '../../App';
-import {getJournals} from '../userSpace';
-import {update_doc, getUserID} from '../FireStoreHelperFunctions';
+import {getPreferredCurrency, getRates} from '../preferredCurrencyService';
 import {useIsFocused} from '@react-navigation/native';
+import {update_doc, getUserID} from '../FireStoreHelperFunctions';
+
+const rate = getRates(); // GET PROPER RATE
+console.log(getPreferredCurrency()); // get currency code
 const Stack = createNativeStackNavigator();
 
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
-  const [journals, setJournals] = useState(getJournals());
+  const [applyRate, setApplyRate] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const isFocused = useIsFocused();
-  console.log(journals);
-  useEffect(() => {
-    console.log(journals);
-    setRefresh(!refresh);
 
+  useEffect(() => {
+    setRefresh(!refresh);
     update_doc(getUserID(), 'journals', listOfJournals);
   }, [isFocused]);
 
-  //useRefresh();
-
   return (
     <>
+      <CurrencyMode applyRate={applyRate} setApplyRate={setApplyRate} />
       <Box bg="light.200" flex={1}>
         <NavBar title={'Catalogue'} navigation={navigation} />
         <ScrollView flex="1">
           <Box alignItems="center" bg="light.200">
-            {Object.keys(journals).map(key => {
+            {Object.keys(journalKeyMemo).map(key => {
               return (
                 <JournalListView
+                  applyRate={applyRate}
+                  rate={rate} // PASS PROPER RATE HERE !
                   key={key}
-                  journal={journals[key]}
-                  colorIndex={journals[key]}
+                  journal={listOfJournals[key]}
+                  colorIndex={journalKeyMemo[key]}
                   navigation={navigation}
                 />
               );

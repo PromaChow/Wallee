@@ -12,9 +12,9 @@ import {
 import {setCurrency} from './CurrencyService';
 import {rates} from './data/rates';
 
-var listOfJournals = {};
+let listOfJournals = {};
 export const listOfBudgets = {};
-export const listOfAutoTransactions = [new Transaction(21, 'AutoPilot')];
+//export const listOfAutoTransactions = [new Transaction(21, 'AutoPilot')];
 export const listOfGoals = {};
 
 const uid = 'fiOgc2ghJOTWt0klUDmDHguM5c22';

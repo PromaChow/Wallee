@@ -12,6 +12,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import MaskedView from '@react-native-community/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {Dimensions} from 'react-native';
+import {HomePage} from './HomePage';
+
 import {
   update_doc,
   getUserID,
@@ -39,7 +41,6 @@ import {
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Feed} from './Feed';
 
 const window = Dimensions.get('window');
 const screen = Dimensions.get('screen');
@@ -167,7 +168,7 @@ const UserProfile = ({navigation}) => {
             onPress={async () => {
               update_doc(getUserID(), 'name', username);
               update_doc(getUserID(), 'email', email);
-              navigation.navigate('Feed');
+              navigation.navigate('Home');
             }}>
             <Text
               style={{
@@ -261,7 +262,7 @@ const UserProfile = ({navigation}) => {
               update_doc(getUserID(), 'name', username);
               update_doc(getUserID(), 'email', email);
               if (isImageChanged === true) addToStorage(getUserID(), image);
-              navigation.navigate('Feed');
+              navigation.navigate('Home');
             }}>
             <Text
               style={{
@@ -286,7 +287,7 @@ export default ProfileWithFeed = () => (
       headerShown: false,
     }}>
     <Stack.Screen name="Profile" component={UserProfile} />
-    <Stack.Screen name="Feed" component={Feed} />
+    <Stack.Screen name="Home" component={HomePage} />
   </Stack.Navigator>
 );
 

@@ -16,7 +16,7 @@ import {update_doc, getUserID} from '../FireStoreHelperFunctions';
 import {array} from '../data/currency';
 import {CurrencyList} from './CurrencyList';
 import {getCurrency} from '../CurrencyService';
-
+import {HomePage} from './HomePage';
 import {
   SafeAreaView,
   ScrollView,
@@ -160,7 +160,7 @@ export const Profile_two = ({navigation}) => {
                   update_doc(uid, 'preferredCurrency', '');
                   update_doc(uid, 'transactions', '');
                   update_doc(uid, 'journals', '');
-                  navigation.navigate('Feed');
+                  navigation.navigate('Home');
                 }}>
                 <Text
                   style={{
@@ -246,7 +246,7 @@ export const Profile_two = ({navigation}) => {
           <TouchableOpacity
             style={styles.currencyTypeInput}
             onPress={() => {
-              navigation.navigate('CurrenyList');
+              navigation.navigate('CurrencyList');
             }}>
             <Image
               style={{

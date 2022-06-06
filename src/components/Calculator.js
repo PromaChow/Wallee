@@ -16,6 +16,7 @@ import {windowHeight, windowWidth} from '../../App';
 import Transaction from '../transaction';
 import BackButton from './BackButton';
 import {ListOfTransactions} from './JournalView';
+import {useToast} from 'native-base';
 
 const NumButton = ({renderSymbol, appendSymbol}) => {
   return (
@@ -165,6 +166,7 @@ const Calculator = ({navigation, route}) => {
 
   const [currentExpression, setExpression] = useState(transaction.amount);
   const [keypadOpen, setKeyPadOpen] = useState(false);
+  const toast = useToast();
 
   return (
     <>
@@ -195,13 +197,20 @@ const Calculator = ({navigation, route}) => {
             _icon={{
               as: Feather,
               name: 'save',
-              variant: 'outline',
+              variant: 'solid',
               color: 'white',
               size: 'lg',
             }}
             onPress={() => {
-              transaction.amount = parseFloat(currentExpression);
-              if (journal !== undefined) journal.addTransaction(transaction);
+              transaction.amount = parseInt(currentExpression);
+              if (journal !== undefined) {
+                transaction.setCreationTime(new Date());
+                journal.addTransaction(transaction);
+              }
+
+              toast.show({
+                description: 'Entry Saved',
+              });
 
               navigation.goBack();
             }}

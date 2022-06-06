@@ -11,23 +11,19 @@ import {
   Icon,
   Stack,
 } from 'native-base';
-import {Budget} from '../budget';
+import {Goal} from '../budget';
 import Feather from 'react-native-vector-icons/Feather';
 import {ExpenseJournal, IncomeJournal, Journal} from '../journal';
-import DatePicker from 'react-native-date-picker';
 
-const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
-  const proportion =
-    (budget.referenceJournal.contribution / budget.amount) * 100;
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
+const GoalListView = ({goal, colorIndex = 2, navigation}) => {
+  const proportion = (goal.referenceJournal.contribution / goal.amount) * 100;
 
   return (
-    <Pressable
-      onPress={() => {
-        setOpen(true);
-      }}>
+    <Pressable>
       <Box
+        onPress={() => {
+          console.log('pressed');
+        }}
         paddingY="5px"
         alignItems={'space-between'}
         bg="white"
@@ -44,25 +40,14 @@ const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
           justifyContent="space-between"
           flex="5">
           <Center marginX={'12px'} flex="1">
-            <Icon
-              as={Feather}
-              name="trending-down"
-              size="xl"
-              color="light.600"
-            />
+            <Icon as={Feather} name="trending-up" size="lg" color="light.600" />
           </Center>
           <Box marginLeft={'5px'} flex="4" alignItems="flex-start">
             <Text fontSize={'xl'} fontWeight="semibold" color="muted.700">
-              {budget.referenceJournal.title}
+              {goal.referenceJournal.title}
             </Text>
             <Text fontSize={'lg'} fontWeight="semibold" color="muted.500">
-              {`${proportion}% spent`}
-            </Text>
-
-            <Text fontSize={'lg'} fontWeight="semibold" color="muted.500">
-              {budget.expiryDate
-                ? `expires: ${budget.expiryDate.toDateString().slice(4, 11)}`
-                : null}
+              {`${proportion}% reached`}
             </Text>
           </Box>
 
@@ -75,7 +60,7 @@ const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
             marginX="20px"
             flex="4"
             alignItems="flex-end">
-            {`${budget.referenceJournal.contribution} / ${budget.amount}`}
+            {`${goal.referenceJournal.contribution} / ${goal.amount}`}
           </Center>
         </Box>
         <Box
@@ -90,30 +75,14 @@ const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
             size="lg"
             bg="info.300"
             _filledTrack={{
-              bg: proportion < 100 ? 'info.500' : 'red.500',
+              bg: proportion < 100 ? 'info.500' : 'success.500',
             }}
             value={proportion}
           />
         </Box>
-        <DatePicker
-          modal
-          title="Select Budget Deadline"
-          mode="date"
-          open={open}
-          date={date}
-          onConfirm={date => {
-            budget.expiryDate = date;
-            console.log(budget.expiryDate.getTime());
-            setOpen(false);
-            setDate(date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
       </Box>
     </Pressable>
   );
 };
 
-export default BudgetListView;
+export default GoalListView;

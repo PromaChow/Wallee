@@ -8,15 +8,11 @@ import notifee from '@notifee/react-native';
 import {AndroidColor} from '@notifee/react-native';
 import SmsAndroid from 'react-native-get-sms-android';
 import {PermissionsAndroid} from 'react-native';
-import {ChangePhoneNumber} from './ChangePhoneNumber';
-import BackgroundService from 'react-native-background-actions';
-import SmsListener from 'react-native-android-sms-listener';
 import {fillAddress} from '../IdentifierService';
-import {GetJournal} from '../dummyJournal';
-import {setPrefferedCurrencyMode} from '../userSpace';
 import {retrieveTransactions} from '../autoPilotTrasactions';
 import {fillJournals} from '../userSpace';
 import {useRefresh} from '../../App';
+
 import {
   get_transactions,
   add_sms_transactions,
@@ -31,8 +27,6 @@ import {
 
 import {
   getUserID,
-  ifExist,
-  add_User,
   retrieve_data,
   update_doc,
   addToStorage,

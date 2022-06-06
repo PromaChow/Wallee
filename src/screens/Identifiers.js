@@ -24,7 +24,7 @@ import {
   Swipeable,
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
-import {getSMSOnce} from './Feed';
+import {getSMSOnce} from '../SMSProcess';
 const Item = ({item, navigation}) => (
   <View style={styles.item}>
     <TouchableOpacity style={{flexDirection: 'row'}}>

@@ -28,6 +28,7 @@ export class Journal {
       (partialSum, transaction) => partialSum + transaction.amount,
       0,
     );
+    return this.contribution;
   }
   getCreationTimeSliced(startIndex, endIndex) {
     return this.timeOfCreation.toTimeString().slice(startIndex, endIndex);

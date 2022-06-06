@@ -21,12 +21,20 @@ export const retrievePreferredCurrency = async () => {
   else preferredCurrency = temp;
 };
 
-export const getRates = () => {
+export const getRates = async () => {
   // preferredCurrency = await retrievePreferredCurrency();
   console.log(rates[0]['usd']);
+  // const data = await retrieve_data(getUserID());
+
+  temp = data['preferredCurrency'];
+
+  if (temp === '') return 1;
+  else preferredCurrency = temp;
+
   console.log(preferredCurrency.currency.code);
   let currencyName = rates[0][preferredCurrency.currency.code.toLowerCase()];
 
   const rate = currencyName['rate'];
+  console.log(typeof rate, 'banana');
   return rate;
 };

@@ -60,8 +60,9 @@ const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
             </Text>
 
             <Text fontSize={'lg'} fontWeight="semibold" color="muted.500">
-              {budget.expiryDate ? 'expires:' : null}{' '}
-              {budget.expiryDate.toDateString().slice(4, 11)}
+              {budget.expiryDate
+                ? `expires: ${budget.expiryDate.toDateString().slice(4, 11)}`
+                : null}
             </Text>
           </Box>
 

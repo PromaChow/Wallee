@@ -15,8 +15,7 @@ import {rates} from './data/rates';
 var listOfJournals = {};
 export const listOfBudgets = {};
 export const listOfAutoTransactions = [new Transaction(21, 'AutoPilot')];
-export var preferredCurrency = 'BDT';
-export let rate = '';
+export const listOfGoals = {};
 
 const uid = 'fiOgc2ghJOTWt0klUDmDHguM5c22';
 

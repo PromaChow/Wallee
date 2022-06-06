@@ -14,16 +14,24 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import JournalView from './JournalView';
 import {useRefresh} from '../../App';
 import {getJournals} from '../userSpace';
+import {update_doc, getUserID} from '../FireStoreHelperFunctions';
+import {useIsFocused} from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
   const [journals, setJournals] = useState(getJournals());
+  const [refresh, setRefresh] = useState(false);
+  const isFocused = useIsFocused();
+  console.log(journals);
   useEffect(() => {
     console.log(journals);
-  });
+    setRefresh(!refresh);
 
-  useRefresh();
+    update_doc(getUserID(), 'journals', listOfJournals);
+  }, [isFocused]);
+
+  //useRefresh();
 
   return (
     <>

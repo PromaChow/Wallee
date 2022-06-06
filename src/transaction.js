@@ -22,6 +22,9 @@ export default class Transaction {
     this.type = type;
   }
 
+  setCreationTime(time) {
+    this.timeOfCreation = time;
+  }
   getCreationTimeSliced(startIndex, endIndex) {
     return this.timeOfCreation.toTimeString().slice(startIndex, endIndex);
   }

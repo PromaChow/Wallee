@@ -14,7 +14,7 @@ import MenuItem from './MenuItem';
 import {retrieve_data, getUserID} from '../FireStoreHelperFunctions';
 
 export const buttonInfo = {
-  Test: {iconName: 'alert-triangle', displayName: 'Test'},
+  Home: {iconName: 'home', displayName: 'Home'},
   NavCatalogue: {
     iconName: 'book',
     displayName: 'Catalogue',
@@ -22,10 +22,6 @@ export const buttonInfo = {
   BudgetScreen: {
     iconName: 'trending-down',
     displayName: 'Budgets',
-  },
-  Statistics: {
-    iconName: 'pie-chart',
-    displayName: 'Statistics',
   },
   AutoPilot: {
     iconName: 'cpu',
@@ -52,8 +48,6 @@ export const buttonInfo = {
     iconName: 'settings',
     displayName: 'Feed',
   },
-
- 
 };
 
 const SideBar = ({state, navigation}) => {

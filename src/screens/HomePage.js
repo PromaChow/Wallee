@@ -8,8 +8,8 @@ import PhoneInput from 'react-native-phone-number-input';
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-date-picker';
-import {setDates, filterJournals, GetJournal} from '../dummyJournal';
-
+import {setDates, filterJournals} from '../dummyJournal';
+import Statistics from './Statistics';
 import {
   Card,
   CardTitle,
@@ -23,106 +23,31 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
   Button,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {useRefresh} from '../../App';
+import NavBar from '../components/NavBar';
+import {Box, Text} from 'native-base';
 
-import {BarChart, LineChart, PieChart} from 'react-native-gifted-charts';
-
-import {Dimensions} from 'react-native';
-const screenWidth = Dimensions.get('window').width;
-
-// export const getPieChartData = data => {
-//   return data.map((item, index) => {
-//     //  const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-//     var r = () => (Math.random() * 256) >> 0;
-//     var color = `rgb(${r()}, ${r()}, ${r()})`;
-
-//     return {
-//       key: index,
-//       value: item,
-//       svg: {fill: color},
-//     };
-//   });
-// };
-const getData = (min_Date, max_Date) => {
-  GetJournal();
-  setDates(min_Date, max_Date);
-  var journals = filterJournals(min_Date, max_Date);
-  console.log(journals);
-
-  //console.log(journals[0].title, journals[0].contribution);
-  var data = [];
-  for (let journal of journals) {
-    var r = () => (Math.random() * 256) >> 0;
-    var color = `rgb(${r()}, ${r()}, ${r()})`;
-    data.splice(data.length, 0, {
-      value: journal.contribution,
-      text: journal.title,
-      color: color,
-    });
-  }
-  console.log(data);
-  return data;
-};
-
-const renderLegend = (text, color) => {
-  return (
-    <View style={{flexDirection: 'row', marginBottom: 12}}>
-      <View
-        style={{
-          height: 18,
-
-          width: 18,
-
-          marginRight: 10,
-
-          borderRadius: 4,
-
-          backgroundColor: color || 'white',
-        }}
-      />
-
-      <Text style={{color: 'white', fontSize: 16}}>{text || ''}</Text>
-    </View>
-  );
-};
-export const HomePage = () => {
-  const chartConfig = {
-    backgroundGradientFrom: '#1E2923',
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: '#08130D',
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false, // optional
-  };
-  useEffect(() => {
-    // GetJournal();
-  });
-  const [dateMin, setDateMin] = useState(new Date());
+export const HomePage = ({navigation}) => {
+  const [dateMin, setDateMin] = useState(new Date('June 4, 2022 03:24:00'));
   const [openMin, setOpenMin] = useState(false);
-  const [dateMax, setDateMax] = useState(new Date());
+  const [dateMax, setDateMax] = useState(new Date('June 9, 2022 03:24:00'));
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  useRefresh();
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  console.log(dateMin, dateMax);
-  var date = new Date();
-  var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-  var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-  console.log(firstDay, lastDay);
-  const data = getData(firstDay, lastDay);
+  // console.log(dateMin, dateMax);
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <Box flex="1">
+      <NavBar title={'Summary'} navigation={navigation} />
       <Modal
         transparent={true}
         isVisible={isModalVisible}
@@ -138,7 +63,7 @@ export const HomePage = () => {
             style={{
               width: 300,
               height: 300,
-              backgroundColor: 'white',
+              backgroundColor: 'grey',
               opacity: 0.6,
 
               borderRadius: 5,
@@ -240,65 +165,14 @@ export const HomePage = () => {
           </View>
         </View>
       </Modal>
-      <ScrollView style={{flex: 1}}>
-        <Card
-          style={{
-            marginTop: 20,
-            marginHorizontal: 15,
-            borderRadius: 10,
-            alignItems: 'center',
-          }}>
-          <CardTitle
+      <ScrollView>
+        <Card style={{marginTop: 10}}>
+          {/* <CardTitle
             title="Summary"
             titleStyle={{color: '#b5ccab'}}
-            subtitle="This is a summary of your journals"
-          />
-
-          <PieChart
-            strokeColor="white"
-            strokeWidth={4}
-            donut
-            data={data}
-            innerCircleColor="#414141"
-            innerCircleBorderWidth={4}
-            innerCircleBorderColor={'white'}
-            textSize={18}
-          />
-
-          <View
-            style={{
-              width: '100%',
-
-              flexDirection: 'row',
-
-              justifyContent: 'space-evenly',
-
-              marginTop: 20,
-            }}>
-            {data.map(d => {
-              return (
-                <View style={{flexDirection: 'row', marginBottom: 12}}>
-                  <View
-                    style={{
-                      height: 18,
-
-                      width: 18,
-
-                      marginRight: 10,
-
-                      borderRadius: 4,
-
-                      backgroundColor: d.color || 'white',
-                    }}
-                  />
-
-                  <Text style={{color: 'white', fontSize: 16}}>
-                    {d.title || ''}
-                  </Text>
-                </View>
-              );
-            })}
-          </View>
+            subtitle="Transaction Volume Over a Time Period"
+          /> */}
+          <View>{/* <Text style={{color: 'black'}}>Hi</Text> */}</View>
           <CardAction separator={true} inColumn={false}>
             <CardButton
               onPress={() => {
@@ -310,24 +184,17 @@ export const HomePage = () => {
 
             <CardButton
               onPress={() => {
-                // setDates(dateMin, dateMax);
-                // console.log(filterJournals());
-                var date = new Date();
-                var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-                var lastDay = new Date(
-                  date.getFullYear(),
-                  date.getMonth() + 1,
-                  0,
-                );
-                setDates(firstDay, lastDay);
-                getData(firstDay, lastDay);
+                setDates(dateMin, dateMax);
+                console.log(filterJournals());
               }}
               title="Select Style"
               color="#b5ccab"
             />
           </CardAction>
         </Card>
+
+        <Statistics dateMin={dateMin} dateMax={dateMax} />
       </ScrollView>
-    </SafeAreaView>
+    </Box>
   );
 };

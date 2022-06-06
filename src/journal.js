@@ -14,7 +14,7 @@ export class Journal {
     this.title = title;
     this.contribution = contribution;
     this.creator = creator;
-    this.timeOfCreation = Date.now();
+    this.timeOfCreation = new Date();
     this.lastAccessTime = this.timeOfCreation;
   }
 
@@ -43,6 +43,22 @@ export class Journal {
 
   getLastAccessDateSliced(startIndex, endIndex) {
     return this.lastAccessTime.toDateString().slice(startIndex, endIndex);
+  }
+
+  getContributionInRange(dateMin, dateMax) {
+    let contrib = 0;
+
+    for (const {amount, timeOfCreation} of this.listOfTransactions) {
+      if (
+        timeOfCreation.getTime() >= dateMin.getTime() &&
+        timeOfCreation.getTime() <= dateMax.getTime()
+      ) {
+        contrib += amount;
+        console.log('Here');
+      }
+    }
+
+    return contrib;
   }
 }
 

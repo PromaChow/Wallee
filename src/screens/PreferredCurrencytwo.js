@@ -24,7 +24,6 @@ import {
   deleteNotif,
 } from '../NotificationService';
 import {update_doc, getUserID} from '../FireStoreHelperFunctions';
-import {setPrefferedCurrencyMode} from '../userSpace';
 
 export const PreferredCurrencytwo = ({navigation}) => {
   const [currencyMode, setCurrencyMode] = React.useState(
@@ -84,7 +83,7 @@ export const PreferredCurrencytwo = ({navigation}) => {
             style={styles.appButtonContainer}
             onPress={() => {
               update_doc(getUserID(), 'preferredCurrency', currencyMode);
-              setPrefferedCurrencyMode(currencyMode);
+              setPreferredCurrency(currencyMode);
               navigation.navigate('Options');
             }}>
             <Text style={styles.appButtonText}>Save</Text>

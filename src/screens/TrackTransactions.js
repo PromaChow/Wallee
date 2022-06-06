@@ -40,8 +40,9 @@ import Transaction from '../transaction';
 import {Row} from 'native-base';
 import {ExpenseJournal} from '../journal';
 import {IncomeJournal} from '../journal';
-import {journalKeyMemo} from '../../App';
+import { useRefresh } from '../../App';
 const screenWidth = Dimensions.get('window').width;
+
 
 export const TrackTransactions = () => {
   const [transactions, setTransaction] = useState(get_transactions());
@@ -49,6 +50,7 @@ export const TrackTransactions = () => {
   const [checked, setChecked] = useState();
   const [transactionId, setTransactionId] = useState(0);
   const [name, setName] = useState(0);
+  useRefresh();
   //const [save, setSave] = useState([]);
 
   //console.log(get_transactions());

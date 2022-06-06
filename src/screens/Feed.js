@@ -16,6 +16,7 @@ import {GetJournal} from '../dummyJournal';
 import {setPrefferedCurrencyMode} from '../userSpace';
 import {retrieveTransactions} from '../autoPilotTrasactions';
 import {fillJournals} from '../userSpace';
+import {useRefresh} from '../../App';
 import {
   get_transactions,
   add_sms_transactions,
@@ -314,9 +315,10 @@ const sendData = async () => {
 export const Feed = () => {
   const [aState, setAppState] = useState(AppState.currentState);
   const [image, setImage] = useState();
-
+  useRefresh();
   useEffect(() => {
     sendData();
+    console.log('feed refreshed');
     getSMS();
     const appStateListener = AppState.addEventListener(
       'change',
@@ -334,7 +336,7 @@ export const Feed = () => {
     return () => {
       appStateListener?.remove();
     };
-  }, []);
+  });
 
   const user = firebase.auth().currentUser;
   const navigation = useNavigation();

@@ -141,7 +141,6 @@ const App = () => {
           <Drawer.Screen name="AutoPilot" component={AutoPilot} />
           <Drawer.Screen name="Home" component={HomePage} />
           <Drawer.Screen name="UserProfile" component={ProfileWithFeed} />
-          <Drawer.Screen name="Statistics" component={Statistics} />
           <Drawer.Screen name="Settings" component={Settings} />
         </Drawer.Navigator>
       </NavigationContainer>

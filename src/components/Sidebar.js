@@ -23,10 +23,10 @@ export const buttonInfo = {
     iconName: 'trending-down',
     displayName: 'Budgets',
   },
-  Statistics: {
-    iconName: 'pie-chart',
-    displayName: 'Statistics',
-  },
+  // Statistics: {
+  //   iconName: 'pie-chart',
+  //   displayName: 'Statistics',
+  // },
   AutoPilot: {
     iconName: 'cpu',
     displayName: 'Auto Pilot',

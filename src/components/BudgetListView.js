@@ -11,12 +11,13 @@ import {
   Icon,
   Stack,
 } from 'native-base';
-import {Goal} from '../budget';
+import {Budget} from '../budget';
 import Feather from 'react-native-vector-icons/Feather';
 import {ExpenseJournal, IncomeJournal, Journal} from '../journal';
 
-const GoalListView = ({goal, colorIndex = 2, navigation}) => {
-  const proportion = (goal.referenceJournal.contribution / goal.amount) * 100;
+const BudgetListView = ({budget, colorIndex = 2, navigation}) => {
+  const proportion =
+    (budget.referenceJournal.contribution / budget.amount) * 100;
 
   return (
     <Pressable>
@@ -49,10 +50,10 @@ const GoalListView = ({goal, colorIndex = 2, navigation}) => {
           </Center>
           <Box marginLeft={'5px'} flex="4" alignItems="flex-start">
             <Text fontSize={'xl'} fontWeight="semibold" color="muted.700">
-              {goal.referenceJournal.title}
+              {budget.referenceJournal.title}
             </Text>
             <Text fontSize={'lg'} fontWeight="semibold" color="muted.500">
-              {`${proportion}% reached`}
+              {`${proportion}% spent`}
             </Text>
           </Box>
 
@@ -65,7 +66,7 @@ const GoalListView = ({goal, colorIndex = 2, navigation}) => {
             marginX="20px"
             flex="4"
             alignItems="flex-end">
-            {`${goal.referenceJournal.contribution} / ${goal.amount}`}
+            {`${budget.referenceJournal.contribution} / ${budget.amount}`}
           </Center>
         </Box>
         <Box
@@ -80,7 +81,7 @@ const GoalListView = ({goal, colorIndex = 2, navigation}) => {
             size="lg"
             bg="info.300"
             _filledTrack={{
-              bg: proportion < 100 ? 'info.500' : 'success.500',
+              bg: proportion < 100 ? 'info.500' : 'red.500',
             }}
             value={proportion}
           />
@@ -90,4 +91,4 @@ const GoalListView = ({goal, colorIndex = 2, navigation}) => {
   );
 };
 
-export default GoalListView;
+export default BudgetListView;

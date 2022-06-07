@@ -12,7 +12,7 @@ import {
 import {setCurrency} from './CurrencyService';
 import {rates} from './data/rates';
 
-var listOfJournals = [];
+var listOfJournals = {};
 export const listOfBudgets = {};
 //export const listOfAutoTransactions = [new Transaction(21, 'AutoPilot')];
 export const listOfGoals = {};
@@ -84,7 +84,13 @@ const processJournals = temp => {
     // var journal = new Journal(title, 0, 'Autopilot');
   }
   // console.log(journalList[0] instanceof ExpenseJournal);
-  listOfJournals = [...journalList];
+  // listOfJournals = [...journalList];
+
+  // Cloing into listOfJournals
+  for (const [key, value] of Object.entries(journalList)) {
+    Object.assign(listOfJournals[key], value);
+  }
+
   console.log('\n\n\n' + listOfJournals[0].contribution);
   return journalList;
 

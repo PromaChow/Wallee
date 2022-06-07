@@ -19,7 +19,7 @@ export const add_sms_transactions = (amount, balance, date, type) => {
     console.log(amount);
     console.log(parseFloat(amount));
     var transaction = new Transaction(parseFloat(amount), 'AutoPilot');
-    transaction.timeOfCreation = new Date();
+    //transaction.timeOfCreation = new Date(new Date(Date.now() * 1000));
     transaction.setRemarks(remarks);
     transaction.setType(type);
     transactions.splice(transactions.length, 0, transaction);

@@ -70,27 +70,27 @@ export const HomePage = ({navigation}) => {
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   useRefresh();
-  useEffect(() => {
-    // sendData();
-    console.log('\n\nhome refreshed\n\n');
-    getSMS();
-    const appStateListener = AppState.addEventListener(
-      'change',
-      nextAppState => {
-        console.log('Next AppState is: ', nextAppState);
-        if (nextAppState === 'background') {
-          //   getSMS();
-        }
-        setAppState(nextAppState);
-      },
-    );
-    return () => {
-      appStateListener?.remove();
-    };
-  });
+  // useEffect(() => {
+  //   // sendData();
+  //   console.log('\n\nhome refreshed\n\n');
+  //   getSMS();
+  //   const appStateListener = AppState.addEventListener(
+  //     'change',
+  //     nextAppState => {
+  //       console.log('Next AppState is: ', nextAppState);
+  //       if (nextAppState === 'background') {
+  //         //   getSMS();
+  //       }
+  //       setAppState(nextAppState);
+  //     },
+  //   );
+  //   return () => {
+  //     appStateListener?.remove();
+  //   };
+  // });
 
   React.useEffect(() => {
-    getSMS();
+    //getSMS();
     sendData();
     const willFocusSubscription = navigation.addListener('focus', () => {
       getSMS();

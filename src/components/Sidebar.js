@@ -8,6 +8,7 @@ import {
   Icon,
   Avatar,
 } from 'native-base';
+import {useRefresh} from '../../App';
 
 import MenuItem from './MenuItem';
 
@@ -53,6 +54,7 @@ const SideBar = ({state, navigation, setSignOut}) => {
   const currentRoute = state.routeNames[state.index];
   const [image, setImage] = useState();
   const [username, setName] = useState();
+  useRefresh();
 
   const setData = async () => {
     const doc = await retrieve_data(getUserID());

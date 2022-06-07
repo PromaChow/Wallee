@@ -44,6 +44,7 @@ export const getSMSOnce = async address => {
 
         address: addr,
       };
+      update_doc(getUserID(), 'lastAccessedDate', Date.now());
       SmsAndroid.list(
         JSON.stringify(filter),
         fail => {

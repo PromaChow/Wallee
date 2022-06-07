@@ -74,24 +74,20 @@ const SideBar = ({state, navigation, setSignOut}) => {
   return (
     <Box flex="1" bg="white">
       <Box
-        padding="20px"
-        marginBottom="20px"
-        bg="light.200"
+        padding="10px"
+        marginBottom="50px"
+        bg="#FFFFFF"
         alignItems="flex-start"
-        shadow="7"
+        shadow="2"
         width="full">
         <Avatar
-          borderWidth={3}
-          borderColor={'#99b897'}
-          size="xl"
-          source={{
-            uri:
-              image === ''
-                ? 'https://images.unsplash.com/photo-1510771463146-e89e6e86560e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80'
-                : image,
-          }}
+          borderWidth={1}
+          borderColor={'#FFFFFF'}
+          size="90"
+          source={require('../data/dollar_2.jpg')}
         />
-        <Box
+        {/* <Box
+
           marginTop="15px"
           justifyContent={'center'}
           alignItems={'center'}
@@ -100,7 +96,7 @@ const SideBar = ({state, navigation, setSignOut}) => {
             fontWeight: 'semibold',
           }}>
           {username}
-        </Box>
+        </Box> */}
       </Box>
       <ScrollView flex="1">
         <VStack alignItems={'flex-start'} space="2">

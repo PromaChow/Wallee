@@ -156,6 +156,7 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   const [signOut, setSignOut] = useState(false);
   const user = firebase.auth().currentUser;
+
   useEffect(() => {
     return notifee.onForegroundEvent(({type, detail}) => {
       switch (type) {
@@ -172,11 +173,11 @@ const App = () => {
 
   return (
     <NativeBaseProvider>
-      {!user ? (
-        <Authentication />
-      ) : (
-        <>
-          <NavigationContainer>
+      <NavigationContainer>
+        {!user ? (
+          <Authentication setSignOut={setSignOut} />
+        ) : (
+          <>
             <Drawer.Navigator
               initialRouteName="Home"
               screenOptions={{
@@ -195,9 +196,9 @@ const App = () => {
               <Drawer.Screen name="Home" component={HomePage} />
               <Drawer.Screen name="Menu" component={MenuButton} />
             </Drawer.Navigator>
-          </NavigationContainer>
-        </>
-      )}
+          </>
+        )}
+      </NavigationContainer>
     </NativeBaseProvider>
 
     // <NavigationContainer>

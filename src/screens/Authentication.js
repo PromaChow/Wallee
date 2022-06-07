@@ -12,34 +12,39 @@ import {CurrencyList} from './CurrencyList';
 import {HomeScreen} from './HomeScreen';
 const Stack = createNativeStackNavigator();
 
-export const Authentication = () => {
+export const Authentication = ({setSignOut}) => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignUp">
-        <Stack.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{title: 'Sign Up'}}
-        />
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{title: 'Profile'}}
-        />
+    <Stack.Navigator initialRouteName="SignUp">
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{title: 'Sign Up'}}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{title: 'Profile'}}
+      />
 
-        <Stack.Screen name="OTP" component={OTP} options={{title: 'Welcome'}} />
+      <Stack.Screen
+        name="OTP"
+        component={OTP}
+        options={{title: 'Welcome'}}
+        initialParams={{
+          setSignOut: setSignOut,
+        }}
+      />
 
-        {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
-        <Stack.Screen name="Profile_two" component={Profile_two} />
-        <Stack.Screen name="CurrencyList" component={CurrencyList} />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+      {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+      <Stack.Screen name="Profile_two" component={Profile_two} />
+      <Stack.Screen name="CurrencyList" component={CurrencyList} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
   );
 };

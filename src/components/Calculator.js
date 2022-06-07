@@ -16,6 +16,7 @@ import {windowHeight, windowWidth} from '../../App';
 import Transaction from '../transaction';
 import BackButton from './BackButton';
 import {ListOfTransactions} from './JournalView';
+import DatePicker from 'react-native-date-picker';
 import {useToast} from 'native-base';
 
 const NumButton = ({renderSymbol, appendSymbol}) => {
@@ -166,6 +167,8 @@ const Calculator = ({navigation, route}) => {
 
   const [currentExpression, setExpression] = useState(transaction.amount);
   const [keypadOpen, setKeyPadOpen] = useState(false);
+  const [date, setDate] = useState(new Date(0));
+  const [open, setOpen] = useState(false);
   const toast = useToast();
 
   return (
@@ -204,7 +207,8 @@ const Calculator = ({navigation, route}) => {
             onPress={() => {
               transaction.amount = parseInt(currentExpression);
               if (journal !== undefined) {
-                transaction.setCreationTime(new Date());
+                if (date.getTime() === 0)
+                  transaction.setCreationTime(new Date());
                 journal.addTransaction(transaction);
               }
 
@@ -243,27 +247,70 @@ const Calculator = ({navigation, route}) => {
           </Box>
           <Divider thickness="2px" marginTop="5px" />
           <Center padding="5px" marginTop="5px" marginBottom="15px">
-            <Button
-              variant="outline"
-              height="auto"
-              onPress={() => {
-                transaction.lastAccessTime = new Date();
-                setExpression(evaluationCallback(currentExpression));
-                setKeyPadOpen(!keypadOpen);
-              }}
-              _text={{
-                fontSize: 'lg',
-                color: 'blue.600',
-              }}
-              leftIcon={
-                keypadOpen ? (
-                  <Icon size="md" as={Feather} name="check" color="blue.600" />
-                ) : (
-                  <Icon size="md" as={Feather} name="edit" color="blue.600" />
-                )
-              }>
-              {keypadOpen ? 'DONE EDITING' : 'EDIT ENTRY'}
-            </Button>
+            <Box flexDirection={'row'} justifyContent="space-between">
+              <Button
+                marginX="1"
+                variant="outline"
+                height="auto"
+                onPress={() => {
+                  transaction.lastAccessTime = new Date();
+                  setExpression(evaluationCallback(currentExpression));
+                  setKeyPadOpen(!keypadOpen);
+                }}
+                _text={{
+                  fontSize: 'lg',
+                  color: 'blue.600',
+                }}
+                leftIcon={
+                  keypadOpen ? (
+                    <Icon
+                      size="md"
+                      as={Feather}
+                      name="check"
+                      color="blue.600"
+                    />
+                  ) : (
+                    <Icon size="md" as={Feather} name="edit" color="blue.600" />
+                  )
+                }>
+                {keypadOpen ? 'DONE EDITING' : 'EDIT ENTRY'}
+              </Button>
+
+              <Button
+                marginX="1"
+                variant="outline"
+                height="auto"
+                onPress={() => {
+                  setOpen(true);
+                }}
+                _text={{
+                  fontSize: 'lg',
+                  color: 'blue.600',
+                }}
+                leftIcon={
+                  <Icon
+                    size="md"
+                    as={Feather}
+                    name="calendar"
+                    color="blue.600"
+                  />
+                }>
+                Select Time
+              </Button>
+              <DatePicker
+                modal
+                open={open}
+                date={date}
+                onConfirm={date => {
+                  setOpen(false);
+                  setDate(date);
+                  transaction.setCreationTime(date);
+                }}
+                onCancel={() => {
+                  setOpen(false);
+                }}
+              />
+            </Box>
           </Center>
         </Center>
 

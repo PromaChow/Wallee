@@ -48,6 +48,7 @@ import {Authentication} from './src/screens/Authentication';
 import MenuButton from './src/components/MenuButton';
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
+import {LogBox} from 'react-native';
 
 export const colorNames = [
   'secondary',
@@ -154,6 +155,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  // LogBox.ignoreAllLogs();
   const [signOut, setSignOut] = useState(false);
   const user = firebase.auth().currentUser;
 

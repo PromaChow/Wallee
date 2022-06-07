@@ -1,7 +1,11 @@
 import React, {useEffect, useState, useRef, useCallback} from 'react';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
@@ -51,7 +55,7 @@ import {
 } from '../FireStoreHelperFunctions';
 
 import NavBar from '../components/NavBar';
-import {Box, Text} from 'native-base';
+import {Box, Text, Spinner} from 'native-base';
 import {IncomeJournal} from '../journal';
 
 const sendData = async () => {
@@ -72,7 +76,9 @@ export const HomePage = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [netBalance, setNetBalance] = useState(0);
-  useRefresh();
+  const [shouldUpload, setShouldUpload] = useState(false);
+  const isFocused = useIsFocused();
+  // useRefresh();
   // useEffect(() => {
   //   // sendData();
   //   console.log('\n\nhome refreshed\n\n');
@@ -111,15 +117,23 @@ export const HomePage = ({navigation}) => {
     const data = await retrieve_data(getUserID());
     const amount = parseFloat(data['primaryAmount']);
     setIsLoading(false);
+    setShouldUpload(true);
     setNetBalance(amount);
   };
 
-  const calculateNetBalance = useCallback(() => {
+  useEffect(() => {
+    let netChange = 0;
+
     for (const journal of Object.values(listOfJournals)) {
-      if (journal instanceof IncomeJournal) netBalance += journal.contribution;
-      else netBalance -= journal.contribution;
+      if (journal instanceof IncomeJournal) netChange += journal.contribution;
+      else netChange -= journal.contribution;
     }
-  }, [netBalance]);
+
+    if (shouldUpload) {
+      update_doc(getUserID(), 'primaryAmount', netBalance + netChange);
+      setNetBalance(netBalance + netChange);
+    }
+  }, [isFocused]);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -129,22 +143,22 @@ export const HomePage = ({navigation}) => {
     <Box flex="1">
       <NavBar title={'Summary'} navigation={navigation} />
 
-      {isLoading ? (
-        <Text>Loadin Primary Amount</Text>
-      ) : (
-        <Box
-          marginY={'-2'}
-          padding="2"
-          alignItems={'center'}
-          bg="red.400"
-          _text={{
-            fontWeight: 'semibold',
-            fontSize: 'lg',
-            color: 'light.200',
-          }}>
-          {netBalance}
-        </Box>
-      )}
+      <Box
+        marginY={'-2'}
+        padding="2"
+        alignItems={'center'}
+        bg="red.400"
+        _text={{
+          fontWeight: 'semibold',
+          fontSize: 'lg',
+          color: 'light.200',
+        }}>
+        {isLoading ? (
+          <Spinner color="cyan.500" size="lg" />
+        ) : (
+          `Net Balance  ${netBalance}`
+        )}
+      </Box>
 
       <Modal
         transparent={true}

@@ -34,6 +34,8 @@ const Catalogue = ({navigation}) => {
     update_doc(getUserID(), 'journals', listOfJournals);
   }, [isFocused]);
 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   return (
     <>
       <CurrencyMode
@@ -48,6 +50,8 @@ const Catalogue = ({navigation}) => {
             {Object.keys(journalKeyMemo).map(key => {
               return (
                 <JournalListView
+                  showModal={showDeleteModal}
+                  setShowModal={setShowDeleteModal}
                   applyRate={applyRate}
                   rate={rate}
                   key={key}

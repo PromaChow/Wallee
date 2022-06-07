@@ -74,8 +74,8 @@ export const getRandomColor = () =>
   Math.floor(Math.random() * colorNames.length);
 
 export const journalKeyMemo = {};
-listOfJournals['Dummy'] = new ExpenseJournal('Dummy', 0);
-journalKeyMemo['Dummy'] = getRandomColor();
+//listOfJournals['Dummy'] = new ExpenseJournal('Dummy', 0);
+//journalKeyMemo['Dummy'] = getRandomColor();
 
 import {
   getUserID,

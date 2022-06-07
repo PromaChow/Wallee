@@ -13,8 +13,9 @@ var addrs = [
   '+8801767895677',
   '1234',
 ];
-export const fillAddress = async data => {
-  addrs = data['ID'];
+export const fillAddress = async () => {
+  const fetchData = retrieve_data(getUserID());
+  addrs = fetchData['ID'];
 };
 export const getAddress = () => {
   return addrs;

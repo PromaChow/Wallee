@@ -12,22 +12,32 @@ import {
 import {setCurrency} from './CurrencyService';
 import {rates} from './data/rates';
 
-let listOfJournals = {};
+var listOfJournals = [];
 export const listOfBudgets = {};
 //export const listOfAutoTransactions = [new Transaction(21, 'AutoPilot')];
 export const listOfGoals = {};
 
-const uid = 'fiOgc2ghJOTWt0klUDmDHguM5c22';
+//const uid = 'fiOgc2ghJOTWt0klUDmDHguM5c22';
+export const fillJournals = async () => {
+  //update_doc(getUserID(), '', transactions);
+  let fetchData = await retrieve_data(getUserID());
+  let temp = fetchData['journals'];
 
-export const getJournals = () => {
-  return listOfJournals;
+  if (temp !== '') {
+    processJournals(temp);
+    //console.log(listOfJournals);
+  }
 };
-export const fillJournals = data => {
-  //update_doc(getUserID(), 'transactions', transactions);
-  let temp = data['journals'];
 
+export const setJournals = async temp => {
   if (temp !== '') processJournals(temp);
 };
+
+export const getJournals = () => {
+  fillJournals();
+  return listOfJournals;
+};
+
 const createTransactionList = transactionList => {
   console.log('hello');
   var tempTransaction = [];
@@ -74,7 +84,9 @@ const processJournals = temp => {
     // var journal = new Journal(title, 0, 'Autopilot');
   }
   // console.log(journalList[0] instanceof ExpenseJournal);
-  listOfJournals = journalList;
+  listOfJournals = [...journalList];
+  console.log('\n\n\n' + listOfJournals[0].contribution);
+  return journalList;
 
   // var tempJournal = [];
   // for (t of temp) {

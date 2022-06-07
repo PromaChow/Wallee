@@ -34,7 +34,8 @@ import {
 const window = Dimensions.get('window');
 const screen = Dimensions.get('screen');
 
-export const Profile_two = ({navigation}) => {
+export const Profile_two = ({navigation, route}) => {
+  const {setSignOut} = route.params;
   const [amount, setAmount] = React.useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
@@ -160,7 +161,7 @@ export const Profile_two = ({navigation}) => {
                   update_doc(uid, 'preferredCurrency', '');
                   update_doc(uid, 'transactions', '');
                   update_doc(uid, 'journals', '');
-                  navigation.navigate('Home');
+                  setSignOut(render => !render);
                 }}>
                 <Text
                   style={{

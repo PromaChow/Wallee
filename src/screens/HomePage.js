@@ -57,8 +57,8 @@ const sendData = async () => {
   console.log('retrieved');
   retrieveTransactions(data);
   retrievePreferredCurrency(data);
-  fillAddress(data);
-  fillJournals(data);
+  fillAddress();
+  fillJournals();
 };
 
 export const HomePage = ({navigation}) => {
@@ -69,24 +69,35 @@ export const HomePage = ({navigation}) => {
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   useRefresh();
-  useEffect(() => {
-    sendData();
-    console.log('feed refreshed');
+  // useEffect(() => {
+  //  // sendData();
+  //   console.log('\n\nhome refreshed\n\n');
+  //   getSMS();
+  //   const appStateListener = AppState.addEventListener(
+  //     'change',
+  //     nextAppState => {
+  //       console.log('Next AppState is: ', nextAppState);
+  //       if (nextAppState === 'background') {
+  //         //   getSMS();
+  //       }
+  //       setAppState(nextAppState);
+  //     },
+  //   );
+  //   return () => {
+  //     appStateListener?.remove();
+  //   };
+  // });
+
+  React.useEffect(() => {
     getSMS();
-    const appStateListener = AppState.addEventListener(
-      'change',
-      nextAppState => {
-        console.log('Next AppState is: ', nextAppState);
-        if (nextAppState === 'background') {
-          getSMS();
-        }
-        setAppState(nextAppState);
-      },
-    );
-    return () => {
-      appStateListener?.remove();
-    };
-  });
+    sendData();
+    const willFocusSubscription = navigation.addListener('focus', () => {
+      getSMS();
+      sendData();
+    });
+
+    return willFocusSubscription;
+  }, []);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);

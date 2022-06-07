@@ -41,7 +41,7 @@ export const OTP = ({route, navigation}) => {
             if (!exists) {
               add_User(user.uid);
               navigation.navigate('Profile');
-            } else navigation.navigate('Home');
+            } else setSignOut(rerender => !rerender);
           });
       }
     });

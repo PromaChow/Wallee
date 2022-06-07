@@ -36,7 +36,13 @@ export const Authentication = ({setSignOut}) => {
       />
 
       {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
-      <Stack.Screen name="Profile_two" component={Profile_two} />
+      <Stack.Screen
+        name="Profile_two"
+        component={Profile_two}
+        initialParams={{
+          setSignOut: setSignOut,
+        }}
+      />
       <Stack.Screen name="CurrencyList" component={CurrencyList} />
       <Stack.Screen
         name="Home"

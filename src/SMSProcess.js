@@ -95,7 +95,7 @@ export const getSMS = async () => {
   console.log(addrs.length);
   const data = await retrieve_data(getUserID());
   let min_date = data['lastAccessedDate'];
-  //min_date = 1054742370000;
+  //let min_date = 1054742370000;
 
   console.log('min_date' + min_date);
   const granted = await PermissionsAndroid.request(

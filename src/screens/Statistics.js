@@ -68,14 +68,17 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
     if (
       journal.timeOfCreation.getTime() > dateMin.getTime() &&
       journal.timeOfCreation.getTime() <= dateMax.getTime()
-    )
+    ) {
+      console.log(journal);
+      console.log('\n\n', journal.getContributionInRange(dateMin, dateMax));
       data.push({
         name: journal.title,
         population: journal.getContributionInRange(dateMin, dateMax),
-        color: colors[colorIndex++],
+        color: colors[colorIndex++ % colors.length],
         legendFontColor: '#7F7F7F',
         legendFontSize: 15,
       });
+    }
   }
 
   return (

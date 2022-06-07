@@ -3,8 +3,11 @@ import {Button, Icon, Box, Menu} from 'native-base';
 import auth from '@react-native-firebase/auth';
 import Feather from 'react-native-vector-icons/Feather';
 import {buttonInfo} from './Sidebar';
+import {useNavigation} from '@react-navigation/native';
 
-const MenuItem = ({active, componentName, navigation, setSignOut}) => {
+const MenuItem = ({active, componentName, setSignOut}) => {
+  const navigation = useNavigation();
+
   const handleClick =
     componentName === 'LogOut'
       ? async () => {

@@ -236,7 +236,7 @@ export const ReceiptScanner = ({navigation}) => {
                 fetchData['date'];
               setRemarks(str);
               save_transactions();
-              console.log(get_transactions);
+              console.log(get_transactions());
             }}>
             <Text
               style={{

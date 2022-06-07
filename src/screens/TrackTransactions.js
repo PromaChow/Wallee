@@ -31,8 +31,9 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {retrieveTransactions} from '../autoPilotTrasactions';
 import {RadioButton} from 'react-native-paper';
-
+import {retrieve_data, getUserID} from '../FireStoreHelperFunctions';
 import {BarChart, LineChart, PieChart} from 'react-native-gifted-charts';
 
 import {Dimensions} from 'react-native';
@@ -40,9 +41,9 @@ import Transaction from '../transaction';
 import {Row} from 'native-base';
 import {ExpenseJournal} from '../journal';
 import {IncomeJournal} from '../journal';
-import { useRefresh } from '../../App';
+import {useRefresh} from '../../App';
+import {transactions} from '../autoPilotTrasactions';
 const screenWidth = Dimensions.get('window').width;
-
 
 export const TrackTransactions = () => {
   const [transactions, setTransaction] = useState(get_transactions());
@@ -50,10 +51,29 @@ export const TrackTransactions = () => {
   const [checked, setChecked] = useState();
   const [transactionId, setTransactionId] = useState(0);
   const [name, setName] = useState(0);
+  const [isRefreshed, setIsRefreshed] = useState(0);
+  const [updated, setUpdated] = useState(true);
   useRefresh();
+
   //const [save, setSave] = useState([]);
 
   //console.log(get_transactions());
+  useEffect(() => {
+    console.log('helloauto');
+    //setUpdated(false);
+    // const fetchData = async () => {
+    //   await retrieveTransactions().then(() => {
+    //     console.log('helloinside');
+    //     // retrieveTransactions();
+    //     setTransaction(get_transactions());
+    //     setUpdated(true);
+    //   });
+    // };
+    // fetchData();
+    console.log(transactions);
+
+    setTransaction(get_transactions());
+  });
 
   const render = (len, transactions) => {
     var j = 0;
@@ -73,7 +93,7 @@ export const TrackTransactions = () => {
             subtitle={transactions[i].creator}
           />
           <CardContent text={transactions[i].remarks} />
-          <CardContent text={j} />
+
           <CardAction separator={true} inColumn={false}>
             <CardButton
               onPress={() => {
@@ -94,15 +114,16 @@ export const TrackTransactions = () => {
     return payments;
   };
 
-  useEffect(() => {
-    console.log('hello');
-    const ac = new AbortController();
-    setTransaction(get_transactions());
-    // setSave(arrayOfSaveStates);
-    console.log('len' + transactions.length);
-    ac.abort();
-    // GetJournal();
-  }, []);
+  // useEffect(() => {
+  //   console.log('hello');
+  //   const ac = new AbortController();
+  //   setTransaction(get_transactions());
+  //   // setSave(arrayOfSaveStates);
+  //   console.log('len' + transactions.length);
+  //   ac.abort();
+
+  //   // GetJournal();
+  // }, []);
   if (transactions.length > 5)
     // console.log(transactions.length);
     console.log(transactions[5] instanceof Transaction);
@@ -118,78 +139,78 @@ export const TrackTransactions = () => {
     a.splice(transactionId, 1);
     setTransaction([...a]);
   };
-
-  return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <ScrollView
-          style={{
-            flex: 1,
-            backgroundColor: '#FFFFFF',
-            borderRadius: 30,
-            marginTop: 30,
-          }}>
-          <Modal
-            transparent={true}
-            isVisible={isModalVisible}
-            onBackdropPress={() => setModalVisible(false)}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+  if (updated) {
+    return (
+      <SafeAreaView style={{flex: 1}}>
+        <View style={styles.container}>
+          <ScrollView
+            style={{
+              flex: 1,
+              backgroundColor: '#FFFFFF',
+              borderRadius: 30,
+              marginTop: 30,
+            }}>
+            <Modal
+              transparent={true}
+              isVisible={isModalVisible}
+              onBackdropPress={() => setModalVisible(false)}>
               <View
                 style={{
-                  width: 300,
-                  height: 300,
-                  backgroundColor: '#FFFFFF',
-                  opacity: 0.9,
+                  flex: 1,
+                  flexDirection: 'column',
                   justifyContent: 'center',
-                  borderRadius: 15,
+                  alignItems: 'center',
                 }}>
-                <Text
+                <View
                   style={{
-                    color: 'black',
-                    alignSelf: 'center',
-                    marginTop: 10,
-                    fontFamily: 'fantasy',
-                    fontSize: 17,
+                    width: 300,
+                    height: 300,
+                    backgroundColor: '#FFFFFF',
+                    opacity: 0.9,
+                    justifyContent: 'center',
+                    borderRadius: 15,
                   }}>
-                  Select Journal Type
-                </Text>
+                  <Text
+                    style={{
+                      color: 'black',
+                      alignSelf: 'center',
+                      marginTop: 10,
+                      fontFamily: 'fantasy',
+                      fontSize: 17,
+                    }}>
+                    Select Journal Type
+                  </Text>
 
-                <View
-                  style={{
-                    color: 'black',
-                    flexDirection: 'row',
-                    marginLeft: 70,
-                    marginTop: 40,
-                  }}>
-                  <RadioButton
-                    value="Income"
-                    status={checked === 'Income' ? 'checked' : 'unchecked'}
-                    onPress={() => setChecked('Income')}
-                    color="black"
-                  />
-                  <Text style={{color: 'black', marginTop: 3}}>Income</Text>
-                </View>
-                <View
-                  style={{
-                    color: 'black',
-                    flexDirection: 'row',
-                    marginLeft: 70,
-                  }}>
-                  <RadioButton
-                    value="Expense"
-                    status={checked === 'Expense' ? 'checked' : 'unchecked'}
-                    onPress={() => setChecked('Expense')}
-                    color="black"
-                  />
-                  <Text style={{color: 'black', marginTop: 3}}>Expense</Text>
-                </View>
-                <TextInput
+                  <View
+                    style={{
+                      color: 'black',
+                      flexDirection: 'row',
+                      marginLeft: 70,
+                      marginTop: 40,
+                    }}>
+                    <RadioButton
+                      value="Income"
+                      status={checked === 'Income' ? 'checked' : 'unchecked'}
+                      onPress={() => setChecked('Income')}
+                      color="black"
+                    />
+                    <Text style={{color: 'black', marginTop: 3}}>Income</Text>
+                  </View>
+                  <View
+                    style={{
+                      color: 'black',
+                      flexDirection: 'row',
+                      marginLeft: 70,
+                    }}>
+                    <RadioButton
+                      value="Expense"
+                      status={checked === 'Expense' ? 'checked' : 'unchecked'}
+                      onPress={() => setChecked('Expense')}
+                      color="black"
+                    />
+                    <Text style={{color: 'black', marginTop: 3}}>Expense</Text>
+                  </View>
+                  {/* <TextInput
                   style={{
                     alignSelf: 'center',
                     borderBottomWidth: 0.5,
@@ -203,73 +224,85 @@ export const TrackTransactions = () => {
                     setName(text);
                   }}>
                   Insert Title of the Journal
-                </TextInput>
+                </TextInput> */}
 
-                <TouchableOpacity
-                  style={styles.modalButtonContainer}
-                  onPress={async () => {
-                    // console.log(k);
-                    //insertAddress(text);
-                    //getSMSOnce(text);
-                    //   var b = filteredDataSource;
-                    //   b.splice(b.length, 0, text);
-                    //   setFilteredDataSource([...b]);
-                    console.log(checked);
-                    if (checked === 'Expense') {
-                      var title = name === '' ? name : 'AutopilotExpense';
-                      console.log(title);
+                  <TouchableOpacity
+                    style={styles.modalButtonContainer}
+                    onPress={async () => {
+                      // console.log(k);
+                      //insertAddress(text);
+                      //getSMSOnce(text);
+                      //   var b = filteredDataSource;
+                      //   b.splice(b.length, 0, text);
+                      //   setFilteredDataSource([...b]);
+                      console.log(checked);
+                      if (checked === 'Expense') {
+                        var title = name === '' ? name : 'AutopilotExpense';
+                        console.log(title);
 
-                      if (!(title in listOfJournals) && title !== '') {
-                        var newJournal = new ExpenseJournal(title, 0);
-                        newJournal.addTransaction(transactions[transactionId]);
-                        listOfJournals[title] = newJournal;
-                      } else {
-                        var newJournal = listOfJournals[title];
-                        newJournal.addTransaction(transactions[transactionId]);
+                        if (!(title in listOfJournals) && title !== '') {
+                          var newJournal = new ExpenseJournal(title, 0);
+                          newJournal.addTransaction(
+                            transactions[transactionId],
+                          );
+                          listOfJournals[title] = newJournal;
+                          console.log(listOfJournals);
+                        } else {
+                          var newJournal = listOfJournals[title];
+                          newJournal.addTransaction(
+                            transactions[transactionId],
+                          );
+                        }
+                      } else if (checked === 'Income') {
+                        var title = name === '' ? name : 'AutopilotIncome';
+
+                        if (!(title in listOfJournals) && title !== '') {
+                          console.log(transactions[transactionId].amount);
+                          var newJournal = new IncomeJournal(title, 0);
+                          newJournal.creator = 'Autopilot';
+                          newJournal.addTransaction(
+                            transactions[transactionId],
+                          );
+
+                          listOfJournals[title] = newJournal;
+                        } else {
+                          console.log(transactions[transactionId].amount);
+                          var newJournal = listOfJournals[title];
+                          newJournal.creator = 'Autopilot';
+                          newJournal.addTransaction(
+                            transactions[transactionId],
+                          );
+                        }
                       }
-                    } else if (checked === 'Income') {
-                      var title = name === '' ? name : 'AutopilotIncome';
-
-                      if (!(title in listOfJournals) && title !== '') {
-                        console.log(transactions[transactionId].amount);
-                        var newJournal = new IncomeJournal(title, 0);
-                        newJournal.creator = 'Autopilot';
-                        newJournal.addTransaction(transactions[transactionId]);
-
-                        listOfJournals[title] = newJournal;
-                      } else {
-                        console.log(transactions[transactionId].amount);
-                        var newJournal = listOfJournals[title];
-                        newJournal.creator = 'Autopilot';
-                        newJournal.addTransaction(transactions[transactionId]);
-                      }
-                    }
-                    delTransaction();
-                    console.log(listOfJournals);
-                    updateJournals();
-                    //arrayOfSaveStates[transactionId] = false;
-                    //setSave(arrayOfSaveStates);
-                    setModalVisible(false);
-                  }}>
-                  <Text
-                    style={{
-                      color: '#FFFFFF',
-                      fontSize: 12,
-                      fontFamily: 'fantasy',
-                      alignSelf: 'center',
+                      delTransaction();
+                      console.log(listOfJournals);
+                      updateJournals();
+                      //arrayOfSaveStates[transactionId] = false;
+                      //setSave(arrayOfSaveStates);
+                      setModalVisible(false);
                     }}>
-                    ADD
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={{
+                        color: '#FFFFFF',
+                        fontSize: 12,
+                        fontFamily: 'fantasy',
+                        alignSelf: 'center',
+                      }}>
+                      ADD
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          </Modal>
+            </Modal>
 
-          <View style>{render(transactions.length, transactions)}</View>
-        </ScrollView>
-      </View>
-    </SafeAreaView>
-  );
+            <View style>{render(transactions.length, transactions)}</View>
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 const styles = StyleSheet.create({

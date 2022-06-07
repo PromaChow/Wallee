@@ -87,12 +87,8 @@ const processJournals = temp => {
   // listOfJournals = [...journalList];
   console.log('\n\n\n', journalList);
   // Cloing into listOfJournals
-  for (const value of journalList) {
-    console.log(value);
-    Object.assign(listOfJournals[value.title], value);
-  }
 
-  console.log('\n\n\n' + listOfJournals[0].contribution);
+  //console.log('\n\n\n' + listOfJournals[0].contribution);
   return journalList;
 
   // var tempJournal = [];

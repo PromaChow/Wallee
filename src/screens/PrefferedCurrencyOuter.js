@@ -20,6 +20,7 @@ import {
   insertNotif,
   deleteNotif,
 } from '../NotificationService';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 export const PrefferedCurrencyOuter = ({navigation}) => {
   useEffect(() => {}, []);

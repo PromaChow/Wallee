@@ -14,7 +14,7 @@ var addrs = [
   '1234',
 ];
 export const fillAddress = async () => {
-  const fetchData = retrieve_data(getUserID());
+  const fetchData = await retrieve_data(getUserID());
   addrs = fetchData['ID'];
 };
 export const getAddress = () => {

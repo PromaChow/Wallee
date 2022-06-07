@@ -20,7 +20,7 @@ export class Journal {
 
   addTransaction(transaction) {
     this.listOfTransactions.push(transaction);
-    this.calculateContribution();
+    this.contribution = this.calculateContribution();
   }
 
   calculateContribution() {

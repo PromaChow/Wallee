@@ -19,7 +19,9 @@ import {
   insertNotif,
   deleteNotif,
 } from '../NotificationService';
-
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {ChangePhoneNumber} from './ChangePhoneNumber';
+import {OTPScreenChange} from './OTPScreenChange';
 export const ChangePhoneNumberOuter = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>

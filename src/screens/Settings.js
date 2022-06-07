@@ -18,6 +18,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import {Identifiers} from './Identifiers';
 import {ChangePhoneNumberOuter} from './ChangePhoneNumberOuter';
 import {ChangePhoneNumber} from './ChangePhoneNumber';
+import {OTPScreenChange} from './OTPScreenChange';
 import {PrefferedCurrencyOuter} from './PrefferedCurrencyOuter';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {PreferredCurrencytwo} from './PreferredCurrencytwo';
@@ -131,6 +132,7 @@ export default Settings = () => (
       name="PreferredCurrencyList"
       component={PreferredCurrencyList}
     />
+    <Stack.Screen name="OTPScreenChange" component={OTPScreenChange} />
   </Stack.Navigator>
 );
 

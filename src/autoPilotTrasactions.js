@@ -1,7 +1,7 @@
 import Transaction from './transaction';
 import {update_doc, retrieve_data, getUserID} from './FireStoreHelperFunctions';
 
-var transactions = [];
+export var transactions = [];
 
 var transaction = new Transaction(3000, 'Autopilot');
 transaction.setRemarks('Demo Transaction');
@@ -19,6 +19,7 @@ export const add_sms_transactions = (amount, balance, date, type) => {
     console.log(amount);
     console.log(parseFloat(amount));
     var transaction = new Transaction(parseFloat(amount), 'AutoPilot');
+    transaction.timeOfCreation = new Date();
     transaction.setRemarks(remarks);
     transaction.setType(type);
     transactions.splice(transactions.length, 0, transaction);
@@ -59,8 +60,9 @@ export const remove_transactions = index => {
   // save_transactions();
 };
 
-export const retrieveTransactions = data => {
+export const retrieveTransactions = async () => {
   //update_doc(getUserID(), 'transactions', transactions);
+  const data = await retrieve_data(getUserID());
   let temp = data['transactions'];
 
   if (temp !== '') processTransactions(temp);

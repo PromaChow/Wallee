@@ -10,9 +10,10 @@ import {setDates, filterJournals} from '../dummyJournal';
 import Statistics from './Statistics';
 import {fillAddress} from '../IdentifierService';
 import {retrieveTransactions} from '../autoPilotTrasactions';
-import {fillJournals} from '../userSpace';
+import {fillJournals, listOfJournals} from '../userSpace';
 import {useRefresh} from '../../App';
 import {retrievePreferredCurrency} from '../preferredCurrencyService';
+
 import {
   Card,
   CardTitle,
@@ -55,7 +56,7 @@ import {Box, Text} from 'native-base';
 const sendData = async () => {
   const data = await retrieve_data(getUserID());
   console.log('retrieved');
-  retrieveTransactions(data);
+  retrieveTransactions();
   retrievePreferredCurrency(data);
   fillAddress();
   fillJournals();
@@ -69,24 +70,24 @@ export const HomePage = ({navigation}) => {
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   useRefresh();
-  // useEffect(() => {
-  //  // sendData();
-  //   console.log('\n\nhome refreshed\n\n');
-  //   getSMS();
-  //   const appStateListener = AppState.addEventListener(
-  //     'change',
-  //     nextAppState => {
-  //       console.log('Next AppState is: ', nextAppState);
-  //       if (nextAppState === 'background') {
-  //         //   getSMS();
-  //       }
-  //       setAppState(nextAppState);
-  //     },
-  //   );
-  //   return () => {
-  //     appStateListener?.remove();
-  //   };
-  // });
+  useEffect(() => {
+    // sendData();
+    console.log('\n\nhome refreshed\n\n');
+    getSMS();
+    const appStateListener = AppState.addEventListener(
+      'change',
+      nextAppState => {
+        console.log('Next AppState is: ', nextAppState);
+        if (nextAppState === 'background') {
+          //   getSMS();
+        }
+        setAppState(nextAppState);
+      },
+    );
+    return () => {
+      appStateListener?.remove();
+    };
+  });
 
   React.useEffect(() => {
     getSMS();
@@ -98,6 +99,12 @@ export const HomePage = ({navigation}) => {
 
     return willFocusSubscription;
   }, []);
+
+  // let netBalance = 0;
+  // for (const journal of Object.values(listOfJournals)) {
+  //   if (journal instanceof IncomeJournal) netBalance += journal.contribution;
+  //   else netBalance -= journal.contribution;
+  // }
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);

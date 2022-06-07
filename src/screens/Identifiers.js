@@ -24,6 +24,7 @@ import {
   Swipeable,
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
+import {retrieve_data, getUserID} from '../FireStoreHelperFunctions';
 import {getSMSOnce} from '../SMSProcess';
 const Item = ({item, navigation}) => (
   <View style={styles.item}>
@@ -56,12 +57,14 @@ export const Identifiers = ({navigation}) => {
   const [filteredDataSource, setFilteredDataSource] = React.useState(
     getAddress(),
   );
+  const [masterDataSource, setMasterDataSource] = React.useState(getAddress());
+  const [isUpdated, setIsUpdated] = useState();
+
   useEffect(() => {
     setFilteredDataSource(getAddress());
   }, []);
   const [text, setText] = React.useState('');
 
-  const [masterDataSource, setMasterDataSource] = React.useState(getAddress());
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -131,6 +134,7 @@ export const Identifiers = ({navigation}) => {
     deleteIdentifier(index);
     var a = filteredDataSource;
     a.splice(index, 1);
+    console.log(a);
     setFilteredDataSource([...a]);
   };
 

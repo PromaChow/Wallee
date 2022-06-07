@@ -1,18 +1,11 @@
-import {Fab, Box, Icon, Modal, IconButton, Center} from 'native-base';
+import {Fab, Box, Icon, Modal, IconButton, Button} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import React, {useEffect, useState} from 'react';
 import {useToast} from 'native-base';
-import {getRates} from '../preferredCurrencyService';
+import {getRates, getPreferredCurrency} from '../preferredCurrencyService';
 
-const CurrencyMode = ({applyRate, setApplyRate}) => {
+const CurrencyMode = ({applyRate, currencyCode, setApplyRate}) => {
   const toast = useToast();
-
-  useEffect(() => {
-    const fetch = async () => {
-      console.log(await getRates(), 'aaaaaaaa');
-    };
-    fetch();
-  }, []);
 
   return (
     <Box
@@ -20,15 +13,14 @@ const CurrencyMode = ({applyRate, setApplyRate}) => {
       alignSelf="flex-end"
       position="absolute"
       alignItems="flex-end">
-      <IconButton
+      <Button
         marginRight="3px"
         marginTop="3px"
         size="lg"
         variant="ghost"
         bg={applyRate ? 'red.400' : 'transparent'}
-        _icon={{
-          as: Feather,
-          name: 'dollar-sign',
+        leftIcon={<Icon as={Feather} name="dollar-sign" color="white" />}
+        _text={{
           color: 'white',
         }}
         onPress={() => {
@@ -38,8 +30,9 @@ const CurrencyMode = ({applyRate, setApplyRate}) => {
               applyRate ? 'Disabled' : 'Enabled'
             }`,
           });
-        }}
-      />
+        }}>
+        {applyRate ? currencyCode : null}
+      </Button>
     </Box>
   );
 };

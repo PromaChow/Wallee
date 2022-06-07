@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import CreateJournalView from '../components/CreateJournalView';
 import {ScrollView, Fab, Box, Icon, IconButton, Center} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
@@ -18,8 +18,8 @@ import {getPreferredCurrency, getRates} from '../preferredCurrencyService';
 import {useIsFocused} from '@react-navigation/native';
 import {update_doc, getUserID} from '../FireStoreHelperFunctions';
 
-const rate = getRates(); // GET PROPER RATE
-console.log(getPreferredCurrency()); // get currency code
+// const rate = getRates(); // GET PROPER RATE
+// console.log(getPreferredCurrency(), 'aaaaaaaaaaaa'); // get currency code
 const Stack = createNativeStackNavigator();
 
 const Catalogue = ({navigation}) => {
@@ -28,6 +28,9 @@ const Catalogue = ({navigation}) => {
   const [refresh, setRefresh] = useState(false);
   const isFocused = useIsFocused();
 
+  let rate = getRates();
+  let currencyCode = getPreferredCurrency().currency.code;
+
   useEffect(() => {
     setRefresh(!refresh);
     update_doc(getUserID(), 'journals', listOfJournals);
@@ -35,7 +38,11 @@ const Catalogue = ({navigation}) => {
 
   return (
     <>
-      <CurrencyMode applyRate={applyRate} setApplyRate={setApplyRate} />
+      <CurrencyMode
+        currencyCode={currencyCode}
+        applyRate={applyRate}
+        setApplyRate={setApplyRate}
+      />
       <Box bg="light.200" flex={1}>
         <NavBar title={'Catalogue'} navigation={navigation} />
         <ScrollView flex="1">

@@ -32,14 +32,22 @@ import {
 import {useRefresh} from '../../App';
 import NavBar from '../components/NavBar';
 import {Box, Text} from 'native-base';
+import listOfJournals from '../userSpace';
+import {IncomeJournal} from '../journal';
 
 export const HomePage = ({navigation}) => {
-  const [dateMin, setDateMin] = useState(new Date('June 4, 2022 03:24:00'));
+  const [dateMin, setDateMin] = useState(new Date('June 6, 2022 03:24:00'));
   const [openMin, setOpenMin] = useState(false);
   const [dateMax, setDateMax] = useState(new Date('June 9, 2022 03:24:00'));
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   useRefresh();
+
+  let netBalance = 0;
+  for (const journal of Object.values(listOfJournals)) {
+    if (journal instanceof IncomeJournal) netBalance += journal.contribution;
+    else netBalance -= journal.contribution;
+  }
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -48,6 +56,18 @@ export const HomePage = ({navigation}) => {
   return (
     <Box flex="1">
       <NavBar title={'Summary'} navigation={navigation} />
+      <Box
+        marginY={'-2'}
+        padding="2"
+        alignItems={'center'}
+        bg="red.400"
+        _text={{
+          fontWeight: 'semibold',
+          fontSize: 'lg',
+          color: 'light.200',
+        }}>
+        {`Net Balance: ${netBalance}`}
+      </Box>
       <Modal
         transparent={true}
         isVisible={isModalVisible}

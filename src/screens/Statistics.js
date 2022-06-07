@@ -72,7 +72,7 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
       data.push({
         name: journal.title,
         population: journal.getContributionInRange(dateMin, dateMax),
-        color: colors[colorIndex++],
+        color: colors[colorIndex++ % colors.length],
         legendFontColor: '#7F7F7F',
         legendFontSize: 15,
       });

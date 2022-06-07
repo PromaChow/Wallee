@@ -66,9 +66,9 @@ export const getRandomColor = () =>
   Math.floor(Math.random() * colorNames.length);
 
 export const journalKeyMemo = {};
-listOfJournals['Food'] = new ExpenseJournal('Food', 0);
+listOfJournals['Food'] = new ExpenseJournal('Food');
 journalKeyMemo['Food'] = getRandomColor();
-listOfJournals['Clothing'] = new ExpenseJournal('Clothing', 0);
+listOfJournals['Clothing'] = new ExpenseJournal('Clothing');
 journalKeyMemo['Clothing'] = getRandomColor();
 
 // Custom Refresh Hook
@@ -83,10 +83,13 @@ export const useRefresh = () => {
 const Drawer = createDrawerNavigator();
 
 const App = () => {
-  LogBox.ignoreLogs(['Non-Serializable...']);
+  // LogBox.ignoreLogs([
+  //   'Non-Serializable values were found in the navigation state. Check:',
+  // ]);
+
+  // LogBox.ignoreAllLogs();
 
   const [signOut, setSignOut] = useState(false);
-  console.log('Status', signOut);
 
   useEffect(() => {
     return notifee.onForegroundEvent(({type, detail}) => {
@@ -105,7 +108,7 @@ const App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="Catalogue"
+          initialRouteName="Home"
           screenOptions={{
             headerShown: false,
           }}

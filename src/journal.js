@@ -71,8 +71,8 @@ export class Journal {
 export class IncomeJournal extends Journal {
   type;
 
-  constructor(title, creator = 'User') {
-    super(title, creator);
+  constructor(title) {
+    super(title);
     this.type = 'income';
   }
 
@@ -84,8 +84,8 @@ export class IncomeJournal extends Journal {
 export class ExpenseJournal extends Journal {
   type;
 
-  constructor(title, creator = 'User') {
-    super(title, creator);
+  constructor(title) {
+    super(title);
     this.type = 'expense';
   }
 

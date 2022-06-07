@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
@@ -10,7 +10,7 @@ import {setDates, filterJournals} from '../dummyJournal';
 import Statistics from './Statistics';
 import {fillAddress} from '../IdentifierService';
 import {retrieveTransactions} from '../autoPilotTrasactions';
-import {fillJournals, listOfJournals} from '../userSpace';
+import listOfJournals, {fillJournals} from '../userSpace';
 import {useRefresh} from '../../App';
 import {retrievePreferredCurrency} from '../preferredCurrencyService';
 
@@ -52,6 +52,7 @@ import {
 
 import NavBar from '../components/NavBar';
 import {Box, Text} from 'native-base';
+import {IncomeJournal} from '../journal';
 
 const sendData = async () => {
   const data = await retrieve_data(getUserID());
@@ -69,6 +70,8 @@ export const HomePage = ({navigation}) => {
   const [dateMax, setDateMax] = useState(new Date('June 9, 2022 03:24:00'));
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [netBalance, setNetBalance] = useState(0);
   useRefresh();
   // useEffect(() => {
   //   // sendData();
@@ -100,11 +103,23 @@ export const HomePage = ({navigation}) => {
     return willFocusSubscription;
   }, []);
 
-  // let netBalance = 0;
-  // for (const journal of Object.values(listOfJournals)) {
-  //   if (journal instanceof IncomeJournal) netBalance += journal.contribution;
-  //   else netBalance -= journal.contribution;
-  // }
+  useEffect(() => {
+    getPrimaryAmount();
+  }, []);
+
+  const getPrimaryAmount = async () => {
+    const data = await retrieve_data(getUserID());
+    const amount = parseFloat(data['primaryAmount']);
+    setIsLoading(false);
+    setNetBalance(amount);
+  };
+
+  const calculateNetBalance = useCallback(() => {
+    for (const journal of Object.values(listOfJournals)) {
+      if (journal instanceof IncomeJournal) netBalance += journal.contribution;
+      else netBalance -= journal.contribution;
+    }
+  }, [netBalance]);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -113,6 +128,24 @@ export const HomePage = ({navigation}) => {
   return (
     <Box flex="1">
       <NavBar title={'Summary'} navigation={navigation} />
+
+      {isLoading ? (
+        <Text>Loadin Primary Amount</Text>
+      ) : (
+        <Box
+          marginY={'-2'}
+          padding="2"
+          alignItems={'center'}
+          bg="red.400"
+          _text={{
+            fontWeight: 'semibold',
+            fontSize: 'lg',
+            color: 'light.200',
+          }}>
+          {netBalance}
+        </Box>
+      )}
+
       <Modal
         transparent={true}
         isVisible={isModalVisible}

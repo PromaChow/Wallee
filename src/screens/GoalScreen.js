@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import CreateJournalView from '../components/CreateJournalView';
 import {ScrollView, Fab, Box, Icon, IconButton, Center} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
@@ -9,11 +9,17 @@ import GoalListView from '../components/GoalListView';
 import {Goal} from '../budget';
 import {listOfGoals} from '../userSpace';
 import CreateGoal from '../components/CreateGoal';
-import {useRefresh} from '../../App';
-
+import {useIsFocused} from '@react-navigation/native';
+import {update_doc, getUserID} from '../FireStoreHelperFunctions';
 const GoalScreen = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
-  useRefresh();
+  const [refresh, setRefresh] = useState(false);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    setRefresh(!refresh);
+    update_doc(getUserID(), 'goals', listOfGoals);
+  }, [isFocused]);
 
   return (
     <>

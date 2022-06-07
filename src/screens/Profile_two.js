@@ -161,6 +161,8 @@ export const Profile_two = ({navigation, route}) => {
                   update_doc(uid, 'preferredCurrency', '');
                   update_doc(uid, 'transactions', '');
                   update_doc(uid, 'journals', '');
+                  update_doc(uid, 'budgets', '');
+                  update_doc(uid, 'goals', '');
                   setSignOut(render => !render);
                 }}>
                 <Text
@@ -266,7 +268,8 @@ export const Profile_two = ({navigation, route}) => {
             style={styles.currencyTextInput}
             onChangeText={text => {
               setAmount(text);
-            }}></TextInput>
+            }}
+            keyboardType="number-pad"></TextInput>
         </View>
       </View>
 
@@ -424,7 +427,7 @@ const styles = StyleSheet.create({
     width: 300,
     fontSize: 18,
     paddingHorizontal: 10,
-    color: '#115e59',
+    color: '#031716',
     fontFamily: 'fantasy',
     marginRight: 30,
     flex: 0.75,

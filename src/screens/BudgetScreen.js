@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import CreateJournalView from '../components/CreateJournalView';
 import {ScrollView, Fab, Box, Icon, IconButton, Center} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
@@ -10,10 +10,18 @@ import {Budget} from '../budget';
 import {listOfBudgets} from '../userSpace';
 import CreateBudget from '../components/CreateBudget';
 import {useRefresh} from '../../App';
+import {useIsFocused} from '@react-navigation/native';
+import {update_doc, getUserID} from '../FireStoreHelperFunctions';
 
 const BudgetScreen = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
-  useRefresh();
+  const [refresh, setRefresh] = useState(false);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    setRefresh(!refresh);
+    update_doc(getUserID(), 'budgets', listOfBudgets);
+  }, [isFocused]);
 
   return (
     <>

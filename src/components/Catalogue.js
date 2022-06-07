@@ -18,8 +18,6 @@ import {getPreferredCurrency, getRates} from '../preferredCurrencyService';
 import {useIsFocused} from '@react-navigation/native';
 import {update_doc, getUserID} from '../FireStoreHelperFunctions';
 
-// const rate = getRates(); // GET PROPER RATE
-// console.log(getPreferredCurrency(), 'aaaaaaaaaaaa'); // get currency code
 const Stack = createNativeStackNavigator();
 
 const Catalogue = ({navigation}) => {
@@ -51,7 +49,7 @@ const Catalogue = ({navigation}) => {
               return (
                 <JournalListView
                   applyRate={applyRate}
-                  rate={rate} // PASS PROPER RATE HERE !
+                  rate={rate}
                   key={key}
                   journal={listOfJournals[key]}
                   colorIndex={journalKeyMemo[key]}

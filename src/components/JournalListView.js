@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
+import listOfJournals from '../userSpace';
 import {bgColors} from '../../App';
 import {
   Pressable,
@@ -73,7 +74,7 @@ const JournalListView = ({
               marginX="35px"
               flex="3"
               justifyContent={'center'}>
-              {journal.contribution * (applyRate ? rate : 1)}
+              {Math.trunc(journal.contribution * (applyRate ? rate : 1))}
 
               <Divider bg="light.300" thickness={'2'} />
 

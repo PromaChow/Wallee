@@ -27,11 +27,8 @@ import {
 } from 'react-native';
 
 export const OTP = ({route, navigation}) => {
-<<<<<<< Updated upstream
-=======
   const {setSignOut} = route.params;
 
->>>>>>> Stashed changes
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -45,11 +42,7 @@ export const OTP = ({route, navigation}) => {
             if (!exists) {
               add_User(user.uid);
               navigation.navigate('Profile');
-<<<<<<< Updated upstream
-            } else navigation.navigate('Feed');
-=======
-            } else setSignOut()
->>>>>>> Stashed changes
+            } else setSignOut();
           });
       }
     });

@@ -105,7 +105,7 @@ const App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="BudgetScreen"
+          initialRouteName="Catalogue"
           screenOptions={{
             headerShown: false,
           }}

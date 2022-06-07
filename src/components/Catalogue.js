@@ -47,7 +47,7 @@ const Catalogue = ({navigation}) => {
         <NavBar title={'Catalogue'} navigation={navigation} />
         <ScrollView flex="1">
           <Box alignItems="center" bg="light.200">
-            {Object.keys(journalKeyMemo).map(key => {
+            {Object.keys(listOfJournals).map(key => {
               return (
                 <JournalListView
                   showModal={showDeleteModal}
@@ -56,7 +56,7 @@ const Catalogue = ({navigation}) => {
                   rate={rate}
                   key={key}
                   journal={listOfJournals[key]}
-                  colorIndex={journalKeyMemo[key]}
+                  colorIndex={0}
                   navigation={navigation}
                 />
               );

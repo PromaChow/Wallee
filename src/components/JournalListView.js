@@ -88,7 +88,7 @@ const JournalListView = ({
                 marginX="35px"
                 flex="3"
                 justifyContent={'center'}>
-                {journal.contribution * (applyRate ? rate : 1)}
+                {(journal.contribution * (applyRate ? rate : 1)).toFixed()}
 
                 <Divider bg="light.300" thickness={'2'} />
 

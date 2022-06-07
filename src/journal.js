@@ -19,7 +19,7 @@ export class Journal {
 
   addTransaction(transaction) {
     this.listOfTransactions.push(transaction);
-    this.calculateContribution();
+    this.contribution = this.calculateContribution();
   }
 
   calculateContribution() {
@@ -60,7 +60,6 @@ export class Journal {
         timeOfCreation.getTime() <= dateMax.getTime()
       ) {
         contrib += amount;
-        console.log('Here');
       }
     }
 

@@ -12,7 +12,7 @@ const DeleteModal = ({showModal, setShowModal, journal}) => {
           _dark: {
             bg: 'coolGray.800',
           },
-          bg: 'warmGray.50',
+          bg: 'warmGray.400',
         }}>
         <Modal.Content maxWidth="350" maxH="212">
           <Modal.CloseButton />

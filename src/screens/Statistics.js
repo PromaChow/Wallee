@@ -40,7 +40,6 @@ const Statistics = ({navigation, dateMin, dateMax}) => {
     '#cd3132',
     '#007add',
     '#11A8CD',
-    '#2472C8',
     '#0DBC79',
     '#E5E510',
     '#555753',

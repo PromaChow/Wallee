@@ -112,6 +112,7 @@ export const HomePage = ({navigation}) => {
             <View style={{flexDirection: 'row'}}>
               <DatePicker
                 modal
+                theme="light"
                 open={openMax}
                 date={dateMax}
                 mode="datetime"

@@ -1,9 +1,8 @@
 import React from 'react';
 import {IconButton} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
-import {useNavigation} from '@react-navigation/native';
 
-const MenuButton = () => {
+const MenuButton = ({navigation}) => {
   const navigation = useNavigation();
 
   return (
@@ -24,4 +23,4 @@ const MenuButton = () => {
   );
 };
 
-export default React.memo(MenuButton);
+export default MenuButton;

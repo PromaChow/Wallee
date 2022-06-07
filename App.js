@@ -87,7 +87,7 @@ const App = () => {
   //   'Non-Serializable values were found in the navigation state. Check:',
   // ]);
 
-  // LogBox.ignoreAllLogs();
+  LogBox.ignoreAllLogs();
 
   const [signOut, setSignOut] = useState(false);
 

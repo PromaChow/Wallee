@@ -76,9 +76,8 @@ export const HomePage = ({navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [netBalance, setNetBalance] = useState(0);
-  const [shouldUpload, setShouldUpload] = useState(false);
   const isFocused = useIsFocused();
-  // useRefresh();
+  useRefresh();
   // useEffect(() => {
   //   // sendData();
   //   console.log('\n\nhome refreshed\n\n');
@@ -109,31 +108,44 @@ export const HomePage = ({navigation}) => {
     return willFocusSubscription;
   }, []);
 
+  // useEffect(() => {
+  //   getPrimaryAmount();
+  // }, []);
+
+  // const getPrimaryAmount = async () => {
+  //   const data = await retrieve_data(getUserID());
+  //   const amount = parseFloat(data['primaryAmount']);
+  //   setIsLoading(false);
+  //   setNetBalance(amount);
+  // };
+
   useEffect(() => {
-    getPrimaryAmount();
-  }, []);
+    const upload = async () => {
+      const data = await retrieve_data(getUserID());
+      const amount = parseFloat(data['primaryAmount']);
+      const cache = parseFloat(data['serverCache']);
 
-  const getPrimaryAmount = async () => {
-    const data = await retrieve_data(getUserID());
-    const amount = parseFloat(data['primaryAmount']);
-    setIsLoading(false);
-    setShouldUpload(true);
-    setNetBalance(amount);
-  };
+      console.log('Cache is', cache);
 
-  useEffect(() => {
-    let netChange = 0;
+      let netChange = 0;
 
-    for (const journal of Object.values(listOfJournals)) {
-      if (journal instanceof IncomeJournal) netChange += journal.contribution;
-      else netChange -= journal.contribution;
-    }
+      for (const journal of Object.values(listOfJournals)) {
+        if (journal instanceof IncomeJournal) netChange += journal.contribution;
+        else netChange -= journal.contribution;
+      }
 
-    if (shouldUpload) {
-      update_doc(getUserID(), 'primaryAmount', netBalance + netChange);
-      setNetBalance(netBalance + netChange);
-    }
-  }, [isFocused]);
+      console.log('NetChange is', netChange);
+
+      const newAmount = amount + netChange - cache;
+
+      update_doc(getUserID(), 'serverCache', netChange);
+      update_doc(getUserID(), 'primaryAmount', newAmount);
+
+      setIsLoading(false);
+      setNetBalance(newAmount);
+    };
+    upload();
+  });
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);

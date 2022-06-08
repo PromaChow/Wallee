@@ -155,7 +155,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  // LogBox.ignoreAllLogs();
+  LogBox.ignoreAllLogs();
   const [signOut, setSignOut] = useState(false);
   const user = firebase.auth().currentUser;
 

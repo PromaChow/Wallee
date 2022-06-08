@@ -251,10 +251,7 @@ const UserProfile = ({navigation}) => {
             }}>
             {email}
           </TextInput>
-          <Text style={styles.text}>Total Amount</Text>
-          <TextInput style={styles.textInputStyleDisabled} editable={false}>
-            {curr + ' ' + amount}
-          </TextInput>
+
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={async () => {
@@ -395,7 +392,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     borderColor: '#115e59',
     alignSelf: 'center',
-    marginVertical: 30,
+    marginVertical: 70,
     marginRight: 30,
   },
 

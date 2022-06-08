@@ -75,7 +75,7 @@ const SideBar = ({state, navigation, setSignOut}) => {
     <Box flex="1" bg="white">
       <Box
         padding="10px"
-        marginBottom="50px"
+        marginBottom="35px"
         bg="#FFFFFF"
         alignItems="flex-start"
         shadow="2"

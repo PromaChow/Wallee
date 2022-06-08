@@ -282,6 +282,7 @@ const Calculator = ({navigation, route}) => {
                 height="auto"
                 onPress={() => {
                   setOpen(true);
+                  setDate(new Date());
                 }}
                 _text={{
                   fontSize: 'lg',
@@ -326,10 +327,14 @@ const Calculator = ({navigation, route}) => {
           width="92%"
           shadow="7"
           marginBottom="5px">
-          Created By:&nbsp;{transaction.creator}
-          Last Edit On:
-          {transaction.getLastAccessTimeSliced(0, 9) +
-            transaction.getLastAccessDateSliced()}
+          <Text fontSize="lg">
+            Created By&nbsp;{' '}
+            <Text fontWeight="bold">{transaction.creator}&nbsp;</Text>
+            on {transaction.getCreationDateSliced()}
+          </Text>
+          <Text fontSize="lg">
+            Last Edit on {transaction.getLastAccessDateSliced()}
+          </Text>
         </Center>
       </Center>
       <Box flex="1" bg="light.200">

@@ -5,6 +5,7 @@ import {
   FormControl,
   Button,
   Radio,
+  useToast,
   Box,
   Center,
 } from 'native-base';
@@ -15,6 +16,7 @@ import {journalKeyMemo, getRandomColor} from '../../App';
 const CreateJournalView = ({showModal, setShowModal}) => {
   const [journalName, setJournalName] = useState('');
   const [journalType, setJournalType] = useState('income');
+  const toast = useToast();
 
   return (
     <Center>
@@ -68,6 +70,14 @@ const CreateJournalView = ({showModal, setShowModal}) => {
                         : new ExpenseJournal(journalName, 0);
 
                     journalKeyMemo[key] = getRandomColor();
+                  } else if (key === '') {
+                    toast.show({
+                      description: 'Journal name can not be empty',
+                    });
+                  } else {
+                    toast.show({
+                      description: 'Duplicate name is not allowed',
+                    });
                   }
 
                   setShowModal(false);

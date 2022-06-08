@@ -35,14 +35,17 @@ const CreateBudget = ({showModal, setShowModal}) => {
               />
             </FormControl>
             <FormControl mt="3">
-              <FormControl.Label>Chose Target Journal</FormControl.Label>
+              <FormControl.Label>
+                Chose Target Expense Journal
+              </FormControl.Label>
               <Radio.Group
                 value={journalName}
                 onChange={nextValue => {
                   setJournalName(nextValue);
                 }}>
-                {Object.keys(journalKeyMemo).map(key =>
-                  key in listOfBudgets ? null : (
+                {Object.keys(listOfJournals).map(key =>
+                  key in listOfBudgets ||
+                  listOfJournals[key] instanceof IncomeJournal ? null : (
                     <Radio key={key} value={key} my="1">
                       {key}
                     </Radio>

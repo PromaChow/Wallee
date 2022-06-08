@@ -9,12 +9,15 @@ import {
   Center,
   Icon,
   Stack,
+  IconButton,
 } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {windowHeight, windowWidth} from '../../App';
 import Transaction from '../transaction';
 import BackButton from './BackButton';
 import {ListOfTransactions} from './JournalView';
+import DatePicker from 'react-native-date-picker';
+import {useToast} from 'native-base';
 
 const NumButton = ({renderSymbol, appendSymbol}) => {
   return (
@@ -147,7 +150,7 @@ const KeyPad = React.memo(({setExpression, evaluationCallback}) => (
 ));
 
 const Calculator = ({navigation, route}) => {
-  const {transaction} = route.params;
+  const {transaction, journal} = route.params;
 
   const evaluationCallback = useCallback(expression => {
     if (expression === '') return '0';
@@ -164,12 +167,9 @@ const Calculator = ({navigation, route}) => {
 
   const [currentExpression, setExpression] = useState(transaction.amount);
   const [keypadOpen, setKeyPadOpen] = useState(false);
-
-  // useEffect(() => {
-  //   return () => {
-  //     transaction.amount = currentExpression;
-  //   };
-  // }, []);
+  const [date, setDate] = useState(new Date(0));
+  const [open, setOpen] = useState(false);
+  const toast = useToast();
 
   return (
     <>
@@ -186,6 +186,7 @@ const Calculator = ({navigation, route}) => {
             alignItems="center"
             justifyContent="center"
             flex="2"
+            mr="-12"
             _text={{
               py: '1',
               pr: '5',
@@ -195,6 +196,29 @@ const Calculator = ({navigation, route}) => {
             }}>
             {keypadOpen ? 'Editing Entry' : 'Entry Details'}
           </Box>
+          <IconButton
+            _icon={{
+              as: Feather,
+              name: 'save',
+              variant: 'solid',
+              color: 'white',
+              size: 'lg',
+            }}
+            onPress={() => {
+              transaction.amount = parseInt(currentExpression);
+              if (journal !== undefined) {
+                if (date.getTime() === 0)
+                  transaction.setCreationTime(new Date());
+                journal.addTransaction(transaction);
+              }
+
+              toast.show({
+                description: 'Entry Saved',
+              });
+
+              navigation.goBack();
+            }}
+          />
         </Box>
         <Center
           padding="20px"
@@ -223,30 +247,71 @@ const Calculator = ({navigation, route}) => {
           </Box>
           <Divider thickness="2px" marginTop="5px" />
           <Center padding="5px" marginTop="5px" marginBottom="15px">
-            <Button
-              variant="unstyled"
-              height="auto"
-              onPress={() => {
-                transaction.lastAccessTime = new Date();
-                setExpression(evaluationCallback(currentExpression));
-                setKeyPadOpen(!keypadOpen);
+            <Box flexDirection={'row'} justifyContent="space-between">
+              <Button
+                marginX="1"
+                variant="outline"
+                height="auto"
+                onPress={() => {
+                  transaction.lastAccessTime = new Date();
+                  setExpression(evaluationCallback(currentExpression));
+                  setKeyPadOpen(!keypadOpen);
+                }}
+                _text={{
+                  fontSize: 'lg',
+                  color: 'blue.600',
+                }}
+                leftIcon={
+                  keypadOpen ? (
+                    <Icon
+                      size="md"
+                      as={Feather}
+                      name="check"
+                      color="blue.600"
+                    />
+                  ) : (
+                    <Icon size="md" as={Feather} name="edit" color="blue.600" />
+                  )
+                }>
+                {keypadOpen ? 'DONE EDITING' : 'EDIT ENTRY'}
+              </Button>
 
-                // Delegate this to "Save Button"
-                // transaction.amount = parseInt(currentExpression);
-              }}
-              _text={{
-                fontSize: 'lg',
-                color: 'blue.600',
-              }}
-              leftIcon={
-                keypadOpen ? (
-                  <Icon size="md" as={Feather} name="check" color="blue.600" />
-                ) : (
-                  <Icon size="md" as={Feather} name="edit" color="blue.600" />
-                )
-              }>
-              {keypadOpen ? 'DONE EDITING' : 'EDIT ENTRY'}
-            </Button>
+              <Button
+                marginX="1"
+                variant="outline"
+                height="auto"
+                onPress={() => {
+                  setOpen(true);
+                  setDate(new Date());
+                }}
+                _text={{
+                  fontSize: 'lg',
+                  color: 'blue.600',
+                }}
+                leftIcon={
+                  <Icon
+                    size="md"
+                    as={Feather}
+                    name="calendar"
+                    color="blue.600"
+                  />
+                }>
+                Select Time
+              </Button>
+              <DatePicker
+                modal
+                open={open}
+                date={date}
+                onConfirm={date => {
+                  setOpen(false);
+                  setDate(date);
+                  transaction.setCreationTime(date);
+                }}
+                onCancel={() => {
+                  setOpen(false);
+                }}
+              />
+            </Box>
           </Center>
         </Center>
 
@@ -262,10 +327,14 @@ const Calculator = ({navigation, route}) => {
           width="92%"
           shadow="7"
           marginBottom="5px">
-          Created By:&nbsp;{transaction.creator}
-          On
-          {transaction.getCreationTimeSliced(0, 9) +
-            transaction.getCreationDateSliced()}
+          <Text fontSize="lg">
+            Created By&nbsp;{' '}
+            <Text fontWeight="bold">{transaction.creator}&nbsp;</Text>
+            on {transaction.getCreationDateSliced()}
+          </Text>
+          <Text fontSize="lg">
+            Last Edit on {transaction.getLastAccessDateSliced()}
+          </Text>
         </Center>
       </Center>
       <Box flex="1" bg="light.200">

@@ -13,6 +13,7 @@ import listOfJournals, {listOfBudgets} from '../userSpace';
 import {journalKeyMemo, getRandomColor} from '../../App';
 import {Budget} from '../budget';
 import Transaction from '../transaction';
+import {useEffect} from 'react';
 
 const SelectJournals = ({showModal, setShowModal}) => {
   const [journalName, setJournalName] = useState(
@@ -67,7 +68,7 @@ const SelectJournals = ({showModal, setShowModal}) => {
 
                   setShowModal(false);
                 }}>
-                Send
+                Insert to Journal
               </Button>
             </Button.Group>
           </Modal.Footer>

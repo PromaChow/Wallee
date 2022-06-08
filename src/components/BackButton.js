@@ -7,12 +7,15 @@ const BackButton = ({navigation}) => (
     position="absolute"
     marginTop="5px"
     marginX="8px"
-    size="md"
-    variant="ghost"
+    size="lg"
+    variant="outline"
     _icon={{
       as: Feather,
       name: 'chevrons-left',
       color: 'white',
+    }}
+    _pressed={{
+      bg: 'teal.800',
     }}
     onPress={() => navigation.goBack()}
   />

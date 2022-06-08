@@ -1,7 +1,6 @@
 export default class Transaction {
   amount;
   creator;
-  paymentMethod;
   timeOfCreation;
   dateOfCreation;
   lastAccessTime;
@@ -27,5 +26,9 @@ export default class Transaction {
 
   getLastAccessDateSliced(startIndex, endIndex) {
     return this.lastAccessTime.toDateString().slice(startIndex, endIndex);
+  }
+
+  setCreationTime(date) {
+    this.timeOfCreation = date;
   }
 }

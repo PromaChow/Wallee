@@ -19,13 +19,16 @@ export class Journal {
 
   addTransaction(transaction) {
     this.listOfTransactions.push(transaction);
-    this.calculateContribution();
+    this.contribution = this.calculateContribution();
   }
 
   calculateContribution() {
-    for (const transaction of this.listOfTransactions) {
-      this.contribution += transaction.amount;
-    }
+    this.contribution = this.listOfTransactions.reduce(
+      (partialSum, transaction) => partialSum + transaction.amount,
+      0,
+    );
+
+    return this.contribution;
   }
 
   getCreationTimeSliced(startIndex, endIndex) {
@@ -43,11 +46,33 @@ export class Journal {
   getLastAccessDateSliced(startIndex, endIndex) {
     return this.lastAccessTime.toDateString().slice(startIndex, endIndex);
   }
+
+  setCreationTime(date) {
+    this.timeOfCreation = date;
+  }
+
+  getContributionInRange(dateMin, dateMax) {
+    let contrib = 0;
+
+    for (const {amount, timeOfCreation} of this.listOfTransactions) {
+      if (
+        timeOfCreation.getTime() >= dateMin.getTime() &&
+        timeOfCreation.getTime() <= dateMax.getTime()
+      ) {
+        contrib += amount;
+      }
+    }
+
+    return contrib;
+  }
 }
 
 export class IncomeJournal extends Journal {
-  constructor(title, creator = 'User') {
-    super(title, creator);
+  type;
+
+  constructor(title) {
+    super(title);
+    this.type = 'income';
   }
 
   contribute(netBalance) {
@@ -56,8 +81,11 @@ export class IncomeJournal extends Journal {
 }
 
 export class ExpenseJournal extends Journal {
-  constructor(title, creator = 'User') {
-    super(title, creator);
+  type;
+
+  constructor(title) {
+    super(title);
+    this.type = 'expense';
   }
 
   contribute(netBalance) {

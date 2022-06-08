@@ -1,6 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import CreateJournalView from '../components/CreateJournalView';
-import {Menu, Box, Icon, IconButton, Center} from 'native-base';
+import {
+  ScrollView,
+  Fab,
+  Input,
+  Box,
+  Button,
+  Icon,
+  IconButton,
+  Center,
+  FormControl,
+} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {journalKeyMemo} from '../../App';
 import NavBar from './NavBar';
@@ -14,9 +24,43 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import JournalView from './JournalView';
 import CurrencyMode from './CurrencyMode';
 import {useRefresh} from '../../App';
+import {getPreferredCurrency, getRates} from '../preferredCurrencyService';
+import {useIsFocused} from '@react-navigation/native';
+import {update_doc, getUserID} from '../FireStoreHelperFunctions';
 
-const Filter = ({rerender}) => {
-  return <Menu.Group title="Filter"></Menu.Group>;
+const Filter = ({showForm, setShowForm, setFilter}) => {
+  return (
+    <Box
+      zIndex={1}
+      alignSelf="flex-end"
+      flexDirection={'row'}
+      position="absolute"
+      alignItems="flex-end">
+      {showForm && (
+        <FormControl maxWidth={'60%'} bg="white">
+          <Input
+            type="text"
+            placeholder="search journal"
+            onChangeText={text => setFilter(text)}
+          />
+        </FormControl>
+      )}
+      <Button
+        marginRight="45px"
+        marginTop="3px"
+        size="lg"
+        variant="ghost"
+        bg="transparent"
+        leftIcon={<Icon as={Feather} name="search" color="white" />}
+        _text={{
+          color: 'white',
+        }}
+        onPress={() => {
+          setShowForm(!showForm);
+          setFilter('');
+        }}></Button>
+    </Box>
+  );
 };
 
 export default Filter;

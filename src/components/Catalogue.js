@@ -17,6 +17,7 @@ import {useRefresh} from '../../App';
 import {getPreferredCurrency, getRates} from '../preferredCurrencyService';
 import {useIsFocused} from '@react-navigation/native';
 import {update_doc, getUserID} from '../FireStoreHelperFunctions';
+import Filter from './Filter';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,8 +37,23 @@ const Catalogue = ({navigation}) => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const [showForm, setShowForm] = useState(false);
+  const [filter, setFilter] = useState('');
+
+  const filterCallBack = useCallback(
+    key => {
+      return filter === '' ? true : key.includes(filter);
+    },
+    [filter],
+  );
+
   return (
     <>
+      <Filter
+        setFilter={setFilter}
+        showForm={showForm}
+        setShowForm={setShowForm}
+      />
       <CurrencyMode
         currencyCode={currencyCode}
         applyRate={applyRate}
@@ -47,20 +63,22 @@ const Catalogue = ({navigation}) => {
         <NavBar title={'Catalogue'} navigation={navigation} />
         <ScrollView flex="1">
           <Box alignItems="center" bg="light.200">
-            {Object.keys(listOfJournals).map(key => {
-              return (
-                <JournalListView
-                  showModal={showDeleteModal}
-                  setShowModal={setShowDeleteModal}
-                  applyRate={applyRate}
-                  rate={rate}
-                  key={key}
-                  journal={listOfJournals[key]}
-                  colorIndex={0}
-                  navigation={navigation}
-                />
-              );
-            })}
+            {Object.keys(listOfJournals)
+              .filter(filterCallBack)
+              .map(key => {
+                return (
+                  <JournalListView
+                    showModal={showDeleteModal}
+                    setShowModal={setShowDeleteModal}
+                    applyRate={applyRate}
+                    rate={rate}
+                    key={key}
+                    journal={listOfJournals[key]}
+                    colorIndex={0}
+                    navigation={navigation}
+                  />
+                );
+              })}
           </Box>
         </ScrollView>
         <Fab

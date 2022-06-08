@@ -170,7 +170,7 @@ export const getSMS = async () => {
 const post_sms = async sms => {
   const fetchData = new Promise((resolve, reject) => {
     //console.log(uri);
-    fetch('http://192.168.88.104:8080/msg', {
+    fetch('http://10.100.103.50:8080/msg', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

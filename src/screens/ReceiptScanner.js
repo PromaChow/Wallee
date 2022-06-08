@@ -66,7 +66,7 @@ export const ReceiptScanner = ({navigation}) => {
       toggleProgressModal();
       // console.log(uri);
       ImgToBase64.getBase64String(uri).then(base64String => {
-        fetch('http://192.168.88.104:8080/image', {
+        fetch('http://10.100.103.50:8080/image', {
           method: 'POST',
           headers: {
             Accept: 'application/json',

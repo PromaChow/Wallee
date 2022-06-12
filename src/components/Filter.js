@@ -51,7 +51,7 @@ const Filter = ({showForm, setShowForm, setFilter}) => {
         size="lg"
         variant="ghost"
         bg="transparent"
-        leftIcon={<Icon as={Feather} name="search" color="white" />}
+        leftIcon={<Icon as={Feather} name="search" color="light.600" />}
         _text={{
           color: 'white',
         }}

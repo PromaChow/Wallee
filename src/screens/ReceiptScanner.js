@@ -37,6 +37,18 @@ import {
 // }
 
 export const ReceiptScanner = ({navigation}) => {
+  const [isProgressModalVisible, setProgressModalVisible] = useState(false);
+  const [isSuccessModalVisible, setSuccessModalVisible] = useState(false);
+  const [remarks, setRemarks] = useState();
+  const toggleProgressModal = () => {
+    setProgressModalVisible(!isProgressModalVisible);
+  };
+
+  const toggleSuccessModal = () => {
+    setProgressModalVisible(false);
+    setSuccessModalVisible(!isSuccessModalVisible);
+  };
+
   // useEffect(() => {
   //   BackHandler.addEventListener(
   //     'hardwareBackPress',
@@ -49,17 +61,6 @@ export const ReceiptScanner = ({navigation}) => {
   //     );
   //   };
   // }, []);
-  const [isProgressModalVisible, setProgressModalVisible] = useState(false);
-  const [isSuccessModalVisible, setSuccessModalVisible] = useState(false);
-  const [remarks, setRemarks] = useState();
-  const toggleProgressModal = () => {
-    setProgressModalVisible(!isProgressModalVisible);
-  };
-
-  const toggleSuccessModal = () => {
-    setProgressModalVisible(false);
-    setSuccessModalVisible(!isSuccessModalVisible);
-  };
 
   const post_image = async uri => {
     const fetchData = new Promise((resolve, reject) => {

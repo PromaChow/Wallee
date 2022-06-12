@@ -19,7 +19,13 @@ const CurrencyMode = ({applyRate, currencyCode, setApplyRate}) => {
         size="lg"
         variant="ghost"
         bg={applyRate ? 'red.400' : 'transparent'}
-        leftIcon={<Icon as={Feather} name="dollar-sign" color="white" />}
+        leftIcon={
+          <Icon
+            as={Feather}
+            name="dollar-sign"
+            color={applyRate ? 'white' : 'light.600'}
+          />
+        }
         _text={{
           color: 'white',
         }}

@@ -68,37 +68,17 @@ const sendData = async () => {
 };
 
 export const HomePage = ({navigation}) => {
-  const [aState, setAppState] = useState(AppState.currentState);
   const [dateMin, setDateMin] = useState(new Date('June 4, 2022 03:24:00'));
   const [openMin, setOpenMin] = useState(false);
-  const [dateMax, setDateMax] = useState(new Date('June 9, 2022 03:24:00'));
+  const [dateMax, setDateMax] = useState(new Date('June 15, 2022 03:24:00'));
   const [openMax, setOpenMax] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [netBalance, setNetBalance] = useState(0);
-  const isFocused = useIsFocused();
+
   useRefresh();
-  // useEffect(() => {
-  //   // sendData();
-  //   console.log('\n\nhome refreshed\n\n');
-  //   getSMS();
-  //   const appStateListener = AppState.addEventListener(
-  //     'change',
-  //     nextAppState => {
-  //       console.log('Next AppState is: ', nextAppState);
-  //       if (nextAppState === 'background') {
-  //         //   getSMS();
-  //       }
-  //       setAppState(nextAppState);
-  //     },
-  //   );
-  //   return () => {
-  //     appStateListener?.remove();
-  //   };
-  // });
 
   React.useEffect(() => {
-    //getSMS();
     sendData();
     const willFocusSubscription = navigation.addListener('focus', () => {
       getSMS();
@@ -108,24 +88,11 @@ export const HomePage = ({navigation}) => {
     return willFocusSubscription;
   }, []);
 
-  // useEffect(() => {
-  //   getPrimaryAmount();
-  // }, []);
-
-  // const getPrimaryAmount = async () => {
-  //   const data = await retrieve_data(getUserID());
-  //   const amount = parseFloat(data['primaryAmount']);
-  //   setIsLoading(false);
-  //   setNetBalance(amount);
-  // };
-
   useEffect(() => {
     const upload = async () => {
       const data = await retrieve_data(getUserID());
       const amount = parseFloat(data['primaryAmount']);
       const cache = parseFloat(data['serverCache']);
-
-      console.log('Cache is', cache);
 
       let netChange = 0;
 
@@ -150,7 +117,39 @@ export const HomePage = ({navigation}) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
   // console.log(dateMin, dateMax);
+
+  // useEffect(() => {
+  //   getPrimaryAmount();
+  // }, []);
+
+  // const getPrimaryAmount = async () => {
+  //   const data = await retrieve_data(getUserID());
+  //   const amount = parseFloat(data['primaryAmount']);
+  //   setIsLoading(false);
+  //   setNetBalance(amount);
+  // };
+
+  // useEffect(() => {
+  //   // sendData();
+  //   console.log('\n\nhome refreshed\n\n');
+  //   getSMS();
+  //   const appStateListener = AppState.addEventListener(
+  //     'change',
+  //     nextAppState => {
+  //       console.log('Next AppState is: ', nextAppState);
+  //       if (nextAppState === 'background') {
+  //         //   getSMS();
+  //       }
+  //       setAppState(nextAppState);
+  //     },
+  //   );
+  //   return () => {
+  //     appStateListener?.remove();
+  //   };
+  // });
+
   return (
     <Box flex="1">
       <NavBar title={'Summary'} navigation={navigation} />
@@ -303,7 +302,7 @@ export const HomePage = ({navigation}) => {
                 toggleModal();
               }}
               title="Select TimePeriod"
-              color="#b5ccab"
+              color="#777777"
             />
 
             <CardButton
@@ -312,7 +311,7 @@ export const HomePage = ({navigation}) => {
                 console.log(filterJournals());
               }}
               title="Select Style"
-              color="#b5ccab"
+              color="#777777"
             />
           </CardAction>
         </Card>

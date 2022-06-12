@@ -11,13 +11,12 @@ import {listOfGoals} from '../userSpace';
 import CreateGoal from '../components/CreateGoal';
 import {useIsFocused} from '@react-navigation/native';
 import {update_doc, getUserID} from '../FireStoreHelperFunctions';
+
 const GoalScreen = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    setRefresh(!refresh);
     update_doc(getUserID(), 'goals', listOfGoals);
   }, [isFocused]);
 

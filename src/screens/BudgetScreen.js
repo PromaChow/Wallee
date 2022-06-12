@@ -15,11 +15,9 @@ import {update_doc, getUserID} from '../FireStoreHelperFunctions';
 
 const BudgetScreen = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    setRefresh(!refresh);
     update_doc(getUserID(), 'budgets', listOfBudgets);
   }, [isFocused]);
 

@@ -4,15 +4,15 @@ import MenuButton from './MenuButton';
 import Feather from 'react-native-vector-icons/Feather';
 
 const NavBar = ({title, navigation}) => (
-  <Box bg="primary.500" width="full" padding="5px" marginBottom="2" shadow="7">
-    <MenuButton navigation={navigation} />
+  <Box bg="white" width="full" padding="5px" marginBottom="2" shadow="7">
+    <MenuButton navigationw={navigation} />
     <Center
-      bg="primary.500"
+      bg="white"
       _text={{
         padding: '1',
         fontSize: '2xl',
         fontWeight: 'normal',
-        color: 'white',
+        color: 'light.600',
       }}>
       {title}
     </Center>

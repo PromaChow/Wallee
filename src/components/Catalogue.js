@@ -24,26 +24,22 @@ const Stack = createNativeStackNavigator();
 const Catalogue = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
   const [applyRate, setApplyRate] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const isFocused = useIsFocused();
+  const [showForm, setShowForm] = useState(false);
+  const [filter, setFilter] = useState('');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   let rate = getRates();
   let currencyCode = getPreferredCurrency().currency.code;
 
+  const isFocused = useIsFocused(); // Hook for determing screen focus
+
   useEffect(() => {
-    setRefresh(!refresh);
+    // update_doc synchronizes models with database
     update_doc(getUserID(), 'journals', listOfJournals);
-  }, [isFocused]);
-
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-  const [showForm, setShowForm] = useState(false);
-  const [filter, setFilter] = useState('');
+  }, [isFocused]); // only run on focus change
 
   const filterCallBack = useCallback(
-    key => {
-      return filter === '' ? true : key.includes(filter);
-    },
+    key => (filter === '' ? true : key.includes(filter)),
     [filter],
   );
 

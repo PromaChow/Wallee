@@ -17,7 +17,7 @@ const MenuButton = () => {
       _icon={{
         as: Feather,
         name: 'menu',
-        color: 'white',
+        color: 'light.600',
       }}
       onPress={() => navigation.toggleDrawer()}
     />

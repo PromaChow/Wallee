@@ -54,14 +54,11 @@ const UserProfile = ({navigation}) => {
   const [curr, setCurrency] = useState('');
   const [amount, setAmount] = useState(0);
   const [email, setEmail] = useState('');
-  const [border, setBorder] = useState(0);
   const [press, setPress] = useState(0);
   const [focus, setFocus] = useState(0);
   const [condition, setCondition] = useState(0);
   const [isImageChanged, setImageChanged] = useState(false);
-  console.log('con' + condition);
 
-  //console.log(username, currency, image);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };

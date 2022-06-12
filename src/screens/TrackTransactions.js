@@ -47,11 +47,9 @@ const screenWidth = Dimensions.get('window').width;
 
 export const TrackTransactions = () => {
   const [transactions, setTransaction] = useState(get_transactions());
-  const [currAmount, setCurrAmount] = useState(0);
   const [checked, setChecked] = useState();
   const [transactionId, setTransactionId] = useState(0);
   const [name, setName] = useState(0);
-  const [isRefreshed, setIsRefreshed] = useState(0);
   const [updated, setUpdated] = useState(true);
   useRefresh();
 

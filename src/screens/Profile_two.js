@@ -163,6 +163,7 @@ export const Profile_two = ({navigation, route}) => {
                   update_doc(uid, 'journals', '');
                   update_doc(uid, 'budgets', '');
                   update_doc(uid, 'goals', '');
+                  update_doc(uid, 'serverCache', 0);
                   setSignOut(render => !render);
                 }}>
                 <Text
